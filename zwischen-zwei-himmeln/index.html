@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warum ein Buch lesen, wenn du im Buch aufwachsen kannst</title>
+<meta name="description" content="Über »Zwischen zwei Himmeln« von Christian Anh Nopper.">
+<meta name="theme-color" content="#0c0a0b">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://erosuniversity.github.io/zwischen-zwei-himmeln/">
+<meta property="og:site_name" content="Eros University">
+<meta property="og:title" content="Warum ein Buch lesen, wenn du im Buch aufwachsen kannst">
+<meta property="og:description" content="Über »Zwischen zwei Himmeln« von Christian Anh Nopper.">
+<meta property="og:image" content="https://erosuniversity.github.io/zwischen-zwei-himmeln/og.jpg">
+<meta property="og:image:width" content="630">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ein Schwarm goldener Punkte, der die Gestalt eines Jungen bildet">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500&display=swap">
+<style>
+  :root {
+    --ink: #1d191a;
+    --ink-soft: #5b5150;
+    --bone: #E8E0D0;
+    --ash: #9A9185;
+    --gold: #C9B47E;
+    --night: #0c0a0b;
+    --display: "Cormorant Garamond", Garamond, Georgia, serif;
+    --body: "EB Garamond", Garamond, Georgia, serif;
+    --caps: "Cinzel", "Trajan Pro", Georgia, serif;
+    --fg: var(--ink); --fg-soft: var(--ink-soft); --accent: #6d4f3a;
+  }
+  body.dark { --fg: var(--bone); --fg-soft: var(--ash); --accent: var(--gold); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--night); color: var(--fg);
+    font: 400 21px/1.62 var(--body); -webkit-font-smoothing: antialiased;
+    transition: color 1.2s ease;
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  /* two skies: dusk until the cut to black, then night */
+  .sky { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+  .sky::before, .sky::after { content: ""; position: absolute; inset: 0; transition: opacity 1.4s ease; }
+  .sky::before { background: linear-gradient(180deg, #b9b7bb 0%, #d4c6bd 46%, #e8c8ab 78%, #e2b593 100%); }
+  .sky::after { background: radial-gradient(ellipse 80% 60% at 50% 30%, #1b1617 0%, var(--night) 70%); opacity: 0; }
+  body.dark .sky::after { opacity: 1; }
+
+  #swarm { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+
+  .mark { position: absolute; top: 20px; left: 22px; z-index: 6; font: 500 11px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--fg-soft); text-decoration: none; transition: color 1.2s; }
+  .mark:hover { color: var(--accent); }
+
+  /* hero */
+  .hero { min-height: 100vh; display: grid; place-items: end center; padding: 0 16px 14vh; text-align: center; }
+  .kicker { font: 500 12px/1.5 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--fg-soft); }
+  .hero h1 { margin: 22px auto 22px; width: min(720px, 92vw); }
+  /* set in Campus MN (Mecanorma) as outlines, so the font file itself is never published */
+  .hero h1 .title-art { display: block; width: 100%; height: auto; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .byline { font: italic 400 18px var(--display); color: var(--fg-soft); }
+  .scroll-hint { margin-top: 38px; font: italic 400 16px var(--display); color: var(--fg-soft); animation: drift 2.8s ease-in-out infinite; }
+  @keyframes drift { 50% { transform: translateY(6px); opacity: .6; } }
+
+  /* reading column */
+  article { position: relative; z-index: 1; }
+  .col { max-width: 660px; margin: 0 auto; padding: 0 22px; }
+  section { padding: 12vh 0 4vh; }
+  h2 { margin: 0 0 30px; font: 500 clamp(30px, 4.4vw, 44px)/1.1 var(--display); }
+  h2 .num { display: block; margin-bottom: 8px; font: 500 13px/1 var(--caps); letter-spacing: .34em; color: var(--accent); transition: color 1.2s; }
+  p { margin: 0 0 1.05em; }
+  q, .quote { font-style: italic; }
+
+  /* cut to black, the title appears */
+  .titlecard { margin-top: 22vh; min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 0 16px; }
+  .titlecard p { margin: 0; font: 500 clamp(44px, 8vw, 96px)/1 var(--display); color: var(--bone); opacity: 0; transform: scale(.98); transition: opacity 2.2s ease .5s, transform 3s ease .5s; }
+  body.dark .titlecard p.in { opacity: 1; transform: none; }
+
+  /* II: between the lines */
+  .between { position: relative; transition: line-height 1.6s cubic-bezier(.6,0,.2,1); }
+  .between.open { line-height: 3.1; }
+  .between .frag {
+    position: absolute; white-space: nowrap; pointer-events: none;
+    font: italic 400 15px/1 var(--display); color: var(--accent); letter-spacing: .04em;
+    opacity: 0; transform: translateY(4px); transition: opacity 1.4s ease, transform 1.4s ease;
+  }
+  .between .frag.in { opacity: .85; transform: none; }
+  .alone { margin-top: 1.6em; font: italic 500 30px/1.2 var(--display); }
+
+  /* III: the little prince */
+  .prince { margin: 56px auto 60px; width: min(460px, 94%); cursor: pointer; }
+  .prince svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .prince .boa { fill: #b98c2e; transition: fill-opacity 1.8s ease; }
+  .prince .boa-line { fill: none; stroke: #8a5d1c; stroke-width: 1.6; }
+  .prince .eye { fill: #3a2410; }
+  .prince .inside { opacity: 0; transition: opacity 1.8s ease .3s; }
+  .prince.inside .boa { fill-opacity: .32; }
+  .prince.inside .inside { opacity: 1; }
+  .prince figcaption { position: relative; height: 1.4em; margin-top: 18px; text-align: center; font: italic 500 24px/1.4 var(--display); }
+  .prince figcaption span { position: absolute; left: 0; right: 0; transition: opacity 1.4s ease; }
+  .prince .kids { opacity: 0; }
+  .prince.inside .hat { opacity: 0; }
+  .prince.inside .kids { opacity: 1; transition-delay: .6s; }
+
+  /* full-bleed visual stages */
+  .stage { position: relative; height: 170vh; margin: 8vh 0; }
+  .stage .pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  .stage canvas { display: block; width: 100%; height: 100%; }
+  .stage .credit { position: absolute; left: 22px; bottom: 18px; font: italic 400 15px var(--display); color: #6f6a64; }
+
+  /* IV: two kids */
+  .twins { margin: 50px 0 30px; text-align: center; user-select: none; }
+  .twins .row { position: relative; height: 330px; max-width: 420px; margin: 0 auto; }
+  .twins .kid {
+    position: absolute; top: 0; width: 46%; height: 290px; padding: 0; border: 0; background: none; cursor: default;
+    transition: transform .42s cubic-bezier(.6,0,.3,1);
+  }
+  .twins .kid .face { width: 100%; height: 100%; display: block; overflow: visible; transition: transform .42s cubic-bezier(.6,0,.3,1); }
+  .twins .kid span { position: absolute; left: 0; right: 0; bottom: -34px; font: 500 11px/1.4 var(--caps); letter-spacing: .26em; text-transform: uppercase; color: var(--accent); transition: opacity .6s; }
+  .twins.hide-labels .kid span { opacity: 0; }
+  .twins.ask .kid { cursor: pointer; }
+  .twins.ask .kid:hover .face, .twins.ask .kid:focus-visible .face { filter: drop-shadow(0 0 14px rgba(201,180,126,.45)); }
+  .twins .kid:focus-visible { outline: 1px solid var(--accent); outline-offset: 6px; }
+  .twins .prompt { min-height: 1.6em; margin-top: 18px; font: italic 500 26px/1.3 var(--display); }
+  .twins .again { margin-top: 6px; padding: 6px 0; border: 0; background: none; color: var(--fg-soft); font: italic 400 16px var(--display); cursor: pointer; visibility: hidden; }
+  .twins.answered .again { visibility: visible; }
+
+  /* V: the wind turbines */
+  .stage.wind .pin { background: linear-gradient(180deg, #0f1420 0%, #2a2a3a 38%, #6b4a44 60%, #c0785a 78%, #e09a6a 100%); }
+
+  /* VI: who do you see */
+  .ending { position: relative; height: 230vh; }
+  .ending .pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: start; justify-items: center; padding-top: 12vh; text-align: center; user-select: none; -webkit-user-select: none; touch-action: none; }
+  .ending p { margin: 0 0 .3em; font: 500 clamp(28px, 4.4vw, 46px)/1.15 var(--display); padding: 0 16px; }
+  .ending .who { margin-top: .6em; font-style: italic; color: var(--gold); }
+  .ending .hint { position: absolute; bottom: 7vh; left: 0; right: 0; font: 500 11px/1.4 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--ash); opacity: 0; transition: opacity 1s; }
+  .ending.hinted .hint { opacity: 1; }
+
+  /* visitor counter, old-school odometer */
+  .visits { position: absolute; top: 14px; right: 18px; z-index: 6; display: flex; align-items: center; gap: 10px; color: var(--fg-soft); transition: color 1.2s; }
+  .visits .lbl { font: 500 10px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; }
+  .visits .digits { display: flex; gap: 2px; }
+  .visits .digits span { display: grid; place-items: center; width: 17px; height: 24px; border: 1px solid currentColor; border-radius: 2px; font: 500 14px/1 var(--caps); color: var(--fg); font-variant-numeric: tabular-nums; }
+
+  /* rating in Eros heads */
+  .rating { margin: 34px 0 40px; padding: 26px 0 22px; border-top: 1px solid rgba(201,180,126,.25); border-bottom: 1px solid rgba(201,180,126,.25); text-align: center; }
+  .rlabel { margin: 0 0 10px; font: 500 11px/1.4 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--accent); }
+  .heads { display: flex; justify-content: center; gap: 4px; margin: 0 0 22px; }
+  .heads svg { width: 54px; height: 54px; display: block; }
+  .heads .off { opacity: .16; }
+  .heads.vote button { padding: 0; border: 0; background: none; cursor: pointer; transition: transform .2s; }
+  .heads.vote button:hover, .heads.vote button:focus-visible { transform: translateY(-3px); outline: none; }
+  .heads.vote.voted button { cursor: default; transform: none; }
+  .tally { margin: 0; font: italic 500 22px/1.3 var(--display); }
+  @media (max-width: 640px) { .heads svg { width: 28px; height: 28px; } .heads { gap: 2px; } .visits .lbl { display: none; } }
+
+  footer { padding: 10vh 22px 8vh; text-align: center; font: italic 400 16px var(--display); color: var(--ash); }
+  footer a { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    body { font-size: 19px; }
+    .between.open { line-height: 2.8; }
+    .between .frag { font-size: 13px; }
+    .twins .row { height: 270px; }
+    .twins .kid { height: 230px; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <canvas id="swarm" aria-hidden="true"></canvas>
+  <a class="mark" href="../">Eros University</a>
+  <div class="visits" id="visits" hidden><span class="lbl">Besucher</span><span class="digits" id="visits-digits"></span></div>
+
+  <header class="hero" id="hero">
+    <div>
+      <div class="kicker">Über »Zwischen zwei Himmeln« von Christian Anh Nopper</div>
+      <h1><span class="sr">“Warum ein Buch lesen, wenn du im Buch aufwachsen kannst”</span><svg class="title-art" viewBox="-10 -677 12051 2787" fill="currentColor" aria-hidden="true"><path transform="translate(-20 0)" d="M434 -576V-412H252V-547L304 -667H427L406 -576ZM381 -531H356L375 -622H340L305 -539V-457H381ZM202 -576V-412H20V-547L72 -667H195L174 -576ZM149 -531H124L143 -622H108L73 -539V-457H149Z M1080 0H916L860 -237L798 0H630L508 -503H457V-667H718V-503H685L720 -358L801 -667H933L1006 -360L1046 -503H1018V-667H1279V-503H1224ZM1038 -45 1180 -548H1226V-622H1064V-548H1102L1001 -188L894 -622H839L721 -183L632 -548H672V-622H510V-548H550L672 -45H762L860 -416L951 -45Z M1285 0V-164H1336L1509 -667H1688L1846 -164H1895V0H1626V-164H1668L1654 -209H1523L1509 -164H1549V0ZM1338 -45H1503V-119H1452L1499 -254H1679L1722 -119H1672V-45H1838V-119H1806L1647 -622H1548L1375 -119H1338ZM1517 -306 1593 -526 1663 -306ZM1566 -342H1612L1591 -410Z M2209 -164V0H1939V-164H1983V-503H1939V-667H2308L2430 -540V-358L2360 -288L2421 -164H2484V0H2308L2188 -246H2176V-164ZM1992 -119V-45H2163V-119H2123V-291H2217L2338 -45H2431V-119H2384L2295 -298L2377 -380V-520L2279 -622H1992V-548H2036V-119ZM2123 -355V-548H2246L2290 -504V-397L2246 -355ZM2176 -400H2237V-503H2176Z M3038 -503V-117L2916 0H2695L2574 -117V-503H2530V-667H2790V-503H2767V-164H2845V-503H2821V-667H3082V-503ZM2627 -548V-138L2723 -45H2889L2985 -138V-548H3029V-622H2867V-548H2898V-157L2858 -119H2753L2714 -157V-548H2744V-622H2583V-548Z M3403 -164V0H3155V-164H3199V-503H3155V-667H3408L3495 -455L3589 -667H3836V-503H3792V-164H3836V0H3587V-164H3619V-328L3529 -126H3452L3372 -321V-164ZM3208 -119V-45H3357V-119H3326V-536L3479 -171H3505L3665 -536V-119H3633V-45H3783V-119H3739V-548H3783V-622H3620L3495 -340L3377 -622H3208V-548H3252V-119Z M4639 -452V-503H4553V-424H4723V-276H4553V-164H4639V-246H4804V0H4316V-164H4360V-503H4316V-667H4798V-452ZM4369 -119V-45H4751V-201H4685V-119H4500V-321H4670V-379H4500V-548H4685V-497H4745V-622H4369V-548H4413V-119Z M5154 -164V0H4873V-164H4917V-503H4873V-667H5154V-503H5110V-164ZM4926 -119V-45H5101V-119H5057V-548H5101V-622H4926V-548H4970V-119Z M5494 -164V0H5233V-164H5277V-503H5233V-667H5457L5616 -386V-503H5580V-667H5832V-503H5788V0H5628L5449 -317V-164ZM5286 -119V-45H5448V-119H5403V-493L5656 -45H5735V-548H5779V-622H5626V-548H5662V-212L5430 -622H5286V-548H5330V-119Z M6308 -503V-667H6683L6795 -548V-369L6754 -332L6795 -292V-111L6672 0H6308V-164H6352V-503ZM6361 -119V-45H6645L6742 -134V-278L6688 -334L6742 -385V-527L6653 -622H6361V-548H6405V-119ZM6492 -119V-311H6611L6655 -266V-153L6618 -119ZM6492 -368V-548H6620L6655 -509V-405L6617 -368ZM6545 -414H6602V-503H6545ZM6545 -164H6602V-266H6545Z M7366 -503V-117L7244 0H7023L6902 -117V-503H6858V-667H7118V-503H7095V-164H7173V-503H7149V-667H7410V-503ZM6955 -548V-138L7051 -45H7217L7313 -138V-548H7357V-622H7195V-548H7226V-157L7186 -119H7081L7042 -157V-548H7072V-622H6911V-548Z M7924 -259V-97L7820 0H7586L7473 -126V-556L7587 -667H7819L7924 -556V-414H7745V-503H7666V-164H7745V-259ZM7871 -214H7798V-153L7761 -119H7649L7613 -160V-515L7647 -548H7761L7798 -509V-459H7871V-537L7791 -622H7618L7526 -532V-147L7618 -45H7791L7871 -120Z M8254 -164V0H7991V-164H8035V-503H7991V-667H8254V-503H8228V-429H8323V-503H8297V-667H8560V-503H8516V-164H8560V0H8297V-164H8323V-274H8228V-164ZM8044 -119V-45H8208V-119H8175V-319H8376V-119H8343V-45H8507V-119H8463V-548H8507V-622H8343V-548H8376V-384H8175V-548H8208V-622H8044V-548H8088V-119Z M9039 -503V-667H9335V-503H9276V-164H9356V-246H9521V0H9039V-164H9083V-503ZM9092 -119V-45H9468V-201H9402V-119H9223V-548H9282V-622H9092V-548H9136V-119Z M9900 -452V-503H9814V-424H9984V-276H9814V-164H9900V-246H10065V0H9577V-164H9621V-503H9577V-667H10059V-452ZM9630 -119V-45H10012V-201H9946V-119H9761V-321H9931V-379H9761V-548H9946V-497H10006V-622H9630V-548H9674V-119Z M10392 -448V-503H10312V-422H10464L10591 -293V-136L10458 0H10248L10119 -129V-229H10312V-164H10399V-262H10234L10119 -377V-553L10234 -667H10469L10593 -544V-448ZM10293 -377 10259 -410V-513L10293 -548H10412L10445 -514V-493H10540V-531L10451 -622H10254L10172 -541V-390L10254 -307H10413L10452 -267V-163L10408 -119H10305L10259 -164V-184H10172V-140L10268 -45H10439L10538 -147V-282L10445 -377Z M10980 -452V-503H10894V-424H11064V-276H10894V-164H10980V-246H11145V0H10657V-164H10701V-503H10657V-667H11139V-452ZM10710 -119V-45H11092V-201H11026V-119H10841V-321H11011V-379H10841V-548H11026V-497H11086V-622H10710V-548H10754V-119Z M11475 -164V0H11214V-164H11258V-503H11214V-667H11438L11597 -386V-503H11561V-667H11813V-503H11769V0H11609L11430 -317V-164ZM11267 -119V-45H11429V-119H11384V-493L11637 -45H11716V-548H11760V-622H11607V-548H11643V-212L11411 -622H11267V-548H11311V-119Z M11869 0V-164H12051V-29L11999 90H11876L11896 0ZM11922 -45H11947L11927 45H11963L11998 -37V-119H11922Z"/><path transform="translate(1741 0)" d="M626 1050H462L406 813L344 1050H176L54 547H3V383H264V547H231L266 692L347 383H479L552 690L592 547H564V383H825V547H770ZM584 1005 726 502H772V428H610V502H648L547 862L440 428H385L267 867L178 502H218V428H56V502H96L218 1005H308L406 634L497 1005Z M1191 598V547H1105V626H1275V774H1105V886H1191V804H1356V1050H868V886H912V547H868V383H1350V598ZM921 931V1005H1303V849H1237V931H1052V729H1222V671H1052V502H1237V553H1297V428H921V502H965V931Z M1686 886V1050H1425V886H1469V547H1425V383H1649L1808 664V547H1772V383H2024V547H1980V1050H1820L1641 733V886ZM1478 931V1005H1640V931H1595V557L1848 1005H1927V502H1971V428H1818V502H1854V838L1622 428H1478V502H1522V931Z M2361 886V1050H2100V886H2144V547H2100V383H2324L2483 664V547H2447V383H2699V547H2655V1050H2495L2316 733V886ZM2153 931V1005H2315V931H2270V557L2523 1005H2602V502H2646V428H2493V502H2529V838L2297 428H2153V502H2197V931Z M3175 547V383H3574L3685 499V939L3568 1050H3175V886H3219V547ZM3228 931V1005H3540L3632 917V519L3545 428H3228V502H3272V931ZM3359 931V502H3515L3546 533V899L3510 931ZM3412 886H3493V547H3412Z M4256 547V933L4134 1050H3913L3792 933V547H3748V383H4008V547H3985V886H4063V547H4039V383H4300V547ZM3845 502V912L3941 1005H4107L4203 912V502H4247V428H4085V502H4116V893L4076 931H3971L3932 893V502H3962V428H3801V502Z M5054 886V1050H4773V886H4817V547H4773V383H5054V547H5010V886ZM4826 931V1005H5001V931H4957V502H5001V428H4826V502H4870V931Z M5381 886V1050H5133V886H5177V547H5133V383H5386L5473 595L5567 383H5814V547H5770V886H5814V1050H5565V886H5597V722L5507 924H5430L5350 729V886ZM5186 931V1005H5335V931H5304V514L5457 879H5483L5643 514V931H5611V1005H5761V931H5717V502H5761V428H5598L5473 710L5355 428H5186V502H5230V931Z M6294 547V383H6669L6781 502V681L6740 718L6781 758V939L6658 1050H6294V886H6338V547ZM6347 931V1005H6631L6728 916V772L6674 716L6728 665V523L6639 428H6347V502H6391V931ZM6478 931V739H6597L6641 784V897L6604 931ZM6478 682V502H6606L6641 541V645L6603 682ZM6531 636H6588V547H6531ZM6531 886H6588V784H6531Z M7352 547V933L7230 1050H7009L6888 933V547H6844V383H7104V547H7081V886H7159V547H7135V383H7396V547ZM6941 502V912L7037 1005H7203L7299 912V502H7343V428H7181V502H7212V893L7172 931H7067L7028 893V502H7058V428H6897V502Z M7910 791V953L7806 1050H7572L7459 924V494L7573 383H7805L7910 494V636H7731V547H7652V886H7731V791ZM7857 836H7784V897L7747 931H7635L7599 890V535L7633 502H7747L7784 541V591H7857V513L7777 428H7604L7512 518V903L7604 1005H7777L7857 930Z M8240 886V1050H7977V886H8021V547H7977V383H8240V547H8214V621H8309V547H8283V383H8546V547H8502V886H8546V1050H8283V886H8309V776H8214V886ZM8030 931V1005H8194V931H8161V731H8362V931H8329V1005H8493V931H8449V502H8493V428H8329V502H8362V666H8161V502H8194V428H8030V502H8074V931Z"/><path transform="translate(689 0)" d="M3 2100V1936H54L227 1433H406L564 1936H613V2100H344V1936H386L372 1891H241L227 1936H267V2100ZM56 2055H221V1981H170L217 1846H397L440 1981H390V2055H556V1981H524L365 1478H266L93 1981H56ZM235 1794 311 1574 381 1794ZM284 1758H330L309 1690Z M1158 1597V1983L1036 2100H815L694 1983V1597H650V1433H910V1597H887V1936H965V1597H941V1433H1202V1597ZM747 1552V1962L843 2055H1009L1105 1962V1552H1149V1478H987V1552H1018V1943L978 1981H873L834 1943V1552H864V1478H703V1552Z M1275 1597V1433H1757V1648H1598V1597H1512V1686H1682V1834H1512V1936H1570V2100H1275V1936H1319V1597ZM1328 1981V2055H1517V1981H1459V1789H1629V1731H1459V1552H1644V1603H1704V1478H1328V1552H1372V1981Z M2390 2100H2226L2170 1863L2108 2100H1940L1818 1597H1767V1433H2028V1597H1995L2030 1742L2111 1433H2243L2316 1740L2356 1597H2328V1433H2589V1597H2534ZM2348 2055 2490 1552H2536V1478H2374V1552H2412L2311 1912L2204 1478H2149L2031 1917L1942 1552H1982V1478H1820V1552H1860L1982 2055H2072L2170 1684L2261 2055Z M2595 2100V1936H2646L2819 1433H2998L3156 1936H3205V2100H2936V1936H2978L2964 1891H2833L2819 1936H2859V2100ZM2648 2055H2813V1981H2762L2809 1846H2989L3032 1981H2982V2055H3148V1981H3116L2957 1478H2858L2685 1981H2648ZM2827 1794 2903 1574 2973 1794ZM2876 1758H2922L2901 1690Z M3690 1841V2003L3586 2100H3352L3239 1974V1544L3353 1433H3585L3690 1544V1686H3511V1597H3432V1936H3511V1841ZM3637 1886H3564V1947L3527 1981H3415L3379 1940V1585L3413 1552H3527L3564 1591V1641H3637V1563L3557 1478H3384L3292 1568V1953L3384 2055H3557L3637 1980Z M4020 1936V2100H3757V1936H3801V1597H3757V1433H4020V1597H3994V1671H4089V1597H4063V1433H4326V1597H4282V1936H4326V2100H4063V1936H4089V1826H3994V1936ZM3810 1981V2055H3974V1981H3941V1781H4142V1981H4109V2055H4273V1981H4229V1552H4273V1478H4109V1552H4142V1716H3941V1552H3974V1478H3810V1552H3854V1981Z M4663 1652V1597H4583V1678H4735L4862 1807V1964L4729 2100H4519L4390 1971V1871H4583V1936H4670V1838H4505L4390 1723V1547L4505 1433H4740L4864 1556V1652ZM4564 1723 4530 1690V1587L4564 1552H4683L4716 1586V1607H4811V1569L4722 1478H4525L4443 1559V1710L4525 1793H4684L4723 1833V1937L4679 1981H4576L4530 1936V1916H4443V1960L4539 2055H4710L4809 1953V1818L4716 1723Z M5251 1648V1597H5165V1676H5335V1824H5165V1936H5251V1854H5416V2100H4928V1936H4972V1597H4928V1433H5410V1648ZM4981 1981V2055H5363V1899H5297V1981H5112V1779H5282V1721H5112V1552H5297V1603H5357V1478H4981V1552H5025V1981Z M5746 1936V2100H5485V1936H5529V1597H5485V1433H5709L5868 1714V1597H5832V1433H6084V1597H6040V2100H5880L5701 1783V1936ZM5538 1981V2055H5700V1981H5655V1607L5908 2055H5987V1552H6031V1478H5878V1552H5914V1888L5682 1478H5538V1552H5582V1981Z M6826 1936V2100H6560V1936H6604V1597H6560V1433H6826V1597H6797V1651L6873 1579V1433H7139V1597H7073L6929 1727L7082 1936H7152V2100H6898V1955L6811 1835L6797 1850V1936ZM6613 1981V2055H6780V1981H6744V1834L6817 1765L6975 1981H6944V2055H7099V1981H7058L6867 1721L7052 1552H7086V1478H6919V1552H6963L6744 1753V1552H6780V1478H6613V1552H6657V1981Z M7171 2100V1936H7222L7395 1433H7574L7732 1936H7781V2100H7512V1936H7554L7540 1891H7409L7395 1936H7435V2100ZM7224 2055H7389V1981H7338L7385 1846H7565L7608 1981H7558V2055H7724V1981H7692L7533 1478H7434L7261 1981H7224ZM7403 1794 7479 1574 7549 1794ZM7452 1758H7498L7477 1690Z M8086 1936V2100H7825V1936H7869V1597H7825V1433H8049L8208 1714V1597H8172V1433H8424V1597H8380V2100H8220L8041 1783V1936ZM7878 1981V2055H8040V1981H7995V1607L8248 2055H8327V1552H8371V1478H8218V1552H8254V1888L8022 1478H7878V1552H7922V1981Z M8761 1936V2100H8500V1936H8544V1597H8500V1433H8724L8883 1714V1597H8847V1433H9099V1597H9055V2100H8895L8716 1783V1936ZM8553 1981V2055H8715V1981H8670V1607L8923 2055H9002V1552H9046V1478H8893V1552H8929V1888L8697 1478H8553V1552H8597V1981Z M9433 1652V1597H9353V1678H9505L9632 1807V1964L9499 2100H9289L9160 1971V1871H9353V1936H9440V1838H9275L9160 1723V1547L9275 1433H9510L9634 1556V1652ZM9334 1723 9300 1690V1587L9334 1552H9453L9486 1586V1607H9581V1569L9492 1478H9295L9213 1559V1710L9295 1793H9454L9493 1833V1937L9449 1981H9346L9300 1936V1916H9213V1960L9309 2055H9480L9579 1953V1818L9486 1723Z M10085 1936V2100H9788V1936H9840V1597H9805V1686H9661V1433H10212V1686H10068V1597H10033V1936ZM9841 1981V2055H10032V1981H9980V1552H10108V1641H10159V1478H9714V1641H9765V1552H9893V1981Z M10468 1597V1433H10650V1568L10598 1688H10475L10495 1597ZM10521 1552H10546L10526 1643H10562L10597 1560V1478H10521ZM10236 1597V1433H10418V1568L10366 1688H10243L10263 1597ZM10289 1552H10314L10294 1643H10330L10365 1560V1478H10289Z"/></svg></h1>
+      <div class="byline">11. Oktober 2026</div>
+      <div class="scroll-hint">↓</div>
+    </div>
+  </header>
+
+  <article>
+    <section id="s1" class="col">
+      <h2><span class="num">I.</span>Schwarmintelligenz</h2>
+      <p>Der Film beginnt mit einem Schwarm,der sich formt, auflöst, neu zusammenfindet, dechiffriert und wieder zerfällt.</p>
+      <p>Zwei Jungs aus Buch, vielleicht fünfzehn Jahre alt, stehen zusammen und rauchen einen Joint.</p>
+      <p>In diesem schwer zu fassenden Zusammenspiel aus Zufall und Ordnung, sieht Maurice die Hand Gottes. „Das ist Gott, der uns ruft”, sagt er. „Gott ruft uns zu sich.” Schnitt auf Schwarz. Der Titel erscheint.</p>
+    </section>
+
+    <div class="titlecard" id="titlecard"><p>Zwischen zwei Himmeln.</p></div>
+
+    <section class="col" style="padding-top:0">
+      <p>Es ist eine Eröffnung, die den ganzen Film in sich trägt, ohne ihn zu erklären, anders als ich.</p>
+      <p>Ein Schwarm ist viele und eines zugleich. Er hat keine Mitte und doch eine Gestalt. Und die erste Deutung, die diese Kinder ihm geben, ist eine Deutung des Rufs, des Fortgehens, des Nach-oben-Gerufen-Werdens, ein Bild, das der Film später eigentlich aufgreifen sollte.</p>
+    </section>
+
+    <section id="s2" class="col">
+      <h2><span class="num">II.</span>Buch, ohne Titel</h2>
+      <p>Von dort an folgt der Film Maurice und seinen Freunden beim Alltag. Es gibt keine Eltern im Bild. Keine Aufsicht, keine Erwachsenen, keine ordnende Instanz. Nur diese Kinder, Berliner Kinder, Bucher Kinder, die sich selbst überlassen sind und sich selbst sein dürfen. Christian Anh Nopper meint, dass er sich in ihnen wiedererkennt.</p>
+      <p class="between" id="between">Intimität durchdringt jede Aussage der Kinder. Die Gespräche, die hier stattfinden, sind von einer Offenheit und Ehrlichkeit, die nur möglich ist, wenn die Kamera nah genug herangekommen ist, um nicht mehr als Gefahr wahrgenommen zu werden. Und das Profunde an diesen Gesprächen liegt nicht in dem, was gesagt wird, sondern in dem, was nicht gesagt wird.</p>
+      <p class="alone">Sie leben.</p>
+      <p>Die einzigen Träume, die zu hören sind, sind solche, die man dem amerikanischen Traum zuordnen würde: reich werden, reich durch Drogen, reich überhaupt. Und als Marcel wegzuziehen scheint, sieht man, wie diese Kinder sich um ihn scharen, um diesen schwarzen Jungen, der vielleicht der Leim des Schwarms ist.</p>
+      <p>Oder vielleicht braucht es auch einfach eine Figur, auf die sich der Blick richtet, eine Hauptfigur, damit der Schwarm überhaupt lesbar wird.</p>
+    </section>
+
+    <section id="s3" class="col">
+      <h2><span class="num">III.</span>Der kleine Prinz</h2>
+      <p>Ein kleiner Bruder geht verloren. Alle suchen. Am nächsten Tag taucht er wieder auf. Nopper erzählt, dass die Kinder, als das Team zum nächsten Drehtag zurückkam, das Ereignis bereits vergessen hatten,obwohl es das Aufregendste war, was geschehen war. Sie hatten sogar die Polizei gerufen. Im Film ist davon nichts zu sehen.</p>
+
+      <figure class="prince" id="prince" aria-label="Eine Riesenschlange, die aussieht wie ein Hut. Weiter unten sieht man: sie hat zwei Köpfe verschluckt.">
+        <svg viewBox="0 0 400 150" stroke-linecap="round" stroke-linejoin="round">
+          <defs><symbol id="eros-head" viewBox="0 0 675 675"><path style="fill:var(--hw)" d="M 111.2,468.43 c 1.12,0.84 2.37,1.41 3.74,1.72 c -0.24,2.33 3.86,3.11 5.56,3.03 c 6.89,2.65 14.37,2.69 21.6,2.8 c -2.4,6.26 -32.46,8.74 -39.12,9.16 c 0.01,-2.84 0.04,-5.67 0.09,-8.5 c 0.79,-6.77 2.45,-6.7 8.13,-8.21 Z M 568.99,486.05 c -0.76,0.21 -1.5,0.45 -2.23,0.73 c -6.06,1.05 -12.09,2.24 -18.1,3.55 c -0.55,0.21 -1.11,0.36 -1.69,0.45 c -0.06,-1.35 -4.2,-3.27 -4.64,-5.74 c -3.79,-14.25 16.53,-13.53 25,-12.79 c 6.65,0.67 0.92,10.58 1.66,13.8 Z M 154.12,536.12 c -0.55,0.57 -1.02,1.2 -1.39,1.91 c -5.18,1.83 -9.94,2.81 -15.6,1.95 c -0.1,-4.55 -3.25,-5.22 -4.17,-8.96 c 0.35,-0.11 0.57,-0.34 0.67,-0.7 c 0.12,-2.21 -1.23,-5.31 0.14,-7.25 c 11.42,-5.62 18.18,2.5 20.35,13.05 Z"/><path style="fill:var(--hw)" d="M 412.05,304.22 c 0,0.5 -0.18,0.93 -0.54,1.27 c -11.37,-0.59 -26.7,0.69 -36.41,7.37 c -2.44,-0.12 -3.49,1.2 -4.72,3.08 c -0.79,0.27 -2.74,1.39 -1.22,2.22 c -3.86,2.78 -7.52,5.79 -10.99,9.04 c -1.11,-0.28 -2.23,-0.48 -3.35,-0.58 c -3.51,-5.76 0.4,-7.85 4.19,-11.24 c 0.27,-1.03 -0.08,-1.8 -1.04,-2.3 c 12.5,0.02 15.96,-4.71 25.86,-10.34 c 9.24,-3.94 19.28,-2.58 28.22,1.48 Z"/><path style="fill:var(--hw)" d="M 492.84,79.02 c 0.4,0.31 0.83,0.58 1.27,0.82 c -0.49,-0.02 -0.81,0.2 -0.95,0.67 c 1.84,8.8 0.15,19.62 -1.84,28.37 c -0.13,1.16 -3.74,2.12 -4.56,3.31 c -19,28.3 -67.65,32.47 -91.54,56.46 c -10.53,12.1 -23.9,30.62 -26.5,46.59 c -1.68,7.85 -14.55,14.57 -13.39,21.95 c 1.15,0.88 2.34,0.93 3.56,0.15 c 0.35,-1.03 0.65,-2.07 0.91,-3.13 c 0.82,-1.15 1.79,-1.28 2.91,-0.39 c 1.89,5.35 -5.07,12.66 -9.84,14.54 c -3.63,2.88 1.63,9.82 -2.27,14.81 c -4.02,6.88 -4.85,7.77 -4.84,16.15 c -1.3,1.69 -4.04,-0.1 -5.63,1.34 c -0.24,2.23 -0.37,4.48 -0.4,6.74 c 0.21,3.09 -8.95,-0.56 -6.29,3.68 c 1.54,1.72 5.17,3.19 2.94,5.94 c -3.41,2.93 -9.31,3.81 -13.19,1.29 c -3.06,-1.85 1.15,-5.78 -1.06,-6.61 c -3.5,-0.13 -6.99,-0.1 -10.49,0.11 c -3.05,0 -1.19,-4.51 -0.07,-5.78 c 2.68,-2.35 5.38,-4.68 8.11,-7 c 1.28,-0.91 2.1,-3.76 -0.2,-3.82 c -3.56,0.83 -7.15,1.51 -10.77,2.03 c -0.41,0.33 -0.6,0.75 -0.58,1.29 c 0.07,2.65 -0.43,5.17 -1.51,7.57 c -1.98,0.73 -3.99,1.43 -6.01,2.11 c -3.43,4.15 -3.85,4.83 -9.33,5.63 c -3.81,1.11 -3.02,6.94 -5.11,9.85 c -10.18,15.8 -22.88,26.14 -37.44,37.56 c -16.9,13.05 -17.64,34.77 -35.46,47.48 c -14.59,10.79 -34.72,22.6 -31.96,43.6 c 0.53,2.87 18.89,22.17 11.48,23.22 c -15.47,-3.84 -20.57,1.6 -34.78,4.92 c -4.43,0.33 -8.84,0.33 -13.23,-0.02 c -0.94,-0.42 -1.88,-0.85 -2.82,-1.27 c -9.85,-5.84 -20.94,0.55 -31.63,-1.57 c -3.77,-0.87 -7.55,-1.7 -11.35,-2.48 c -1.66,-14.8 7.66,-15.75 16.84,-23.93 c 9.15,-9.51 6.27,-13.09 5.11,-23.33 c 0.8,-0.14 1.53,-0.46 2.18,-0.96 c 2.44,4.03 4.33,8.62 9.83,5.49 c 3.96,-6.92 -10.77,-12.65 -14.76,-16.24 c -4.92,-4.5 -9.61,-12.25 -17.38,-9.75 c -0.27,-0.12 -0.53,-0.24 -0.8,-0.35 c -2.86,-7.43 -1.07,-12.12 0.35,-19.5 c 3.24,-4.3 6.6,-8.52 10.07,-12.67 c 4.95,-5 17.41,-14.7 17.61,-21.98 c 0.52,-0.09 1.04,-0.2 1.55,-0.34 c 1.47,0.56 1.7,-1.14 2.32,-1.98 c 0.66,-0.05 1.31,-0.15 1.93,-0.29 c 9.21,-19.97 10.61,-49.28 7.71,-70.45 c -1.09,-7.01 -4.93,-10.8 -10.88,-14.08 c -11.25,-9.49 -4.91,-47.43 -3.77,-60.9 c 3.27,-5.59 5.34,-11.54 6.92,-17.77 c 0.5,0.33 1.03,0.54 1.62,0.61 c 0.33,-1.24 0.73,-2.49 1.17,-3.73 c 1.41,-1.56 3.01,-2.89 4.8,-4 c -0.19,-1.89 -0.25,-3.8 -0.17,-5.74 c 1.29,-2.07 2.56,-4.14 3.83,-6.23 c 15.93,-18.5 35.06,-34.32 56.4,-46.19 c 9.92,-5.27 10.45,-10.81 15.32,-19.68 c 7.57,-9.22 25.94,-22.62 37.49,-25.37 c 1.12,-0.79 0.56,-2.03 0.93,-3.19 c 0.66,-2.44 8.68,-3.67 10.82,-3.82 c -1.59,6.6 -8.84,15.41 -11.36,22.48 c -0.32,0.55 -0.76,1 -1.29,1.35 c 0.18,0.47 0.21,0.94 0.1,1.41 c -4.57,6.85 -6.93,16 -11.19,22.39 c 0.83,3.66 -7.45,13.07 -4.69,17.85 c -4.56,11.15 -0.52,27.86 -0.58,39.74 c -1.16,-0.01 -1.99,2.64 -2.9,1.4 c -0.05,-5.29 -0.13,-10.58 -0.24,-15.88 c -0.48,-4.9 -1.29,-9.72 -2.42,-14.47 c -1.43,0.97 -0.05,7.71 -0.13,9.47 c -0.03,8 -0.1,16 -0.22,24.01 c -0.04,0.52 0.16,0.93 0.59,1.21 c 2.91,-0.31 5.5,-0.78 3.89,3.42 c -4.27,6.54 -6.54,14.23 -9.11,21.58 c -0.45,4.02 -1.73,7.67 -1.39,11.78 c -0.05,3.73 0.77,7.26 2.47,10.58 c 1.27,1.43 3.59,4.05 5.69,3.67 c 7.77,6.7 21.29,0.2 27.62,-5.91 c 1.12,0.23 2.22,0.18 3.29,-0.15 c 22.26,-29.88 11.08,-55.89 3.09,-88.38 c -0.27,-4.31 -1.03,-11.21 1.29,-15.03 c 0.15,-0.44 0.12,-0.87 -0.09,-1.28 c -3.49,-1.27 -7.05,-2.37 -10.67,-3.3 c -1.18,0 -2.66,-2.18 -3.55,-1.65 c 3.69,-10.12 7.65,-20.12 11.89,-30.02 c 75.54,-27.62 155.83,-25.66 226.73,13.99 Z M 145.02,309.85 c -1.74,-0.15 -3.92,-0.02 -2.74,2.42 c 2.36,4.47 15.01,28.91 21.78,22.83 c 3.09,-4.74 6.33,-9.37 9.72,-13.88 c 3.71,-3.1 10.06,-2.62 12.84,-6.34 c 5.32,0.66 15.04,-16.7 15.05,-20.25 c -1.21,-6.53 -3.36,-10.25 -10.19,-11.62 c -1.38,-0.33 -2.3,0.15 -2.76,1.44 c 0.71,15.86 0.86,17.59 -15.42,20.29 c -9.47,1.44 -18.37,1 -27.91,1.05 c -2.18,0.18 -0.33,2.8 -0.37,4.06 Z M 391.55,392.83 c -7.33,3.04 -14.42,24.41 -19.81,31.21 c -9.7,14.6 -17.29,20.12 -35.23,20.03 c -0.91,0.19 -1.75,0.53 -2.53,1.03 c -2.65,1.57 -5.95,1.4 -8.08,-0.96 c 2.06,-1.31 -0.11,-3.83 -0.1,-5.63 c 0.13,-2.2 -0.03,-4.37 -0.45,-6.51 c -1,-1.07 -2.23,-1.7 -3.71,-1.88 c -1.02,-0.92 -2.23,-1.42 -3.61,-1.5 c -0.87,-5.31 -2.82,-10.99 2.19,-14.88 c 6.78,-3.91 5.94,-15.78 12.15,-21.84 c 16.28,-10.05 10.85,12.63 17.03,11.13 c 4.77,-2.2 1.17,-4.52 -0.11,-7.77 c -2.56,-6.4 5.23,-13.27 9.99,-16.52 c 14.42,-8.41 14.41,-6.12 19.31,-22.89 c 4.9,-8.87 27.89,-14.97 26.01,-26.21 c 3.65,-2.84 7.21,-5.8 10.65,-8.89 c 2.1,-2.27 4.98,6.35 5.01,7.73 c 1.72,24.1 -15.23,43.82 -27.21,63.07 c -0.45,0.49 -0.95,0.92 -1.5,1.28 Z M 377.29,381.01 c 0.37,1.87 -0.72,8.25 3.03,6.65 c 7.19,-3.63 7.46,-18.24 7.75,-25.21 c 0.12,-2.38 -2.33,-0.88 -3.11,0 c -5.71,4.93 -6.73,11.44 -7.67,18.56 Z M 499.21,504.62 c -0.57,0.4 -1.15,0.79 -1.74,1.17 c -4.94,2.02 -14.59,10.1 -19.77,8.83 c -3.4,-0.44 -7.55,-2.27 -10.92,-1.27 c -2.63,1.52 -7.87,9.09 -10.43,9.41 c -10.87,0.54 -9.05,2.38 -14.9,10.15 c -7.46,3.35 -7.53,2.04 -9.72,10.38 c -0.91,2.45 -3.01,2.63 -5.31,2.58 c -2.16,-0.94 -1.81,-3.95 -2.34,-5.87 c 0.43,0.08 0.71,-0.09 0.84,-0.52 c -3.55,-30.58 17.71,-60 43.2,-74.77 c 5.92,-4.2 23.35,-0.69 23.58,6.82 c -2.04,10.74 6.48,21.98 7.51,33.09 Z"/><path style="fill:var(--hl)" d="M 266.02,48.76 c 1.31,0.1 2.62,0.19 3.93,0.29 c 1.2,0.06 -0.23,2.43 0.19,3.2 c -1.28,0.78 -4.8,8.11 -6.04,9.84 c -10.17,17.08 -18.76,33.74 -26.51,52.15 c -2.76,-4.78 5.52,-14.19 4.69,-17.85 c 4.26,-6.39 6.62,-15.54 11.19,-22.39 c 0.11,-0.47 0.08,-0.94 -0.1,-1.41 c 0.53,-0.35 0.97,-0.8 1.29,-1.35 c 2.52,-7.07 9.77,-15.88 11.36,-22.48 Z M 494.11,79.84 c 11.58,25.82 14.73,41.64 -5.78,63.93 c -9.59,7.46 -25.23,14.27 -36.33,19.81 c -18.36,8.26 -64.36,19.33 -60.89,44.92 c -1.24,9.97 -6.44,20.49 -8.2,30.7 c 0.17,10.01 2.2,8.9 -5.73,15.43 c -6.29,9.8 -17.75,19.57 -21.61,30.41 c -4.58,9.12 -7.01,29.98 -19.26,31.61 c -12.29,1.52 -25.61,-5.03 -36.15,4.15 c -11.38,7.5 -21.2,19.59 -33.31,25.48 c -7.35,4.09 -19.25,6.89 -22.98,15.12 c -5.71,11.23 -10.31,22.55 -21.22,29.79 c -8.08,6.13 -36.66,20.1 -30.09,32.97 c 7.95,14.31 23.77,6.38 30.93,-3.95 c 2.5,-3.54 6.3,-11.93 9.49,-14.31 c 9.51,-0.27 27,-2.69 29.7,9.76 c 4.94,22.14 -25.13,41.35 -40.73,51.81 c -18.81,10.13 -33.41,-3.99 -51.29,-4.84 c -9.02,0.65 -17.52,2.5 -25.88,-2.18 c 4.39,0.35 8.8,0.35 13.23,0.02 c 14.21,-3.32 19.31,-8.76 34.78,-4.92 c 7.41,-1.05 -10.95,-20.35 -11.48,-23.22 c -2.76,-21 17.37,-32.81 31.96,-43.6 c 17.82,-12.71 18.56,-34.43 35.46,-47.48 c 14.56,-11.42 27.26,-21.76 37.44,-37.56 c 2.09,-2.91 1.3,-8.74 5.11,-9.85 c 5.48,-0.8 5.9,-1.48 9.33,-5.63 c 2.02,-0.68 4.03,-1.38 6.01,-2.11 c 1.08,-2.4 1.58,-4.92 1.51,-7.57 c -0.02,-0.54 0.17,-0.96 0.58,-1.29 c 3.62,-0.52 7.21,-1.2 10.77,-2.03 c 2.3,0.06 1.48,2.91 0.2,3.82 c -2.73,2.32 -5.43,4.65 -8.11,7 c -1.12,1.27 -2.98,5.78 0.07,5.78 c 3.5,-0.21 6.99,-0.24 10.49,-0.11 c 2.21,0.83 -2,4.76 1.06,6.61 c 3.88,2.52 9.78,1.64 13.19,-1.29 c 2.23,-2.75 -1.4,-4.22 -2.94,-5.94 c -2.66,-4.24 6.5,-0.59 6.29,-3.68 c 0.03,-2.26 0.16,-4.51 0.4,-6.74 c 1.59,-1.44 4.33,0.35 5.63,-1.34 c -0.01,-8.38 0.82,-9.27 4.84,-16.15 c 3.9,-4.99 -1.36,-11.93 2.27,-14.81 c 4.77,-1.88 11.73,-9.19 9.84,-14.54 c -1.12,-0.89 -2.09,-0.76 -2.91,0.39 c -0.26,1.06 -0.56,2.1 -0.91,3.13 c -1.22,0.78 -2.41,0.73 -3.56,-0.15 c -1.16,-7.38 11.71,-14.1 13.39,-21.95 c 2.6,-15.97 15.97,-34.49 26.5,-46.59 c 23.89,-23.99 72.54,-28.16 91.54,-56.46 c 0.82,-1.19 4.43,-2.15 4.56,-3.31 c 1.99,-8.75 3.68,-19.57 1.84,-28.37 c 0.14,-0.47 0.46,-0.69 0.95,-0.67 Z M 254.22,95.05 c 0.89,-0.53 2.37,1.65 3.55,1.65 c 3.62,0.93 7.18,2.03 10.67,3.3 c 0.21,0.41 0.24,0.84 0.09,1.28 c -2.32,3.82 -1.56,10.72 -1.29,15.03 c 7.99,32.49 19.17,58.5 -3.09,88.38 c -1.07,0.33 -2.17,0.38 -3.29,0.15 c 16.89,-19.49 7.41,-56.14 1.3,-78.49 c -1.17,-3.43 2.56,-12.26 -0.9,-14.12 c -2.49,-1.52 -5.01,-2.97 -7.58,-4.36 c -2.32,-1.4 -3.25,-2.22 -2.35,-5.07 c 0.94,-2.59 1.9,-5.18 2.89,-7.75 Z M 237.01,153.98 c 0.93,13.53 -1.04,22.44 -5.52,35.01 c -1.74,7.47 -2.41,14.94 1.75,21.76 c -2.1,0.38 -4.42,-2.24 -5.69,-3.67 c -1.7,-3.32 -2.52,-6.85 -2.47,-10.58 c -0.34,-4.11 0.94,-7.76 1.39,-11.78 c 2.57,-7.35 4.84,-15.04 9.11,-21.58 c 1.61,-4.2 -0.98,-3.73 -3.89,-3.42 c -0.43,-0.28 -0.63,-0.69 -0.59,-1.21 c 0.12,-8.01 0.19,-16.01 0.22,-24.01 c 0.08,-1.76 -1.3,-8.5 0.13,-9.47 c 1.13,4.75 1.94,9.57 2.42,14.47 c 0.11,5.3 0.19,10.59 0.24,15.88 c 0.91,1.24 1.74,-1.41 2.9,-1.4 Z M 126.89,183.87 c -1.14,13.47 -7.48,51.41 3.77,60.9 c 5.95,3.28 9.79,7.07 10.88,14.08 c 2.9,21.17 1.5,50.48 -7.71,70.45 c -0.62,0.14 -1.27,0.24 -1.93,0.29 c -0.62,0.84 -0.85,2.54 -2.32,1.98 c -0.23,-8.58 8.36,-12.29 6.78,-20.01 c 0.78,-2.06 2.73,-2.25 2.85,-4.81 c 0.98,-8.58 -2.48,-15.98 -2.86,-24.09 c -0.26,-1.9 1.82,-1.76 2.47,-3.26 c 1.11,-6.87 0.39,-14.47 -2.87,-20.69 c -3.13,-0.38 -6.3,-0.58 -9.48,-0.6 c -0.58,-0.03 -1.01,-0.29 -1.3,-0.79 c -6.41,-23.62 -8.68,-50.65 1.72,-73.45 Z M 186.62,314.88 c -0.11,-1.58 1.64,-6.82 -1.18,-6.69 c -8.78,-0.68 -16.4,2.68 -24.96,2.81 c -4.87,-0.28 -9.74,-0.64 -14.6,-1.09 c -0.28,-0.02 -0.57,-0.04 -0.86,-0.06 c 0.04,-1.26 -1.81,-3.88 0.37,-4.06 c 9.54,-0.05 18.44,0.39 27.91,-1.05 c 16.28,-2.7 16.13,-4.43 15.42,-20.29 c 0.46,-1.29 1.38,-1.77 2.76,-1.44 c 6.83,1.37 8.98,5.09 10.19,11.62 c -0.01,3.55 -9.73,20.91 -15.05,20.25 Z M 412.05,304.22 c 0.96,0.78 1.71,1.73 2.25,2.84 c 0.95,1.52 0.27,3.89 -1.78,3.96 c -15.96,-4.58 -29.6,-2.2 -43.36,7.14 c -1.52,-0.83 0.43,-1.95 1.22,-2.22 c 1.23,-1.88 2.28,-3.2 4.72,-3.08 c 9.71,-6.68 25.04,-7.96 36.41,-7.37 c 0.36,-0.34 0.54,-0.77 0.54,-1.27 Z M 357.97,313.08 c 0.96,0.5 1.31,1.27 1.04,2.3 c -3.79,3.39 -7.7,5.48 -4.19,11.24 c 1.12,0.1 2.24,0.3 3.35,0.58 c -1.43,0.94 -3.27,4.4 -5.24,3.2 c -8.24,-7.8 -7,-15.81 5.04,-17.32 Z M 404.6,329.64 c 1.88,11.24 -21.11,17.34 -26.01,26.21 c -4.9,16.77 -4.89,14.48 -19.31,22.89 c -4.76,3.25 -12.55,10.12 -9.99,16.52 c 1.28,3.25 4.88,5.57 0.11,7.77 c -6.18,1.5 -0.75,-21.18 -17.03,-11.13 c -6.21,6.06 -5.37,17.93 -12.15,21.84 c -5.01,3.89 -3.06,9.57 -2.19,14.88 c -1.63,-0.07 -3.26,-0.16 -4.88,-0.29 c -2.98,-0.58 -1.89,-11.07 -0.41,-13.2 c 2.01,-4.21 6.88,-4.19 8.79,-7.17 c 2.09,-11.43 4.25,-16.11 14.49,-22.32 c 3.34,-1.08 6.4,2.97 9.45,1.26 c 8.85,-7.28 14.46,-12.67 24.93,-17.96 c 0.54,-0.37 0.89,-0.87 1.06,-1.49 c -1.51,-8.02 2.41,-13.52 8.49,-18.13 c 10.1,-6.74 17.28,-9.62 24.65,-19.68 Z M 128.03,331.91 c -0.2,7.28 -12.66,16.98 -17.61,21.98 c -3.47,4.15 -6.83,8.37 -10.07,12.67 c -1.42,7.38 -3.21,12.07 -0.35,19.5 c -1.38,-0.44 -2.74,-0.95 -4.07,-1.54 c -7.73,-15.88 15.28,-35.03 25.14,-44.91 c 1.88,-2.14 3.53,-7.82 6.96,-7.7 Z M 377.29,381.01 c 0.94,-7.12 1.96,-13.63 7.67,-18.56 c 0.78,-0.88 3.23,-2.38 3.11,0 c -0.29,6.97 -0.56,21.58 -7.75,25.21 c -3.75,1.6 -2.66,-4.78 -3.03,-6.65 Z M 100.8,386.41 c 7.77,-2.5 12.46,5.25 17.38,9.75 c 3.99,3.59 18.72,9.32 14.76,16.24 c -5.5,3.13 -7.39,-1.46 -9.83,-5.49 c -1.64,-5.04 -16.42,-18.51 -22.31,-20.5 Z M 120.93,407.87 c 1.16,10.24 4.04,13.82 -5.11,23.33 c -9.18,8.18 -18.5,9.13 -16.84,23.93 c -1.07,-0.3 -4.04,0.17 -4.53,-0.97 c -3.33,-28.54 34.49,-17.43 19.77,-49.89 c -0.08,-0.38 0.04,-0.66 0.36,-0.84 c 2.08,1.16 3.74,4.63 6.35,4.44 Z M 321.64,430.12 c 1.48,0.18 2.71,0.81 3.71,1.88 c 0.42,2.14 0.58,4.31 0.45,6.51 c -0.01,1.8 2.16,4.32 0.1,5.63 c -3.34,-3.55 -1.63,-9.86 -4.26,-14.02 Z M 568.99,486.05 c -0.74,-3.22 4.99,-13.13 -1.66,-13.8 c -8.47,-0.74 -28.79,-1.46 -25,12.79 c 0.44,2.47 4.58,4.39 4.64,5.74 c -11.3,1.96 -19.7,5.08 -31.32,3.58 c -5.39,3.53 -10.87,6.95 -16.44,10.26 c -1.03,-11.11 -9.55,-22.35 -7.51,-33.09 c -0.23,-7.51 -17.66,-11.02 -23.58,-6.82 c -25.49,14.77 -46.75,44.19 -43.2,74.77 c -0.13,0.43 -0.41,0.6 -0.84,0.52 c -1.87,-9.35 -2.45,-18.78 -1.74,-28.28 c 4.42,-24.25 25.74,-56.6 51.28,-61.58 c 18.9,-1.42 26.4,11.29 30.69,27.13 c 0.7,1.2 1.28,4.31 3.31,3.12 c 18.55,-11 35.46,-18.7 57.68,-16.11 c 16.12,2.74 12.63,20.6 3.69,21.77 Z M 111.2,468.43 c -5.68,1.51 -7.34,1.44 -8.13,8.21 c -0.05,2.83 -0.08,5.66 -0.09,8.5 c -0.65,-0.06 -1.3,-0.12 -1.95,-0.16 c -4.11,-2.79 -2.26,-13.81 -0.04,-17.58 c 2.7,-4.95 7.03,-0.96 10.21,1.03 Z M 114.94,470.15 c 8.23,2.03 16.58,2.63 25.03,1.78 c 2.79,-0.39 2.04,2.27 2.13,4.05 c -7.23,-0.11 -14.71,-0.15 -21.6,-2.8 c -1.7,0.08 -5.8,-0.7 -5.56,-3.03 Z M 154.12,536.12 c -2.17,-10.55 -8.93,-18.67 -20.35,-13.05 c -1.37,1.94 -0.02,5.04 -0.14,7.25 c -0.1,0.36 -0.32,0.59 -0.67,0.7 c -1.01,-3.24 -1.86,-6.52 -2.55,-9.85 c -0.38,-2.14 -0.43,-4.28 -0.16,-6.42 c 3.39,-2.03 8.83,-1.28 12.68,-2.44 c 5.36,-1.95 14.99,-10.68 20.59,-9.45 c 4.76,2.56 -3.15,8.61 -5.27,9.84 c -4.09,4.51 4.18,15.28 -4.13,23.42 Z"/><path style="fill:var(--hd)" d="M 492.84,79.02 c -70.9,-39.65 -151.19,-41.61 -226.73,-13.99 c -0.66,-0.97 -0.43,-3.02 -2.01,-2.94 c 1.24,-1.73 4.76,-9.06 6.04,-9.84 c 10.51,-3.63 21.01,-7.29 31.5,-10.96 c 49.37,-13.6 104.41,-12.19 152.39,6.22 c 8.23,3.89 24.03,8.33 30.03,14.74 c 1.1,2.15 8.88,15.82 8.78,16.77 Z M 269.95,49.05 c -1.31,-0.1 -2.62,-0.19 -3.93,-0.29 c -2.14,0.15 -10.16,1.38 -10.82,3.82 c -0.37,1.16 0.19,2.4 -0.93,3.19 c -11.55,2.75 -29.92,16.15 -37.49,25.37 c -4.87,8.87 -5.4,14.41 -15.32,19.68 c -21.34,11.87 -40.47,27.69 -56.4,46.19 c -0.73,-0.14 -0.96,-0.57 -0.69,-1.31 c 3.52,-10.69 15.23,-21.85 23.78,-28.94 c 7.78,-6.57 15.69,-12.97 23.72,-19.19 c 0.55,-0.11 1.11,-0.09 1.66,0.06 c 7.13,-8.53 20.91,-9.17 23.79,-23.83 c 2.93,-8.78 7.13,-8.99 14.32,-13.64 c 5.17,-5.13 10.33,-10.26 15.49,-15.39 c 5.29,-4.27 9.17,-0.08 14.05,-8.03 c 2.01,-1.3 13.04,-4.05 12.08,0.27 c -1.52,3.3 -3.23,6.5 -5.12,9.59 c -0.16,2.14 1.85,0.67 1.81,2.45 Z M 141.23,153.24 c -0.08,1.94 -0.02,3.85 0.17,5.74 c -1.79,1.11 -3.39,2.44 -4.8,4 c -0.44,1.24 -0.84,2.49 -1.17,3.73 c -0.59,-0.07 -1.12,-0.28 -1.62,-0.61 c -0.18,-0.2 -0.24,-0.44 -0.18,-0.7 c 2.19,-3.7 4.21,-7.49 6.08,-11.36 c 0.36,-0.54 0.87,-0.8 1.52,-0.8 Z M 145.02,309.85 c 0.29,0.02 0.58,0.04 0.86,0.06 c 4.57,10.69 10.4,16.96 18.18,25.19 c -6.77,6.08 -19.42,-18.36 -21.78,-22.83 c -1.18,-2.44 1,-2.57 2.74,-2.42 Z M 391.55,392.83 c 0.69,4.86 -22.23,41.26 -28.61,45.65 c -8.58,8.06 -13.22,6.89 -24.44,7.53 c -0.9,-0.05 -3.98,-0.13 -4.52,-0.91 c 0.78,-0.5 1.62,-0.84 2.53,-1.03 c 17.94,0.09 25.53,-5.43 35.23,-20.03 c 5.39,-6.8 12.48,-28.17 19.81,-31.21 Z M 141.96,459.18 c -0.01,0.15 -0.02,0.29 -0.03,0.44 c -7.65,0.31 -15.3,0.57 -22.97,0.77 c -2.48,-0.5 -4.95,-1.01 -7.43,-1.51 c -0.76,-0.09 -1.16,-0.51 -1.2,-1.27 c 10.69,2.12 21.78,-4.27 31.63,1.57 Z M 101.03,484.98 c 0.65,0.04 1.3,0.1 1.95,0.16 c 6.66,-0.42 36.72,-2.9 39.12,-9.16 c -0.09,-1.78 0.66,-4.44 -2.13,-4.05 c 0.56,-0.87 1.34,-1.16 2.33,-0.87 c 0.68,0.98 0.95,2.09 0.82,3.32 c 0.34,0.65 0.85,1.14 1.54,1.46 c 2.4,7.61 -8.62,8.21 -13.4,9.76 c -9.13,1.33 -18.32,2.03 -27.54,2.09 c -0.72,-1.1 -1.61,-2.01 -2.69,-2.71 Z M 497.47,505.79 c 0.85,5.42 -11.09,12.42 -15.97,12.75 c -4.59,0.63 -11.53,-2.64 -14.76,1.63 c -7.59,9.2 -5.15,8.54 -17.39,10.67 c -3.98,5.26 -3.94,9.39 -11.24,10.9 c -5.11,2.18 -2.43,10.69 -7.59,10.66 c -4.24,0.72 -4.48,-3.54 -4.1,-6.53 c 2.3,0.05 4.4,-0.13 5.31,-2.58 c 2.19,-8.34 2.26,-7.03 9.72,-10.38 c 5.85,-7.77 4.03,-9.61 14.9,-10.15 c 2.56,-0.32 7.8,-7.89 10.43,-9.41 c 3.37,-1 7.52,0.83 10.92,1.27 c 5.18,1.27 14.83,-6.81 19.77,-8.83 Z M 152.73,538.03 c 2.27,1.86 -1.82,5.09 -3.43,5.79 c -4.71,3.3 -9.48,0.44 -12.17,-3.84 c 5.66,0.86 10.42,-0.12 15.6,-1.95 Z"/><path style="fill:var(--hd)" d="M 414.3,307.06 c -0.54,-1.11 -1.29,-2.06 -2.25,-2.84 c -8.94,-4.06 -18.98,-5.42 -28.22,-1.48 c 0,-0.68 0.25,-1.24 0.75,-1.69 c 2.13,-0.83 4.27,-1.66 6.41,-2.49 c 1.85,0.3 3.69,0.19 5.51,-0.34 c 1.66,-0.04 3.32,-0.04 4.98,0.02 c 1.94,0.46 3.9,0.77 5.89,0.93 c 1.67,0.62 3.33,1.29 4.96,2.01 c 2.03,1.71 3.66,3.04 1.97,5.88 Z"/><path style="fill:var(--hd)" d="M 566.76,486.78 c -3.42,6.45 -10.57,7.08 -16.94,4.89 c -0.64,-0.24 -1.03,-0.68 -1.16,-1.34 c 6.01,-1.31 12.04,-2.5 18.1,-3.55 Z"/></symbol></defs>
+          <!-- the boa: until you read on, a hat -->
+          <path class="boa" d="M28 123 C70 122 96 120 110 104 C120 60 138 24 166 22 C192 21 202 40 210 52 C218 34 234 18 260 20 C290 23 300 70 308 100 C322 116 346 120 366 120 C373 120 377 121 377 123 C377 125 372 125 366 125 L30 125 C24 125 24 123 28 123 Z"/>
+          <circle class="eye" cx="368" cy="121.5" r="1.4"/>
+          <!-- inside: two Eros heads, one black, one white -->
+          <g class="inside">
+            <use href="#eros-head" x="118" y="30" width="96" height="96" style="--hw:#141213;--hl:#3b3839;--hd:#a19e9c"/>
+            <use href="#eros-head" x="208" y="26" width="96" height="96" style="--hw:#ffffff;--hl:#cfcdcc;--hd:#5a5758"/>
+          </g>
+          <path class="boa-line" d="M28 123 C70 122 96 120 110 104 C120 60 138 24 166 22 C192 21 202 40 210 52 C218 34 234 18 260 20 C290 23 300 70 308 100 C322 116 346 120 366 120 C373 120 377 121 377 123 C377 125 372 125 366 125 L30 125 C24 125 24 123 28 123 Z"/>
+        </svg>
+        <figcaption><span class="hat">Es ist ein Hut.</span><span class="kids">Es waren doch zwei verlorene Kinder</span></figcaption>
+      </figure>
+
+      <p>Denn der Film weigert sich, ein Drama aus einer Existenz zu machen, die ohnehin da ist. In einer Kultur, in der alles pornifiziert und überdramatisiert wird, in der wir nur noch dramatische Darstellungen der Wirklichkeit sehen und dabei den Kontakt zur Wirklichkeit selbst verlieren, setzt dieser Film einen anderen Ton.</p>
+      <p>Die Realität ist nichts Besonderes.</p>
+      <p>Und nur wer aufmerksam ist, wer seinen Fokus darauf richtet, zu lesen, was diese Kinder zu sagen versuchen und in welcher Tonalität sie es sagen, wie sie träumen, wie sie einander in diesen Träumen stützen,</p>
+      <p>Was überhaupt träumbar ist in einer solchen Lage,</p>
+      <p>Man muss aus dem, was geschieht, kein Spektakel machen.</p>
+      <p>Nur ohne das Spektakel versteht man die Erfahrung wirklich, und nur was man wirklich versteht, kann man verändern. Es sind dieselben Gespräche, die einem in Buch begegnen, oder in vielen öffentlichen Raum Berlins.</p>
+    </section>
+
+    <div class="stage" id="mirror-stage">
+      <div class="pin">
+        <canvas id="mirror" aria-label="Eine Figur tanzt vor einem Spiegel; ihr Spiegelbild tanzt einen Hauch zu spät."></canvas>
+        <div class="credit">nach Jordan Wolfson, (Female figure)</div>
+      </div>
+    </div>
+
+    <section id="s4" class="col">
+      <h2><span class="num">IV.</span>Kinderarmut, die aussieht wie ein normales Kind</h2>
+      <p>Wir haben es mit einer enormen Krise der Kinderarmut zu tun, und der einzige Weg, ihr zu begegnen, ist Bewusstsein in der Öffentlichkeit.</p>
+      <p>Aber nicht das Bewusstsein, dass „diese Kinder Drogenbarone werden wollen , sondern das Bewusstsein, dass sie von außen wie ganz normale Kinder erscheinen. Und dass sie es bleiben werden. Die Armut kündigt sich nicht an. Sie trägt kein Zeichen. Genau deshalb bleibt sie unsichtbar und genau deshalb ist die Weigerung des Regisseurs, zu dramatisieren, der einzige ehrliche Weg, sie sichtbar zu machen.</p>
+
+      <div class="twins" id="twins">
+        <div class="row">
+          <button class="kid" type="button" data-label="Kind" style="left:0"><svg class="face" viewBox="0 0 675 675" aria-hidden="true"><use href="#eros-head" style="--hw:#ffffff;--hl:#cfcdcc;--hd:#5a5758"/></svg><span>Kind</span></button>
+          <button class="kid" type="button" data-label="Kind in Kinderarmut" style="left:54%"><svg class="face" viewBox="0 0 675 675" aria-hidden="true"><use href="#eros-head" style="--hw:#ffffff;--hl:#cfcdcc;--hd:#5a5758"/></svg><span>Kind in Kinderarmut</span></button>
+        </div>
+        <p class="prompt" id="twins-prompt" aria-live="polite"></p>
+        <button class="again" type="button" id="twins-again">Nochmal</button>
+      </div>
+    </section>
+
+    <section id="s5" class="col">
+      <h2><span class="num">V.</span>Zwei Windräder, eines kaputt</h2>
+      <p>Am Ende sieht man Marcel wieder und seinen Freund, den Blick über die Autobahn gerichtet. Und was der Freund sagt was er sieht zwei Windräder, eines davon kaputt.</p>
+    </section>
+
+    <div class="stage wind" id="wind-stage">
+      <div class="pin"><canvas id="wind" aria-label="Zwei Windräder über einer Autobahn in der Dämmerung. Eines dreht sich, das andere steht still."></canvas></div>
+    </div>
+
+    <section class="col" style="padding-top:0">
+      <p>Was ist der Unterschied zwischen dem Kampf gegen Windmühlen, wie ihn Don Quijote führt, und dem Kampf gegen kaputte Windmühlen?</p>
+      <p>Beides scheint ein sinnloser Kampf. Aber der Unterschied ist entscheidend. Don Quijotes Windmühlen sind intakt. Sie funktionieren, sie sind nützlich, sie tun ihre Arbeit, der Wahn liegt ganz in ihm, in seinem Blick, der Riesen sieht, wo gewöhnliche Maschinen stehen. Der Kampf ist sinnlos, weil es nie einen Gegner gab.</p>
+      <p>Ein kaputtes Windrad ist etwas anderes. Es ist kein verkannter Riese, sondern ein echtes Versagen, das offen dasteht. Der Kampf gegen es ist keine Einbildung, sondern etwas, das der Trauer näher ist, oder der Sturheit. Das Ding sollte funktionieren. Es sollte den Wind einfangen und sich drehen, und es tut es nicht mehr, und niemand repariert es. Don Quijote bleibt wenigstens die Würde eines eingebildeten Gegners. Diese Kinder schlagen auf eine Struktur ein, die wirklich kaputt ist: grausamere Sinnlosigkeit.</p>
+    </section>
+
+    <section id="s6" class="col">
+      <h2><span class="num">VI.</span>Nicht was, sondern wie</h2>
+      <p>Ich fand den Film außerordentlich in Ordnung 7 von 10. Nicht, weil er der spektakulärste der drei Kurzfilme wäre, die ich an jenem Abend gesehen habe. Sondern weil er etwas versteht, was heute selten ist.</p>
+
+      <div class="rating" id="rating">
+        <div class="rlabel">Erste Bewertung</div>
+        <div class="heads" id="heads-first" role="img" aria-label="7 von 10 Eros-Köpfen"></div>
+        <div class="rlabel">Deine Bewertung</div>
+        <div class="heads vote" id="heads-vote" role="radiogroup" aria-label="Bewerte den Film mit 1 bis 10 Eros-Köpfen"></div>
+        <p class="tally" id="tally" aria-live="polite">7 von 10 · 1 Bewertung</p>
+      </div>
+      <p>Takt und Tongefühl. Es kommt nicht darauf an, was man sagt, sondern wie man es sagt. Und Christian Anh Nopper findet diese eine Tonalität und hält sie.</p>
+      <p>Es ist wie mit schönen Menschen. Schöne Menschen bekommen nicht die meisten Komplimente</p>
+      <p>Sobald jemand schön ist, halten die anderen sich mit Komplimenten zurück. Dasselbe geschah im Publikum. Die meisten näherten sich dem Film über seine Ästhetik, über seine Verweigerung des Spektakels. Die Einzigen, die nach Marcel als Person fragten, nach seiner Zukunft, danach, wie er wurde, wer er ist, waren die einzigen People of Color im Raum. Und einer von ihnen, Oscar, stellte die vielleicht schönste Frage des Abends: ob Christian oder das Publikum den Song „Kids (2 Finger an den  Kopf)” kennt:</p>
+      <p>Auch das Lied fängt mit einem Schwarm von Stimmen an, ein Chor.</p>
+      <p>Darin liegt, fast beiläufig, die eigentliche Pointe. Dass der Film von den meisten als Haltung betrachtet wurde und von einigen wenigen als ein Junge, den man nach seinem Leben fragt.</p>
+    </section>
+
+    <div class="ending" id="ending">
+      <div class="pin">
+        <p>Wer sieht den Schwarm und wer sieht den Jungen?</p>
+        <p class="who">Wen siehst du?</p>
+        <div class="hint">Halten, um den Jungen zu sehen</div>
+      </div>
+    </div>
+  </article>
+
+  <footer>11. Oktober 2026 · <a href="../">Eros University</a></footer>
+
+  <script type="module" src="essay.js"></script>
+</body>
+</html>
