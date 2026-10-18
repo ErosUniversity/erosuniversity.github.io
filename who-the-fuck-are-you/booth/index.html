@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eros Fotoautomat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=Cinzel:wght@500&family=Caveat:wght@500&display=swap">
+<style>
+  :root {
+    --night: #242021;
+    --night-2: #1B1819;
+    --gold: #C8A14B;
+    --bone: #EAE2D2;
+    --ash: #A0978B;
+    --carmine: #8C1C2E;
+    --ember: #D9452B;
+    --display: "UnifrakturMaguntia", Georgia, serif;
+    --serif: "Spectral", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --caps: "Cinzel", Georgia, serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--night); color: var(--bone); font: 400 17px/1.5 var(--serif); padding: 24px 16px 64px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  h1 { margin: 0; font: 400 44px/1 var(--display); color: var(--gold); }
+  .caps { font: 500 12px var(--caps); letter-spacing: .26em; text-transform: uppercase; color: var(--ash); }
+
+  .stage { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 320px; background: var(--night-2); border: 1px solid #3a3335; overflow: hidden; }
+  .stage video, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .stage.live { min-height: 0; }
+  .mirror { transform: scaleX(-1); }
+  #video { object-fit: fill; }
+  .veil { position: absolute; inset: 0; display: grid; place-content: center; gap: 16px; text-align: center; padding: 24px; background: var(--night-2); }
+  .veil p { margin: 0; color: var(--ash); max-width: 46ch; }
+  .count { position: absolute; inset: 0; display: grid; place-content: center; font: 400 min(30vw, 260px)/1 var(--display); color: var(--gold); text-shadow: 0 4px 30px rgba(0,0,0,.6); pointer-events: none; }
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; transition: opacity .5s ease-out; }
+  .flash.on { opacity: .9; transition: none; }
+
+  button { font: 500 13px var(--caps); letter-spacing: .2em; text-transform: uppercase; padding: 13px 22px; border-radius: 2px; cursor: pointer;
+           background: var(--gold); color: var(--night); border: 1px solid var(--gold); }
+  button.ghost { background: transparent; color: var(--gold); }
+  button:disabled { opacity: .45; cursor: default; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--bone); outline-offset: 2px; }
+
+  .bar { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-top: 14px; }
+  .bar .status { font: 13px var(--mono); color: var(--ash); margin-left: auto; }
+  label.check { font: 13px var(--mono); color: var(--ash); display: flex; gap: 8px; align-items: center; }
+
+  details { margin-top: 14px; font: 13px var(--mono); color: var(--ash); }
+  summary { cursor: pointer; }
+  .tune { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 24px; margin-top: 12px; }
+  .tune label { display: grid; gap: 4px; }
+  .tune input { width: 100%; accent-color: var(--gold); }
+
+  #strip-section { margin-top: 40px; display: none; }
+  #strip-section.on { display: block; }
+  .fields { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; margin: 16px 0; font: 12px var(--mono); color: var(--ash); }
+  .fields label { display: grid; gap: 4px; letter-spacing: .06em; text-transform: uppercase; flex: 1 1 220px; }
+  .fields input { font: 15px var(--serif); padding: 8px 10px; border: 1px solid #4A4452; border-radius: 4px; background: #2A2630; color: var(--bone); min-width: 0; }
+  #strip { width: min(420px, 100%); height: auto; display: block; margin: 0 auto; box-shadow: 0 24px 60px -24px rgba(0,0,0,.8); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Eros Fotoautomat</h1>
+    <span class="caps">Vier Bilder · Schwarz-Weiß · Mit Zustimmung</span>
+  </header>
+
+  <div class="stage" id="stage">
+    <video id="video" class="mirror" playsinline muted></video>
+    <canvas id="gl" class="mirror"></canvas>
+    <canvas id="overlay"></canvas>
+    <div class="count" id="count" hidden></div>
+    <div class="flash" id="flash"></div>
+    <div class="veil" id="veil">
+      <p>Vier Bilder, schwarz-weiß, wie im Fotoautomaten. Die Kamera geht erst an, wenn du startest.</p>
+      <div><button id="start">Kamera starten</button></div>
+      <p id="veil-msg"></p>
+    </div>
+  </div>
+
+  <div class="bar">
+    <button id="shoot" disabled>Vier Bilder · 3 · 2 · 1</button>
+    <input type="checkbox" id="voice" hidden>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div class="fields words">
+    <label for="p-sig">Deine Signatur <input id="p-sig" maxlength="24" placeholder="Name, Kürzel, Zeichen" autocomplete="off" style="text-transform:uppercase"></label>
+  </div>
+  <div id="tune" hidden></div>
+
+  <section id="strip-section">
+    <div class="fields">
+      <button id="dl-strip">9:16 speichern</button>
+      <button id="pin" class="ghost">An die Pinnwand</button>
+      <span class="status" id="pin-status"></span>
+    </div>
+    <canvas id="strip" width="1080" height="1920"></canvas>
+  </section>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
