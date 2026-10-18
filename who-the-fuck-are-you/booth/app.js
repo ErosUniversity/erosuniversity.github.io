@@ -512,11 +512,12 @@ const slug = () => (($('p-sig').value || 'fotoautomat').toLowerCase().replace(/[
 $('dl-strip').addEventListener('click', () => download(strip, `eros-fotoautomat-${slug()}.png`));
 
 // hand the strip to the page around us, which pins it to the board
-$('pin').addEventListener('click', () => {
+$('pin').addEventListener('click', async () => {
   if (!stripOnly) return;
-  const t = document.createElement('canvas'); const w = 240; t.width = w; t.height = Math.round(stripOnly.height * w / stripOnly.width);
+  const t = document.createElement('canvas'); const w = 320; t.width = w; t.height = Math.round(stripOnly.height * w / stripOnly.width);
   t.getContext('2d').drawImage(stripOnly, 0, 0, t.width, t.height);
   const entry = { img: t.toDataURL('image/jpeg', 0.82), sig: ($('p-sig').value || '').trim(), at: Date.now() };
-  try { window.parent?.erosPin?.(entry); $('pin-status').textContent = 'Hängt an der Pinnwand.'; }
-  catch { $('pin-status').textContent = 'Pinnwand nicht erreichbar.'; }
+  $('pin').disabled = true; $('pin-status').textContent = 'Wird aufgehängt …';
+  try { $('pin-status').textContent = await window.parent.erosPin(entry); }
+  catch (e) { console.warn(e); $('pin-status').textContent = 'Hat nicht geklappt. Versuch es gleich nochmal.'; $('pin').disabled = false; }
 });

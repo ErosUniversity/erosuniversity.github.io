@@ -284,31 +284,44 @@ $("yes").addEventListener("click", () => {
 });
 
 // =====================================================================================
-// the pinboard: strips from the Fotoautomat, with a line for the angel, one for the devil and a signature.
-// For now it lives in this browser only; a shared wall needs storage (and someone approving what goes up).
+// the pinboard: every strip from the Fotoautomat, for everyone. Stored in Supabase.
+// Strips go up straight away; the Postdekan can take one down in the dashboard ("approved" off).
 // =====================================================================================
-const PIN_KEY = "eros.foto.pins";
-const loadPins = () => { try { return JSON.parse(localStorage.getItem(PIN_KEY) || "[]"); } catch { return []; } };
-function renderPins() {
-  const pins = loadPins(), box = $("pins");
-  box.replaceChildren(...pins.map((p, i) => {
-    const fig = document.createElement("figure"); fig.className = "pin";
-    fig.style.transform = `rotate(${((i * 37) % 9) - 4}deg)`;
-    const img = document.createElement("img"); img.src = p.img; img.alt = "Fotoautomat-Streifen" + (p.sig ? " von " + p.sig : "");
-    const cap = document.createElement("figcaption");
-    for (const [label, text] of [["Engel", p.good], ["Teufel", p.bad]]) {
-      if (!text) continue;
-      const b = document.createElement("b"); b.textContent = label; cap.append(b, document.createTextNode(text));
-    }
-    if (p.sig) { const sg = document.createElement("span"); sg.className = "sig"; sg.textContent = p.sig; cap.append(sg); }
-    fig.append(img, cap); return fig;
-  }));
-  $("board-empty").hidden = pins.length > 0;
+const SB_URL = "https://csvxfyzgvhfvrmkejaqk.supabase.co";
+const SB_KEY = "sb_publishable_8uAUu5iuA6EPY9-nWNxJig_sI5tAivl";       // publishable: meant to sit in page code
+const sbReady = import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm").then(({ createClient }) => createClient(SB_URL, SB_KEY));
+const stripUrl = (path) => `${SB_URL}/storage/v1/object/public/strips/${path}`;
+
+function pinFigure(src, sig, i) {
+  const fig = document.createElement("figure"); fig.className = "pin";
+  fig.style.transform = `rotate(${((i * 37) % 9) - 4}deg)`;
+  const img = document.createElement("img"); img.src = src; img.loading = "lazy"; img.alt = "Fotoautomat-Streifen" + (sig ? " von " + sig : "");
+  fig.append(img);
+  if (sig) { const cap = document.createElement("figcaption"); const sg = document.createElement("span"); sg.className = "sig"; sg.textContent = sig; cap.append(sg); fig.append(cap); }
+  return fig;
 }
-window.erosPin = (entry) => {
-  const pins = [entry, ...loadPins()].slice(0, 24);
-  try { localStorage.setItem(PIN_KEY, JSON.stringify(pins)); } catch { pins.pop(); try { localStorage.setItem(PIN_KEY, JSON.stringify(pins)); } catch {} }
-  renderPins();
+async function loadWall() {
+  try {
+    const sb = await sbReady;
+    const { data, error } = await sb.from("pins").select("id, sig, path, created_at").order("created_at", { ascending: false }).limit(80);
+    if (error) throw error;
+    $("pins").replaceChildren(...data.map((p, i) => pinFigure(stripUrl(p.path), p.sig, i)));
+    $("board-empty").hidden = data.length > 0;
+  } catch (e) { console.warn("Pinnwand:", e); }
+}
+const dataUrlToBlob = (u) => fetch(u).then((r) => r.blob());
+window.erosPin = async (entry) => {
+  const sb = await sbReady;
+  const path = `${crypto.randomUUID()}.jpg`;
+  const up = await sb.storage.from("strips").upload(path, await dataUrlToBlob(entry.img), { contentType: "image/jpeg" });
+  if (up.error) throw up.error;
+  const ins = await sb.from("pins").insert({ path, sig: entry.sig || null });
+  if (ins.error) throw ins.error;
+  await loadWall();
+  $("board").scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+  return "Hängt jetzt an der Pinnwand, für alle.";
+};
+loadWall();
   $("board").scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
 };
 renderPins();
