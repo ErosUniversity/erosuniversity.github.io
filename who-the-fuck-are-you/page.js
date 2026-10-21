@@ -322,9 +322,7 @@ window.erosPin = async (entry) => {
   return "Hängt jetzt an der Pinnwand, für alle.";
 };
 loadWall();
-  $("board").scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
-};
-renderPins();
+
 
 // =====================================================================================
 // visitors (each browser counted once), kept by a free public counter
