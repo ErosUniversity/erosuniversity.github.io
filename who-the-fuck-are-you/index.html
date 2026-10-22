@@ -89,6 +89,14 @@
   .kruger .bar.small { font-size: clamp(18px, 3.6vw, 26px); }
   .kruger .bar.bottom { margin-top: auto; }
 
+  .credit-kruger { margin: -4vh auto 7vh; width: min(560px, 100%); text-align: center; font: italic 400 15px var(--body); color: var(--grey); }
+  .credit-kruger i { font-style: normal; }
+
+  /* the video, phone-shaped */
+  .reel { position: relative; margin: 6vh auto 7vh; width: min(380px, 86%); }
+  .reel video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: #111; box-shadow: 0 18px 40px rgba(0,0,0,.6); }
+  .reel .sound { position: absolute; right: 10px; bottom: 10px; padding: 7px 11px; border: 1px solid #fff; background: rgba(0,0,0,.55); color: #fff; font: 500 10px/1 var(--caps); letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
+
   blockquote { margin: 1.8em 0; padding: 0; text-align: center; }
   blockquote p { font: italic 800 clamp(28px, 4.2vw, 42px)/1.1 var(--bold); margin: 0 0 12px; }
   blockquote footer { font: italic 400 16px var(--body); color: var(--grey); }
@@ -196,15 +204,9 @@
       <p>Ich trage eine Cap und eine Sonnenbrille, weil ich auf diesen Bildern nicht erkannt werden will. Ich bin für die Musik da, nicht um im Kontext der Musik öffentlich dargestellt zu werden. Wenn mich jemand im Visier hat, schaue ich kurz weg. Die meisten Medienmacher verstehen das sofort. Man kann ohne Worte zustimmen und ohne Worte ablehnen. Das kriegt man hin, wenn man respektvoll mit Menschen umgeht.</p>
       <p>Eine Fotografin nervt das. Sie kommt immer näher, bis sie mir ein Blitzfoto ins Gesicht schießt. Ich sage: Meine Freunde haben kein Problem damit, mach doch Fotos von denen. Wieder ein Blitz in mein Gesicht. Ich sage:</p>
 
-      <figure class="kruger" aria-label="Bitte: Nur DU darfst SO keine Fotos mehr von mir machen. Danke.">
-        <div class="bars">
-          <span class="bar small">Bitte:</span>
-          <span class="bar">Nur DU</span>
-          <span class="bar">darfst SO</span>
-          <span class="bar">keine Fotos mehr</span>
-          <span class="bar">von mir machen.</span>
-        </div>
-        <div class="bars" style="top:auto;bottom:9%"><span class="bar small">Danke.</span></div>
+      <figure class="reel">
+        <video id="reel" src="https://ik.imagekit.io/b85jlqldz/chrome_bop_cap.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video"></video>
+        <button class="sound" id="reel-sound" type="button" aria-pressed="false">Ton an</button>
       </figure>
 
       <p>Eine andere Frau spricht sie auch an, ungefähr in ihrem Alter, jemanden, auf den sie vielleicht eher hört, weil ich jünger bin und aus einer anderen Klasse komme. Auch sie erklärt ihr, dass das nicht schön ist.</p>
@@ -251,6 +253,17 @@
       <p>Der Türsteher sagt, wie ein guter Vater: Glauben tue ich in der Kirche.</p>
       <p>Ich glaube überall, wo ich bin. Ich bringe die Kirche mit mir.</p>
       <p>Ich gehe freiwillig raus. Draußen steht sie. Sie schaut mich mit großen Augen an und erwartet, dass ruckzuck eine Entschuldigung kommt, weil ich doch wieder rein wollen sollte. Aus meinem Mund kommt: Wollen wir reden?</p>
+
+      <figure class="kruger" aria-label="Manche Menschen wollen nicht mit dir reden, damit sie dich hassen können.">
+        <div class="bars">
+          <span class="bar">Manche Menschen</span>
+          <span class="bar">wollen nicht</span>
+          <span class="bar">mit dir reden,</span>
+          <span class="bar">damit sie dich</span>
+          <span class="bar">hassen können.</span>
+        </div>
+      </figure>
+      <p class="credit-kruger">Nach Barbara Kruger. Vgl. <i>Untitled (Your body is a battleground)</i>, 1989.</p>
       <p class="line">Sie sagt Nein.</p>
       <p>Ich frage nach ihrem Namen. Sie sagt wieder Nein und geht rein.</p>
       <p>Der Mann der Kirche bietet mir an, weiterzugehen. Ich nehme dankend an. Meine Freunde kommen nach.</p>

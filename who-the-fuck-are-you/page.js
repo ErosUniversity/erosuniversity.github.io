@@ -194,6 +194,16 @@ new IntersectionObserver(([e], obs) => {
   strobeBurst($("wtf"));
 }, { threshold: 0.9 }).observe($("wtf"));
 
+// II. the video: plays muted on its own, sound on request, pauses when off screen
+{
+  const v = $("reel"), b = $("reel-sound");
+  b.addEventListener("click", () => {
+    v.muted = !v.muted; if (!v.muted) v.play();
+    b.textContent = v.muted ? "Ton an" : "Ton aus"; b.setAttribute("aria-pressed", String(!v.muted));
+  });
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }, { threshold: 0.2 }).observe(v);
+}
+
 // V. the questions arrive one by one
 for (const q of $("questions").children) new IntersectionObserver(([e]) => q.classList.toggle("in", e.isIntersecting), { rootMargin: "-25% 0px -25% 0px" }).observe(q);
 
@@ -322,7 +332,6 @@ window.erosPin = async (entry) => {
   return "Hängt jetzt an der Pinnwand, für alle.";
 };
 loadWall();
-
 
 // =====================================================================================
 // visitors (each browser counted once), kept by a free public counter
