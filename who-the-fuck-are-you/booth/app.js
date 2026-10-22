@@ -299,11 +299,13 @@ function frame() {
 
 // --- start -----------------------------------------------------------------
 
+const waiting = (on) => { $('start-wrap').hidden = on; $('loader').hidden = !on; };
 $('start').addEventListener('click', async () => {
   $('start').disabled = true;
   const msg = $('veil-msg');
+  waiting(true);
   try {
-    msg.textContent = 'Kamera …';
+    msg.textContent = 'Darf ich deine Kamera benutzen?';
     const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'user' }, audio: false });
     video.srcObject = stream;
     await video.play();
@@ -313,7 +315,7 @@ $('start').addEventListener('click', async () => {
     overlay.width = W; overlay.height = H;
     camera.aspect = W / H; camera.updateProjectionMatrix();
 
-    msg.textContent = 'Gesichtserkennung und Figuren laden …';
+    msg.textContent = 'Der Automat wärmt sich auf …';
     const [vision, kindGood, kindBad] = await Promise.all([
       FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm'),
       FIGURES ? loadFigure(good, MODEL_GOOD, false) : 'off',
@@ -332,12 +334,15 @@ $('start').addEventListener('click', async () => {
     frame();
   } catch (err) {
     console.error(err);
-    msg.textContent = location.protocol === 'file:'
-      ? 'Bitte über den lokalen Server öffnen (siehe README), nicht per Doppelklick.'
+    waiting(false);
+    msg.textContent = err.name === 'NotAllowedError'
+      ? 'Okay, keine Kamera. Wenn du es dir anders überlegst, klick nochmal.'
       : 'Kamera nicht verfügbar: ' + (err.message || err.name);
     $('start').disabled = false;
   }
 });
+// everything above has loaded: the button works now
+$('start').disabled = false; $('start').textContent = 'Kamera starten';
 
 // --- tuning panel ----------------------------------------------------------
 

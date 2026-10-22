@@ -37,6 +37,14 @@
   #video { object-fit: fill; }
   .veil { position: absolute; inset: 0; display: grid; place-content: center; gap: 16px; text-align: center; padding: 24px; background: var(--night-2); }
   .veil p { margin: 0; color: var(--ash); max-width: 46ch; }
+  /* the waiting: four frames light up in turn, like the four exposures */
+  .loader { display: flex; gap: 10px; justify-content: center; }
+  .loader i { width: 34px; height: 44px; border: 1px solid #5a5354; background: #141112; animation: expose 1.6s infinite; }
+  .loader i:nth-child(2) { animation-delay: .4s; } .loader i:nth-child(3) { animation-delay: .8s; } .loader i:nth-child(4) { animation-delay: 1.2s; }
+  @keyframes expose { 0%, 100% { background: #141112; border-color: #5a5354; } 8% { background: #f4f1ea; border-color: #f4f1ea; box-shadow: 0 0 22px rgba(255,255,255,.5); } 30% { background: #3a3536; } }
+  @media (prefers-reduced-motion: reduce) { .loader i { animation-duration: 4s; } }
+  #veil-msg { min-height: 1.5em; font-style: italic; }
+
   .count { position: absolute; inset: 0; display: grid; place-content: center; font: 400 min(30vw, 260px)/1 var(--display); color: var(--gold); text-shadow: 0 4px 30px rgba(0,0,0,.6); pointer-events: none; }
   .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; transition: opacity .5s ease-out; }
   .flash.on { opacity: .9; transition: none; }
@@ -80,8 +88,9 @@
     <div class="flash" id="flash"></div>
     <div class="veil" id="veil">
       <p>Vier Bilder, schwarz-weiß, wie im Fotoautomaten. Die Kamera geht erst an, wenn du startest.</p>
-      <div><button id="start">Kamera starten</button></div>
-      <p id="veil-msg"></p>
+      <div id="start-wrap"><button id="start" disabled>Automat lädt …</button></div>
+      <div class="loader" id="loader" hidden aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p id="veil-msg" aria-live="polite"></p>
     </div>
   </div>
 
