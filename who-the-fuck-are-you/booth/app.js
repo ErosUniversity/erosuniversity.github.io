@@ -299,7 +299,55 @@ function frame() {
 
 // --- start -----------------------------------------------------------------
 
-const waiting = (on) => { $('start-wrap').hidden = on; $('loader').hidden = !on; };
+// --- the loading screen: two Eros heads as yin and yang, turning, dithered to 1 bit -------------
+const yy = (() => {
+  const c = $('yinyang'), g = c.getContext('2d', { willReadFrequently: true }), N = c.width;
+  const head = new Image(); head.src = '../assets/eros-head.png';
+  const darkHead = document.createElement('canvas');
+  head.onload = () => {                                    // a black version of the white head
+    darkHead.width = head.naturalWidth; darkHead.height = head.naturalHeight;
+    const d = darkHead.getContext('2d'); d.drawImage(head, 0, 0);
+    d.globalCompositeOperation = 'source-in'; d.fillStyle = '#000'; d.fillRect(0, 0, darkHead.width, darkHead.height);
+  };
+  const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  let on = false, t0 = 0, raf = 0, step = 0, lastStep = 0;
+  function frame(now) {
+    if (!on) return;
+    const t = (now - t0) / 1000, a = t * 0.9, R = N / 2 - 3, cx = N / 2, cy = N / 2;
+    g.clearRect(0, 0, N, N);
+    g.save(); g.translate(cx, cy); g.rotate(a);
+    // yin and yang
+    g.fillStyle = '#fff'; g.beginPath(); g.arc(0, 0, R, -Math.PI / 2, Math.PI / 2); g.fill();
+    g.fillStyle = '#000'; g.beginPath(); g.arc(0, 0, R, Math.PI / 2, Math.PI * 1.5); g.fill();
+    g.fillStyle = '#fff'; g.beginPath(); g.arc(0, -R / 2, R / 2, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#000'; g.beginPath(); g.arc(0, R / 2, R / 2, 0, Math.PI * 2); g.fill();
+    // the heads sit where the dots would be: white in the dark, dark in the light
+    if (head.complete && darkHead.width) {
+      const h = R * 0.62, w = h * head.naturalWidth / head.naturalHeight;
+      g.drawImage(head, -w / 2, R / 2 - h / 2, w, h);
+      g.drawImage(darkHead, -w / 2, -R / 2 - h / 2, w, h);
+    }
+    g.restore();
+    g.strokeStyle = '#fff'; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, R + 1, 0, Math.PI * 2); g.stroke();
+    // 1-bit ordered dither: every pixel ends up black or white
+    const img = g.getImageData(0, 0, N, N), d = img.data;
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const i = (y * N + x) * 4; if (d[i + 3] < 10) continue;
+      const lum = (d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11) * d[i + 3] / 255;
+      const v = lum > (BAYER[(y & 3) * 4 + (x & 3)] + 0.5) * 16 ? 255 : 0;
+      d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
+    }
+    g.putImageData(img, 0, 0);
+    // a progress bar that never quite admits how long it takes
+    if (now - lastStep > 260) { lastStep = now; step = (step + 1) % 13; $('bar').textContent = '[' + '■'.repeat(Math.min(step, 10)) + '□'.repeat(10 - Math.min(step, 10)) + ']'; }
+    raf = requestAnimationFrame(frame);
+  }
+  return {
+    start() { if (on) return; on = true; t0 = performance.now(); raf = requestAnimationFrame(frame); },
+    stop() { on = false; cancelAnimationFrame(raf); },
+  };
+})();
+const waiting = (on) => { $('start-wrap').hidden = on; $('loader').hidden = !on; $('veil-msg').classList.toggle('typing', on); on ? yy.start() : yy.stop(); };
 $('start').addEventListener('click', async () => {
   $('start').disabled = true;
   const msg = $('veil-msg');
@@ -326,6 +374,7 @@ $('start').addEventListener('click', async () => {
       runningMode: 'VIDEO', numFaces: 1, outputFacialTransformationMatrixes: true,
     });
     placeFigures();
+    waiting(false);
     $('veil').hidden = true;
     $('stage').classList.add('live');
     $('shoot').disabled = false;
