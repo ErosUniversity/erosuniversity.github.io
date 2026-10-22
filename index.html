@@ -1,134 +1,155 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eros University</title>
-<meta name="description" content="Eros University – Scientia pro devotis. Portae clausae sunt.">
-<meta name="theme-color" content="#141112">
-<!-- link preview (WhatsApp, iMessage, Telegram): square image -> small thumbnail beside the text -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://erosuniversity.github.io/">
+<title>WHO THE FUCK ARE YOU?</title>
+<meta name="description" content="Warum ein Foto machen, wenn du mich auch abschießen kannst. Über Zustimmung, Kameras und eine Nacht in Berlin.">
+<meta name="theme-color" content="#050505">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://erosuniversity.github.io/who-the-fuck-are-you/">
 <meta property="og:site_name" content="Eros University">
-<meta property="og:title" content="Eros University · Portae clausae sunt">
-<meta property="og:description" content="Immatriculatio nonnisi per invitationem. First Year · Drop I.">
-<meta property="og:image" content="https://erosuniversity.github.io/og.jpg">
+<meta property="og:title" content="WHO THE FUCK ARE YOU?">
+<meta property="og:description" content="a human being.">
+<meta property="og:image" content="https://erosuniversity.github.io/who-the-fuck-are-you/og.jpg">
 <meta property="og:image:width" content="630">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Gold statue of the Eros University figure: devil-horned baby head above a torso">
 <meta name="twitter:card" content="summary">
-<link rel="apple-touch-icon" href="og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,500;0,800;1,800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500&family=Caveat:wght@500&display=swap">
 <style>
   :root {
-    --night: #141112;
-    --night-2: #241e1f;
-    --gold: #C9B47E;        /* off-gold, matches the figure */
-    --gold-dim: #8C7C55;
-    --bone: #E8E0D0;
-    --ash: #9A9185;
-    --ember: #D9452B;
-    --display: "Cormorant Garamond", Garamond, Georgia, serif;
+    --ink: #050505;
+    --paper: #ececea;
+    --grey: #8c8c8a;
+    --red: #e1251b;        /* Barbara Kruger red */
+    --gold: #C9B47E;
     --body: "EB Garamond", Garamond, Georgia, serif;
-    --caps: "Cinzel", "Trajan Pro", Georgia, serif;
-    color-scheme: dark;
+    --bold: "Jost", "Futura", "Century Gothic", sans-serif;
+    --caps: "Cinzel", Georgia, serif;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; overflow: hidden; }
-  body {
-    background: radial-gradient(ellipse 60% 70% at 50% 45%, var(--night-2) 0%, var(--night) 70%) var(--night);
-    color: var(--bone); font: 400 19px/1.55 var(--body); -webkit-font-smoothing: antialiased;
-  }
-  canvas { position: fixed; inset: 0; display: block; touch-action: manipulation; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ink); color: var(--paper); font: 400 21px/1.62 var(--body); -webkit-font-smoothing: antialiased; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  a { color: var(--paper); }
 
-  /* film grain */
-  body::after {
-    content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 5; opacity: .07;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: grain 1s steps(6) infinite;
-  }
-  @keyframes grain { 0%{transform:translate(0,0)} 33%{transform:translate(-3%,2%)} 66%{transform:translate(2%,-3%)} 100%{transform:translate(0,0)} }
+  .mark { position: absolute; top: 18px; left: 20px; z-index: 6; font: 500 11px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--grey); text-decoration: none; }
+  .visits { position: absolute; top: 12px; right: 18px; z-index: 6; display: flex; align-items: center; gap: 10px; color: var(--grey); }
+  .visits .lbl { font: 500 10px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; }
+  .visits .digits { display: flex; gap: 2px; }
+  .visits .digits span { display: grid; place-items: center; width: 17px; height: 24px; border: 1px solid currentColor; border-radius: 2px; font: 500 14px/1 var(--bold); color: var(--paper); }
 
-  .caps { font: 500 12px/1.4 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
-
-  .mark { position: fixed; top: 22px; left: 24px; z-index: 6; }
-  .mark small { display: block; color: var(--ash); font: italic 400 15px var(--display); letter-spacing: .02em; text-transform: none; margin-top: 2px; }
-
-  .caption {
-    position: fixed; left: 0; right: 0; bottom: 26px; z-index: 6; text-align: center; margin: 0;
-    font: 500 15px/1 var(--caps); letter-spacing: .5em; text-transform: uppercase; color: var(--gold);
-    padding-left: .5em; /* optically recentre the tracking */
+  /* hero: the question, under flash */
+  .hero { position: relative; height: 100vh; min-height: 560px; overflow: hidden; display: grid; place-items: center; text-align: center; }
+  .hero { background: #000; }
+  .hero.white { background: #fff; }
+  .hero .strobe { position: absolute; right: 18px; bottom: 16px; padding: 6px 10px; border: 1px solid currentColor; background: none; color: var(--grey); font: 500 10px/1 var(--caps); letter-spacing: .26em; text-transform: uppercase; cursor: pointer; mix-blend-mode: difference; }
+  .hero h1 {
+    position: relative; margin: 0; padding: 0 16px; mix-blend-mode: difference; color: #fff;
+    font: italic 800 clamp(54px, 11vw, 168px)/.9 var(--bold); letter-spacing: -.02em; text-transform: uppercase;
   }
-  .caption span { display: block; margin-top: 10px; font: italic 400 14px var(--display); letter-spacing: .04em; text-transform: none; color: var(--ash); }
+  .hero .answer { position: absolute; left: 0; right: 0; bottom: 14vh; margin: 0; font: italic 400 clamp(22px, 2.6vw, 30px) var(--body); color: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity 2s ease; }
+  .hero .answer.in { opacity: 1; }
 
-  /* texts revealed behind each part */
-  .reveal {
-    position: fixed; left: 0; top: 0; z-index: 4; width: min(340px, 78vw);
-    transform: translate(-50%, -50%); pointer-events: none; text-align: center;
-    opacity: 0; filter: blur(6px); transition: opacity .7s ease, filter .7s ease;
-  }
-  .reveal.on { opacity: 1; filter: blur(0); transition-delay: .15s; }
-  .reveal h2 { margin: 8px 0 10px; font: 500 34px/1.05 var(--display); color: var(--bone); }
-  .reveal p { margin: 0; color: #CFC6B6; }
-  .reveal[data-part="head"] { width: min(540px, 86vw); }
-  .reveal[data-part="head"] h2 { font-size: 30px; margin: 4px 0 6px; }
-  .reveal .foot { margin-top: 12px; font: italic 400 15px var(--display); color: var(--ash); }
+  .col { max-width: 660px; margin: 0 auto; padding: 0 22px; }
+  section { padding: 14vh 0 4vh; }
+  h2 { margin: 0 0 30px; font: italic 800 clamp(30px, 4.6vw, 48px)/1.02 var(--bold); letter-spacing: -.01em; }
+  h2 .num { display: block; margin-bottom: 10px; font: 500 13px/1 var(--caps); font-style: normal; letter-spacing: .34em; color: var(--grey); }
+  p { margin: 0 0 1.05em; }
+  .shout { font: italic 800 clamp(26px, 4vw, 40px)/1.1 var(--bold); text-transform: uppercase; letter-spacing: -.01em; margin: 1.2em 0; }
+  .line { margin: 0 0 .5em; }
 
-  .loading { position: fixed; inset: 0; display: grid; place-items: center; z-index: 7; transition: opacity 1.2s ease; }
-  .loading.done { opacity: 0; pointer-events: none; }
+  /* full-bleed stages */
+  .stage { position: relative; margin: 8vh 0; }
+  .stage canvas { display: block; width: 100%; }
+  .stage .cap { position: absolute; left: 22px; bottom: 14px; font: italic 400 15px var(--body); color: var(--grey); pointer-events: none; }
 
-  /* --- the gate: voice, choices, password --- */
-  .stage {
-    position: fixed; left: 50%; bottom: 92px; z-index: 6; width: min(580px, calc(100vw - 32px));
-    transform: translateX(-50%); text-align: center; transition: opacity .8s ease;
-  }
-  .voice { min-height: 1.5em; margin: 0 0 18px; font: italic 500 26px/1.3 var(--display); color: var(--bone); }
-  .voice .cursor { display: inline-block; width: .5ch; animation: blink 1s steps(1) infinite; color: var(--gold); }
-  @keyframes blink { 50% { opacity: 0; } }
-  .choices { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; min-height: 44px; }
-  .choices button, .pw button {
-    font: 500 12px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--gold);
-    background: rgba(20, 17, 18, .55); border: 1px solid rgba(201, 180, 126, .45); padding: 14px 20px 13px 22px;
-    cursor: pointer; transition: background .3s, border-color .3s, color .3s, opacity .6s, transform .6s;
-    opacity: 0; transform: translateY(6px);
-  }
-  .choices button.in, .pw.in button { opacity: 1; transform: none; }
-  .choices button:hover, .choices button:focus-visible, .pw button:hover, .pw button:focus-visible {
-    background: rgba(201, 180, 126, .14); border-color: var(--gold); color: var(--bone); outline: none;
-  }
-  .choices button.quiet { border-color: transparent; color: var(--ash); }
-  .pw { display: none; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .pw.on { display: flex; }
-  .pw input {
-    flex: 1 1 320px; max-width: 440px; padding: 13px 16px 12px; background: rgba(20, 17, 18, .7); color: var(--bone);
-    border: 1px solid rgba(201, 180, 126, .45); font: 500 14px/1 var(--caps); letter-spacing: .22em; text-transform: uppercase;
-    text-align: center; outline: none; opacity: 0; transition: opacity .6s, border-color .3s;
-  }
-  .pw.in input { opacity: 1; }
-  .pw input:focus { border-color: var(--gold); }
-  .pw.wrong input { border-color: var(--ember); animation: shake .4s; }
-  @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-  .veil { position: fixed; inset: 0; z-index: 8; background: #000; opacity: 0; pointer-events: none; transition: opacity 1.4s ease; }
-  .veil.on { opacity: 1; }
+  /* I: the swarm of three */
+  #swarm3 { height: 70vh; }
+  .legend { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-top: 10px; font: 500 11px/1.4 var(--caps); letter-spacing: .26em; text-transform: uppercase; color: var(--grey); }
+  .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
 
-  body.at-gate .reveal { visibility: hidden; }
-  body.entered .stage { opacity: 0; pointer-events: none; }
-  .caption { transition: opacity 1.2s ease; }
-  body.entered .caption { opacity: 0; }
+  /* II: Marey's engraving, as a print on paper */
+  .engraving { margin: 40px 0 10px; }
+  .engraving img { display: block; width: 100%; height: auto; background: #f4f2ec; padding: 14px; filter: grayscale(1) contrast(1.08); box-shadow: 0 18px 40px rgba(0,0,0,.6); }
+  .engraving figcaption { margin-top: 12px; font: italic 400 15px var(--body); color: var(--grey); text-align: center; }
 
-  @media (max-width: 640px) {
-    .voice { font-size: 22px; }
-    .stage { bottom: 80px; }
-    body { font-size: 17px; }
-    .reveal h2 { font-size: 28px; }
-    .caption { font-size: 13px; letter-spacing: .4em; bottom: 18px; }
-    .mark { top: 16px; left: 16px; }
-    .mark { transition: opacity .5s ease; }
-    body.reading .mark { opacity: 0; }
+  /* II: shooting gallery */
+  #gallery { height: 62vh; min-height: 380px; cursor: none; touch-action: manipulation; }
+  .score { position: absolute; right: 22px; bottom: 14px; font: italic 800 18px var(--bold); text-transform: uppercase; color: var(--paper); pointer-events: none; }
+
+  /* Barbara Kruger */
+  .kruger { position: relative; margin: 6vh auto 7vh; width: min(560px, 100%); aspect-ratio: 4 / 5; overflow: hidden; background: #111; }
+  .kruger img { position: absolute; left: 8%; top: 22%; width: 92%; height: 70%; object-fit: contain; object-position: right bottom; filter: grayscale(1) contrast(1.3); }
+  .kruger::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .kruger .bars { position: absolute; left: 6%; right: 6%; top: 12%; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+  .kruger .bar { background: var(--red); color: #fff; padding: 4px 12px 6px; font: italic 800 clamp(26px, 6vw, 44px)/1 var(--bold); letter-spacing: -.01em; }
+  .kruger .bar.small { font-size: clamp(18px, 3.6vw, 26px); }
+  .kruger .bar.bottom { margin-top: auto; }
+
+  .credit-kruger { margin: -4vh auto 7vh; width: min(560px, 100%); text-align: center; font: italic 400 15px var(--body); color: var(--grey); }
+  .credit-kruger i { font-style: normal; }
+
+  /* the video, phone-shaped */
+  .reel { position: relative; margin: 6vh auto 7vh; width: min(380px, 86%); }
+  .reel video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: #111; box-shadow: 0 18px 40px rgba(0,0,0,.6); }
+  .reel .sound { position: absolute; right: 10px; bottom: 10px; padding: 7px 11px; border: 1px solid #fff; background: rgba(0,0,0,.55); color: #fff; font: 500 10px/1 var(--caps); letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
+
+  blockquote { margin: 1.8em 0; padding: 0; text-align: center; }
+  blockquote p { font: italic 800 clamp(28px, 4.2vw, 42px)/1.1 var(--bold); margin: 0 0 12px; }
+  blockquote footer { font: italic 400 16px var(--body); color: var(--grey); }
+
+  /* III: the flash */
+  .whiteout { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 20; transition: opacity 1.4s ease; }
+  .whiteout.on { opacity: .92; transition: none; }
+  .whiteout.hard { opacity: 1; transition: none; }
+  #wtf { display: inline-block; mix-blend-mode: difference; color: #fff; position: relative; z-index: 21; }
+
+  /* IV: the card in the hand */
+  #card3d { height: 72vh; min-height: 420px; cursor: grab; touch-action: pan-y; }
+
+  /* V: the coat ticket, the questions */
+  .ticket {
+    width: 150px; margin: 34px auto 40px; padding: 18px 0 14px; text-align: center; color: #111; background: #e9e4d6;
+    transform: rotate(-4deg); box-shadow: 0 10px 30px rgba(0,0,0,.6);
+    clip-path: polygon(0 0, 100% 0, 100% 46%, 93% 50%, 100% 54%, 100% 100%, 0 100%, 0 54%, 7% 50%, 0 46%);
   }
-  @media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
+  .ticket small { display: block; font: 500 10px/1 var(--caps); letter-spacing: .3em; }
+  .ticket b { display: block; font: 800 54px/1 var(--bold); margin: 8px 0 4px; }
+  .questions { margin: 2em 0; }
+  .questions p { font: italic 800 clamp(24px, 3.6vw, 36px)/1.15 var(--bold); margin: 0 0 .5em; opacity: .25; transition: opacity 1s ease; }
+  .questions p.in { opacity: 1; }
+
+  /* VI: the question to you */
+  .ask { text-align: center; padding: 10vh 0 6vh; }
+  .ask h3 { margin: 0 0 28px; font: italic 800 clamp(32px, 5vw, 56px)/1.05 var(--bold); }
+  .ask .btns { display: flex; justify-content: center; gap: 14px; }
+  .ask button { min-width: 140px; padding: 16px 26px; border: 2px solid var(--paper); background: transparent; color: var(--paper); font: italic 800 20px var(--bold); text-transform: uppercase; cursor: pointer; transition: background .2s, color .2s; }
+  .ask button:hover, .ask button:focus-visible { background: var(--paper); color: var(--ink); outline: none; }
+  .ask .reply { min-height: 1.6em; margin-top: 26px; font: italic 400 24px var(--body); }
+  .booth { display: none; margin: 0 auto 6vh; width: min(1000px, 100%); padding: 0 12px; }
+  .booth.on { display: block; }
+  .booth iframe { display: block; width: 100%; height: min(1500px, 170vh); border: 0; background: #111; }
+  .booth .note { font: italic 400 15px var(--body); color: var(--grey); text-align: center; margin: 10px 0 0; }
+
+  /* the pinboard */
+  .board { padding: 12vh 0 4vh; }
+  .board h2 { max-width: 660px; margin: 0 auto 40px; }
+  .pins { display: flex; flex-wrap: wrap; justify-content: center; gap: 46px 34px; padding: 10px 22px 30px; }
+  .pin { position: relative; width: 150px; margin: 0; }
+  .pin img { display: block; width: 100%; box-shadow: 0 14px 28px rgba(0,0,0,.65); }
+  .pin::before { content: ""; position: absolute; top: -9px; left: 50%; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--red); box-shadow: 0 2px 4px rgba(0,0,0,.6); z-index: 1; }
+  .pin figcaption { margin-top: 12px; font: italic 400 15px/1.35 var(--body); color: var(--paper); }
+  .pin figcaption b { display: block; font: 500 10px/1.4 var(--caps); letter-spacing: .24em; text-transform: uppercase; color: var(--grey); font-style: normal; margin-top: 6px; }
+  .pin figcaption .sig { display: block; margin-top: 8px; font: italic 800 18px/1 var(--bold); text-transform: uppercase; color: var(--paper); }
+  .board-empty, .board-note { max-width: 660px; margin: 0 auto; text-align: center; color: var(--grey); font: italic 400 17px var(--body); padding: 0 22px; }
+  .board-note { font-size: 14px; margin-top: 18px; }
+
+  footer.end { padding: 8vh 22px; text-align: center; font: italic 400 16px var(--body); color: var(--grey); }
+
+  @media (max-width: 640px) { body { font-size: 19px; } .visits .lbl { display: none; } }
 </style>
 <script type="importmap">
 { "imports": {
@@ -137,43 +158,151 @@
 } }
 </script>
 </head>
-<body class="at-gate">
-  <header class="mark caps">Eros University<small>Scientia pro devotis</small></header>
+<body>
+  <a class="mark" href="../">Eros University</a>
+  <div class="visits" id="visits" hidden><span class="lbl">Besucher</span><span class="digits" id="visits-digits"></span></div>
+  <div class="whiteout" id="whiteout" aria-hidden="true"></div>
 
-  <article class="reveal" data-part="head">
-    <div class="caps">First Year</div>
-    <h2>Become part of the University</h2>
-    <p>by securing your first year hoodie. It also comes with privileges, explored and explained at a later point in the semester.</p>
+  <header class="hero" id="hero">
+    <h1>Who the fuck are you?</h1>
+    <p class="answer" id="answer">a human being.</p>
+    <button class="strobe" id="strobe" type="button" aria-pressed="false">Blitze aus</button>
+  </header>
+
+  <article>
+    <section class="col" id="s1">
+      <h2><span class="num">I.</span>Die Dreifaltigkeit</h2>
+      <p>Ich frage, ob ich kommen kann. Gar kein Problem. Ich darf rein.</p>
+      <p>Ich bin für Boys Noise da. Meine zwei Freunde und ich lieben Musik, Und die Musik war wirklich gut. Ich war nicht da, um jemanden kennenzulernen und oder mich abzulenken. Ich war da für die Musik und für den Ort, einen Ort, den ich sehr, sehr gern habe. Wo ich respektvoll mit allen umgehe, die respektvoll mit mir umgehen.</p>
+      <p>Die ersten beiden Reihen vor dem DJ sind für die Medien reserviert. Das ist fair, Medien sind wichtig. Also stehen wir in der dritten Reihe. Immer schön laut und nett auf den billigen Plätzen. Aber die Medien stehen nicht nur vor dem DJ-Pult, sondern auch dahinter. Und von dort aus ist das Target nicht der DJ. Das Ziel sind wir.</p>
+      <p>Denn was ist ein DJ ohne eine gute Crowd? Was im Nachtleben kaum jemand laut sagt: Die Crowd ist wichtiger als der DJ.. Es ist ein Symbiose.</p>
+      <p>Es gibt drei: die Musikmacher, die Medienmacher und die Stimmungsmacher, also die Crowd. Diese Dreifaltigkeit muss im Einklang sein. Sie bilden ein Schwarm aus 3 Unter-Schwarmen. Und ein Schwarm hält zusammen. Er greift sich nicht selbst an.</p>
+      <p>Wenn jemand aus der Reihe tanzt, dann passt sich der Schwarm dem Contrarian an.</p>
+    </section>
+
+    <div class="stage">
+      <canvas id="swarm3" aria-label="Drei Schwärme aus Punkten bewegen sich als einer. Tanzt ein Punkt aus der Reihe, folgen ihm alle."></canvas>
+      <div class="legend"><span><i style="background:#ffffff"></i>Musikmacher</span><span><i style="background:#8c8c8a"></i>Medienmacher</span><span><i style="background:#C9B47E"></i>Stimmungsmacher</span></div>
+    </div>
+
+    <section class="col" id="s2">
+      <h2><span class="num">II.</span>Im Visier</h2>
+      <p>Die ersten Kameras, die man aus der Hand benutzen konnte, sahen aus wie Gewehre. 1882 baute Étienne-Jules Marey seine fotografische Flinte: Kolben, Lauf, Abzug. Die Sprache hat das nie vergessen. Wir schießen Fotos. Wir haben jemanden im Visier.</p>
+      <figure class="engraving">
+        <img src="assets/marey-fusil.png" alt="Stich von 1882: Mareys fotografische Flinte mit Kolben, Lauf und Abzug, daneben Verschluss, Schlitzscheibe und die Kassette für 25 lichtempfindliche Platten." loading="lazy">
+        <figcaption>Étienne-Jules Marey, fusil photographique, La Nature, 1882</figcaption>
+      </figure>
+    </section>
+
+    <div class="stage">
+      <canvas id="gallery" aria-label="Eine Schießbude mit Enten. Wer trifft, hat einen Eros-Kopf abgeschossen."></canvas>
+      <div class="cap">Schießbude. Klick, um zu schießen.</div>
+      <div class="score" id="score"></div>
+    </div>
+
+    <section class="col" style="padding-top:0">
+      <p>Ich trage eine Cap und eine Sonnenbrille, weil ich auf diesen Bildern nicht erkannt werden will. Ich bin für die Musik da, nicht um im Kontext der Musik öffentlich dargestellt zu werden. Wenn mich jemand im Visier hat, schaue ich kurz weg. Die meisten Medienmacher verstehen das sofort. Man kann ohne Worte zustimmen und ohne Worte ablehnen. Das kriegt man hin, wenn man respektvoll mit Menschen umgeht.</p>
+      <p>Eine Fotografin nervt das. Sie kommt immer näher, bis sie mir ein Blitzfoto ins Gesicht schießt. Ich sage: Meine Freunde haben kein Problem damit, mach doch Fotos von denen. Wieder ein Blitz in mein Gesicht. Ich sage:</p>
+
+      <figure class="reel">
+        <video id="reel" src="https://ik.imagekit.io/b85jlqldz/chrome_bop_cap.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Video"></video>
+        <button class="sound" id="reel-sound" type="button" aria-pressed="false">Ton an</button>
+      </figure>
+
+      <p>Eine andere Frau spricht sie auch an, ungefähr in ihrem Alter, jemanden, auf den sie vielleicht eher hört, weil ich jünger bin und aus einer anderen Klasse komme. Auch sie erklärt ihr, dass das nicht schön ist.</p>
+      <p>Ich denke, damit ist es geklärt. Aber die Lust zu tanzen ist weg. Ich kühle mich woanders ab. Es klingt kindisch, dass mich das so beschäftigt. Aber es ist einfach das Gefühl, das es auslöst, wenn man unwillentlich wieder und wieder und wieder abgeschossen wird, obwohl man ohne Worte und mit Worten Nein gesagt hat.</p>
+
+      <blockquote>
+        <p>„ein Nein ist kein Nein“</p>
+        <footer>Zitat eine alte Managerin von mir.</footer>
+      </blockquote>
+    </section>
+
+    <section class="col" id="s3">
+      <h2><span class="num">III.</span>Das letzte Foto</h2>
+      <p>Nach einem Moment habe ich wieder Lust zu tanzen. Da kommt dieselbe Fotografin und schießt ein Foto von mir.</p>
+      <p>Ich gehe zu ihr, fasse sie an der Schulter und sage: Ich habe dir gesagt, ich will keine Fotos. Bitte zeig mir dein letztes Foto.</p>
+      <p class="line">Sie sagt: Du bist da nicht drauf.</p>
+      <p class="line">Ich sage: In Ordnung, dann zeig es mir.</p>
+      <p class="line">Sie sagt: Ich bin vom Team, ich muss gar nichts.</p>
+      <p class="line">Ich sage:</p>
+      <p class="shout" id="wtf">Who the fuck are you?</p>
+      <p>Sie geht weg. Die Leute um mich herum zeigen mir die kalte Schulter.</p>
+    </section>
+
+    <section class="col" id="s4">
+      <h2><span class="num">IV.</span>Das Kleingedruckte</h2>
+    </section>
+
+    <div class="stage">
+      <canvas id="card3d" aria-label="Eine Hand hält eine Kreditkarte. Egal wie man sie kippt, der Name bleibt unlesbar."></canvas>
+      <div class="cap">Kipp die Karte.</div>
+    </div>
+
+    <section class="col" style="padding-top:0">
+      <p>Genau in diesem Moment hebt ein Kollege eine Kreditkarte vom Boden auf und betrachtet ganz, ganz genau das Kleingedruckte. Der Name ist kaum zu lesen. Und eigentlich ist er auch egal. Die Karte erfüllt ihre Funktion, solange sie Geld überweisen kann. Wer Geld überweisen kann, dessen Name darf klein gedruckt sein. Der Name ist die Person. Die Person trägt Verantwortung. Die Funktion nicht.</p>
+      <p>Ich verstehe, warum alle Medien machen. Mit Musik allein verdient man kaum noch Geld, Spotify zahlt nichts. Das Geld kommt über Deals, und für Deals muss Musik sichtbar sein. Deshalb gibt es heute nicht nur DJs, sondern auch VJs. Das Publikum erwartet eine visuelle Performance, und es stimmt zu, selbst ein Teil davon zu sein.</p>
+      <p>Aber stimmt es wirklich zu? Ist mein Eintritt schon meine Zustimmung, die unwiederruflich ist? Darf ich nicht mehr fragen, bitte jetzt nicht mehr?  Dann war mir das nicht bewusst. Ich verstehe, dass mein Eintritt in kinky Clubs eine erste Zustimmung ist und eine Angabe meiner Suche: Ich will berührt werden. Genauso will ich an solchen Orten sagen können, so kannst du ein Foto von mir machen und so halt nicht.</p>
+      <p class="shout" style="text-transform:none">Also fass mich nicht an mit deinen Händen oder deiner Kamera, ohne zu fragen.</p>
+    </section>
+
+    <section class="col" id="s5">
+      <h2><span class="num">V.</span>Glauben tue ich in der Kirche</h2>
+      <p>Kurz danach steht der Türsteher neben mir und bittet mich, meine Jacke zu holen. Ich hole meine Jacke. Meinen Zettel finde ich nicht. Ich weiß, die Nummer ist 208, aber um respektvoll zu sein, sage ich: Ich glaube, 208.</p>
+      <div class="ticket" aria-hidden="true"><small>Garderobe</small><b>208</b><small>nicht verlieren</small></div>
+      <p>Der Türsteher sagt, wie ein guter Vater: Glauben tue ich in der Kirche.</p>
+      <p>Ich glaube überall, wo ich bin. Ich bringe die Kirche mit mir.</p>
+      <p>Ich gehe freiwillig raus. Draußen steht sie. Sie schaut mich mit großen Augen an und erwartet, dass ruckzuck eine Entschuldigung kommt, weil ich doch wieder rein wollen sollte. Aus meinem Mund kommt: Wollen wir reden?</p>
+
+      <figure class="kruger" aria-label="Manche Menschen wollen nicht mit dir reden, damit sie dich hassen können.">
+        <div class="bars">
+          <span class="bar">Manche Menschen</span>
+          <span class="bar">wollen nicht</span>
+          <span class="bar">mit dir reden,</span>
+          <span class="bar">damit sie dich</span>
+          <span class="bar">hassen können.</span>
+        </div>
+      </figure>
+      <p class="credit-kruger">Nach Barbara Kruger. Vgl. <i>Untitled (Your body is a battleground)</i>, 1989.</p>
+      <p class="line">Sie sagt Nein.</p>
+      <p>Ich frage nach ihrem Namen. Sie sagt wieder Nein und geht rein.</p>
+      <p>Der Mann der Kirche bietet mir an, weiterzugehen. Ich nehme dankend an. Meine Freunde kommen nach.</p>
+      <p>Im Deutschen steckt in dem Wort für den schlimmsten Übergriff die Gewalt selbst: Vergewaltigung. Sich Gewalt über jemanden nehmen, ohne seine Zustimmung.</p>
+      <div class="questions" id="questions">
+        <p>Was ist eine digitale oder mediale Vergewaltigung?</p>
+        <p>Wann ist Gewalt in Ordnung?</p>
+        <p>Weißt du was Gewalt ist?</p>
+        <p>Brauchen wir neue Worte für Gewalt?</p>
+      </div>
+      <p>Es ist wie ungefragte Nacktbilder zu bekommen, nur umgekehrt: Nicht jemand schickt dir ein Bild, um das du nie gebeten hast, sondern jemand nimmt sich ein Bild von dir, obwohl du ihm persönlich gesagt hast, dass du es nicht willst. Und das ist kein BDSM Play Shooting, bei dem ich mit deiner Macht, da du die Kamera in der hand hälst und bestimmst, wer auf den Bildern erscheint. Ich sage dir nur, ich will auf DEINEN Bildern nicht erscheinen</p>
+    </section>
+
+    <section class="col" id="s6">
+      <h2><span class="num">VI.</span>Was möglich wäre</h2>
+      <p>Es gibt einen Unterschied zwischen einem Foto, das man von jemandem macht, und einem Shot, den man schießt. Das eine will festhalten, was im Raum schon da ist, die Energie, die Menschen, wie sie sind. Das andere legt über eine Szene, was man selbst sehen will, und zwingt ihr einen Stil auf, den sie nicht will.</p>
+      <p>Mach Fotos von deinen Freunden. Lass deine Freunde Fotos von dir machen. Und wenn du mich nicht kennst, frag mich.</p>
+      <p>Also um aus dieser Situation zu lernen, frage ich dich ganz nett ob ich ein Foto von dir machen darf, dann kannst du es runterladen und wenn du magst auf dieser Seite verewigen mit einem kleinen Spruch für den Engel und den Teufel auf deiner Schulter, und deiner Signatur.</p>
+    </section>
+
+    <div class="ask" id="ask">
+      <h3>Darf ich ein Foto von dir machen?</h3>
+      <div class="btns"><button type="button" id="yes">Ja</button><button type="button" id="no">Nein</button></div>
+      <p class="reply" id="reply" aria-live="polite"></p>
+    </div>
+    <div class="booth" id="booth">
+      <p class="note">Die Kamera läuft nur in deinem Browser. Nichts wird hochgeladen, solange du es nicht selbst willst.</p>
+    </div>
+
+    <section class="board" id="board">
+      <h2 class="col" style="padding:0 22px;text-align:center"><span class="num">Pinnwand</span>Die, die Ja gesagt haben</h2>
+      <div class="pins" id="pins"></div>
+      <p class="board-empty" id="board-empty">Noch hängt hier nichts. Sag oben Ja, mach deine vier Bilder und häng sie hier auf.</p>
+      <p class="board-note">Wer hier hängt, hat Ja gesagt. Alle sehen diese Wand.</p>
+    </section>
   </article>
 
-  <article class="reveal" data-part="torso">
-    <div class="caps">The Brothers</div>
-    <h2>Faculty of the Back</h2>
-    <p>You never see it, yet it carries the weight and holds its posture to the very end.</p>
-    <p class="foot">Ten brothers · Winter semester 2026/27</p>
-  </article>
+  <footer class="end"><a href="../">Eros University</a></footer>
 
-  <article class="reveal" data-part="legs">
-    <div class="caps">The Sisters</div>
-    <h2>Faculty of the Legs</h2>
-    <p>You never feel them, yet they carry us out into the world, always one step ahead.</p>
-    <p class="foot">Ten sisters · Winter semester 2026/27</p>
-  </article>
-
-  <section class="stage" aria-live="polite">
-    <p class="voice" id="voice"></p>
-    <div class="choices" id="choices"></div>
-    <form class="pw" id="pw" autocomplete="off">
-      <input id="pw-input" type="text" spellcheck="false" autocapitalize="characters" aria-label="Password">
-      <button type="submit">Speak</button>
-    </form>
-  </section>
-  <div class="veil" id="veil"></div>
-
-  <p class="caption">Portae clausae sunt<span>Immatriculatio nonnisi per invitationem</span></p>
-
-  <div class="loading caps">Eros University</div>
-
-  <script type="module" src="main.js"></script>
+  <script type="module" src="page.js"></script>
 </body>
 </html>
