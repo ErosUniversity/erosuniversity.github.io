@@ -211,6 +211,13 @@ h1,h2,h3,p{margin:0;font-weight:500}
 .close .fin{display:inline-block;width:34px;height:34px;border-radius:50%;background:var(--teal);margin-left:10px;opacity:0;transform:scale(0)}
 #s12.active .close .fin{animation:pop .7s var(--spring) 1.5s forwards,pulse 2.4s ease-in-out 2.4s infinite}
 #s12 .sub{position:absolute;left:120px;top:705px}
+.close{color:inherit;text-decoration:none;cursor:pointer;z-index:5}
+.close .fin{transition:transform .4s var(--spring)}
+.close:hover .fin{transform:scale(1.5)!important}
+.close:hover span{color:var(--teal);transition:color .3s}
+#s12 .cta{position:absolute;left:120px;top:790px;color:var(--teal);text-decoration:none;z-index:5}
+#s12 .cta:hover{color:var(--text)}
+body.last .navzone{display:none}
 #s12 .foot{position:absolute;left:120px;right:120px;bottom:100px;display:flex;justify-content:space-between;align-items:center}
 #s12 .foot .dot{width:12px;height:12px;margin-right:14px}
 
@@ -551,8 +558,9 @@ h1,h2,h3,p{margin:0;font-weight:500}
 <!-- 12 -->
 <section class="slide" id="s12">
   <div class="eyebrow a">14 — Closing</div><div class="count"></div>
-  <h1 class="close words"><span style="animation-delay:.2s">meet</span> <span style="animation-delay:.4s">the</span> <span style="animation-delay:.6s">team,</span> <span style="animation-delay:.95s">unc</span><i class="fin"></i></h1>
+  <a class="close words" id="toProduct" href="product/" target="_top"><span style="animation-delay:.2s">meet</span> <span style="animation-delay:.4s">the</span> <span style="animation-delay:.75s">unc</span><i class="fin"></i></a>
   <p class="sub a" style="--d:2s">UNC — company intelligence for mid-market teams.</p>
+  <a class="mono cta a fade" href="product/" target="_top" style="--d:2.4s">Click to open the product demo &nbsp;→</a>
   <div class="rule a draw" style="bottom:160px;--d:2.3s"></div>
   <div class="foot">
     <span class="mono a fade" style="--d:2.6s;display:flex;align-items:center"><span class="dot"></span>UNC · Berlin</span>
@@ -608,6 +616,7 @@ function loadApp() {
   });
   appFrame.src = productURL;
 }
+document.querySelectorAll('#s12 a').forEach(a => a.href = productURL);
 
 slides.forEach((s, i) => s.querySelectorAll('.count, .count-auto').forEach(c =>
   c.textContent = String(i + 1).padStart(2, '0') + ' / ' + slides.length));
@@ -713,6 +722,7 @@ function go(i) {
   s.querySelectorAll('[data-at]').forEach(el => { el.classList.remove('on'); later(+el.dataset.at, () => el.classList.add('on')); });
   s.querySelectorAll('[data-count]').forEach(countUp);
   hooks[s.id] && hooks[s.id](s);
+  document.body.classList.toggle('last', i === slides.length - 1);
   document.getElementById('progress').style.width = ((i + 1) / slides.length * 100) + '%';
   history.replaceState(null, '', '#' + (i + 1));
 }

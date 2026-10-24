@@ -32,7 +32,7 @@ and tells you straight what to worry about. That's the product. (~6 min, 15 slid
 | # | Slide | Animation |
 |---|---|---|
 | 14 | Brand system | "Calm. Precise. Confident." word by word, swatches slide in |
-| 15 | Closing | "meet the team, unc" — the teal dot from slide 1 returns as the full stop and keeps pulsing |
+| 15 | Closing | "meet the unc." — the teal dot from slide 1 returns as the full stop. Click the headline (or the teal link) to open the product demo |
 
 ## Controls
 → / Space / click right side: next · ← / click left side: back · **R** replays the current slide's animation ·
