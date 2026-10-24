@@ -214,6 +214,81 @@ h1,h2,h3,p{margin:0;font-weight:500}
 #s12 .foot{position:absolute;left:120px;right:120px;bottom:100px;display:flex;justify-content:space-between;align-items:center}
 #s12 .foot .dot{width:12px;height:12px;margin-right:14px}
 
+/* live product */
+#live .h{font-size:80px;max-width:400px;top:210px}
+.steps{position:absolute;left:120px;top:440px;width:390px;list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:52px 1fr;padding:20px 0;border-top:1px solid var(--line);color:var(--dim);transition:color .4s}
+.steps li .mono{font-size:16px;padding-top:7px;transition:color .4s}
+.steps li b{display:block;font-size:28px;font-weight:500;letter-spacing:-.015em}
+.steps li span{font-size:20px}
+.steps li.on{color:var(--text)}
+.steps li.on .mono{color:var(--teal)}
+.browser{position:absolute;left:560px;top:190px;width:1240px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 40px 120px #0008}
+.browser-bar{height:44px;display:flex;align-items:center;gap:9px;padding:0 18px;border-bottom:1px solid var(--line)}
+.browser-bar i{width:11px;height:11px;border-radius:50%;background:#3a4247}
+.browser-bar .url{margin-left:18px;width:460px;height:26px;border-radius:5px;background:var(--ink);display:flex;align-items:center;gap:10px;padding:0 14px;font-family:var(--mono);font-size:13px;color:var(--dim);letter-spacing:.04em}
+.browser-bar .url .dot{width:7px;height:7px}
+.screen{position:relative;width:1240px;height:698px;overflow:hidden;background:#f5f5f7}
+.screen iframe{position:absolute;left:0;top:0;width:1440px;height:810px;border:0;transform:scale(.86111);transform-origin:0 0}
+.screen .shield{position:absolute;inset:0}
+.cursor{position:absolute;left:620px;top:420px;width:28px;height:28px;margin:-3px 0 0 -5px;transition:left .9s cubic-bezier(.6,0,.2,1),top .9s cubic-bezier(.6,0,.2,1);pointer-events:none;z-index:2;filter:drop-shadow(0 3px 6px #0007)}
+.cursor::after{content:"";position:absolute;left:-12px;top:-12px;width:30px;height:30px;border-radius:50%;border:3px solid var(--teal);opacity:0}
+.cursor.click::after{animation:ripple .55s ease-out}
+@keyframes ripple{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(1.7)}}
+.offline{position:absolute;inset:0;display:none;place-content:center;gap:16px;text-align:center;background:var(--ink);color:var(--muted);font-size:28px}
+.screen.no-app .offline{display:grid}
+.screen.no-app .cursor{display:none}
+#live .live-note{position:absolute;left:120px;bottom:60px;font-size:16px}
+
+/* supabase */
+#supa .h{font-size:80px}
+#pay .h{font-size:76px;max-width:860px}
+.pipe{position:absolute;left:120px;right:120px;top:420px;height:250px}
+.pipe .wire{position:absolute;left:150px;right:150px;top:50%;height:2px;background:var(--line)}
+.pipe .packet{position:absolute;z-index:2;top:calc(50% - 7px);left:144px;width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 22px var(--teal);opacity:0}
+#supa.active .packet{animation:packet 3.6s linear 2.4s infinite}
+@keyframes packet{0%{left:144px;opacity:1}88%{left:calc(100% - 158px);opacity:1}100%{left:calc(100% - 158px);opacity:0}}
+.nodes{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:46px;height:100%}
+.node{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between}
+#supa.active .node{animation:rise .9s var(--ease) both,nodehot 3.6s linear infinite;animation-delay:var(--d),calc(2.4s + var(--h))}
+@keyframes nodehot{0%{border-color:var(--teal)}12%,100%{border-color:var(--line)}}
+.node .mono{font-size:15px}
+.node b{display:block;font-size:34px;font-weight:500;letter-spacing:-.02em}
+.node p{font-size:21px;color:var(--muted);margin-top:10px;font-weight:400;line-height:1.35}
+#supa .cols{position:absolute;left:120px;right:120px;top:760px;display:grid;grid-template-columns:repeat(3,1fr);gap:56px}
+#supa .col h3{font-size:36px;margin:16px 0 14px}
+#supa .col .sub{font-size:25px}
+#supa .col .mono{color:var(--teal);font-size:17px}
+
+/* stripe checkout */
+.flow{position:absolute;left:120px;top:430px;width:780px;list-style:none;margin:0;padding:0}
+.flow li{display:grid;grid-template-columns:64px 1fr;padding:19px 0;border-top:1px solid var(--line);opacity:.3;transition:opacity .5s}
+.flow li.on{opacity:1}
+.flow li .mono{font-size:17px;padding-top:8px}
+.flow li.on .mono{color:var(--teal)}
+.flow b{font-size:29px;font-weight:500;letter-spacing:-.015em}
+.flow code{font-family:var(--mono);font-size:25px;color:var(--teal);font-weight:400}
+.flow p{font-size:21px;color:var(--muted);margin-top:5px;font-weight:400}
+.checkout{position:absolute;left:1030px;top:190px;width:770px;background:#fff;color:#1a1f36;border-radius:12px;padding:44px 54px;box-shadow:0 40px 120px #000a}
+.co-head{display:flex;align-items:center;justify-content:space-between;font-size:19px;color:#697386}
+.co-head .badge{font-family:var(--mono);font-size:13px;letter-spacing:.1em;background:#ffe7a8;color:#6b4a00;border-radius:4px;padding:5px 10px}
+.co-title{font-size:24px;color:#697386;margin-top:28px}
+.co-price{font-size:62px;font-weight:600;letter-spacing:-.03em;margin:4px 0 22px}
+.co-price small{font-size:21px;color:#697386;font-weight:400;letter-spacing:0}
+.co-label{font-size:17px;color:#30313d;margin:18px 0 8px}
+.co-field{border:1px solid #e0e0e6;border-radius:6px;height:56px;display:flex;align-items:center;padding:0 18px;font-size:21px;font-variant-numeric:tabular-nums}
+.co-field.card{border-radius:6px 6px 0 0}
+.co-row{display:grid;grid-template-columns:1fr 1fr;border:1px solid #e0e0e6;border-top:0;border-radius:0 0 6px 6px}
+.co-row div{height:56px;display:flex;align-items:center;padding:0 18px;font-size:21px}
+.co-row div+div{border-left:1px solid #e0e0e6}
+.ph{color:#a3acb9}
+.co-btn{margin-top:28px;height:62px;border-radius:6px;background:#0a2540;color:#fff;font-size:21px;font-weight:600;display:grid;place-items:center;transition:background .4s,transform .15s}
+.co-btn.press{transform:scale(.97)}
+.co-btn.done{background:#1b8a63}
+.event{position:absolute;left:1030px;top:920px;font-family:var(--mono);font-size:17px;letter-spacing:.06em;color:var(--dim);opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.event.on{opacity:1;transform:none}
+.event b{color:var(--teal);font-weight:400}
+
 /* chrome */
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--teal);transition:width .6s var(--ease);z-index:5}
 #hint{position:fixed;right:20px;bottom:16px;font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;transition:opacity 1s;z-index:5}
@@ -248,13 +323,13 @@ h1,h2,h3,p{margin:0;font-weight:500}
   <div class="rule a draw" style="bottom:160px;--d:2.6s"></div>
   <div class="foot">
     <span class="mono a fade" style="--d:2.9s">Agent-led workspace for mid-market teams</span>
-    <span class="mono a fade" style="--d:3s">01 / 12</span>
+    <span class="mono a fade count-auto" style="--d:3s"></span>
   </div>
 </section>
 
 <!-- 02 -->
 <section class="slide" id="s2">
-  <div class="eyebrow a" style="--d:0s">01 — The problem</div><div class="count">02 / 12</div>
+  <div class="eyebrow a" style="--d:0s">01 — The problem</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s">Company information is scattered across tools.</h1>
   <div class="tool" style="left:150px;top:560px;--r:-4deg;--fx:-500px;--fy:200px;--d:.5s"><span class="mono">Finance</span><b>Accounting</b></div>
   <div class="tool" style="left:560px;top:700px;--r:3deg;--fx:-200px;--fy:500px;--d:.7s"><span class="mono">Revenue</span><b>CRM</b></div>
@@ -266,7 +341,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 03 -->
 <section class="slide" id="s3">
-  <div class="eyebrow a">02 — What UNC is</div><div class="count">03 / 12</div>
+  <div class="eyebrow a">02 — What UNC is</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s">One operating picture of your company.</h1>
   <div class="tool" style="left:100px;--sx:50px;--sy:40px;--r:-4deg;--cx:710px"><span class="mono">Finance</span><b>Accounting</b></div>
   <div class="tool" style="left:440px;--sx:120px;--sy:180px;--r:3deg;--cx:370px"><span class="mono">Revenue</span><b>CRM</b></div>
@@ -284,7 +359,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 04 -->
 <section class="slide" id="s4">
-  <div class="eyebrow a">03 — Meet Agent UNC</div><div class="count">04 / 12</div>
+  <div class="eyebrow a">03 — Meet Agent UNC</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s">Ask your unc anything.</h1>
   <p class="sub lead a" style="--d:.3s">Agent UNC answers questions and flags what needs attention — grounded in your own data.</p>
   <div class="chat a" style="--d:.35s">
@@ -301,7 +376,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 05 -->
 <section class="slide" id="s5">
-  <div class="eyebrow a">04 — The operating picture</div><div class="count">05 / 12</div>
+  <div class="eyebrow a">04 — The operating picture</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s;top:206px">One view. Actually custom.</h1>
   <div class="grid8">
     <div class="tile" style="--d:.35s"><span class="mono">01</span><span class="dot live"></span><span class="val" data-count="248.6" data-dec="1" data-pre="€" data-suf="k" data-delay="500"></span><b>Finance</b></div>
@@ -318,7 +393,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 06 -->
 <section class="slide" id="s6">
-  <div class="eyebrow a">05 — Priorities</div><div class="count">06 / 12</div>
+  <div class="eyebrow a">05 — Priorities</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s">Needs your attention, takes up more of your screen.</h1>
   <p class="sub lead a" style="--d:.3s">Ranked by what changed, not by who shouts loudest.</p>
   <div class="rows" data-at="1500">
@@ -328,9 +403,28 @@ h1,h2,h3,p{margin:0;font-weight:500}
   </div>
 </section>
 
+<!-- live product -->
+<section class="slide" id="live">
+  <div class="eyebrow a">06 — Live product</div><div class="count"></div>
+  <h1 class="h a" style="--d:.1s">See it live.</h1>
+  <ol class="steps">
+    <li class="a" style="--d:.3s"><span class="mono">01</span><div><b>Overview</b><span>Eight signals at a glance</span></div></li>
+    <li class="a" style="--d:.38s"><span class="mono">02</span><div><b>Finance</b><span>Cash, margin and runway</span></div></li>
+    <li class="a" style="--d:.46s"><span class="mono">03</span><div><b>Tickets &amp; Issues</b><span>Open work and risks</span></div></li>
+    <li class="a" style="--d:.54s"><span class="mono">04</span><div><b>Ask Agent UNC</b><span>Answers from company data</span></div></li>
+    <li class="a" style="--d:.62s"><span class="mono">05</span><div><b>Subscription</b><span>Plans, billed through Stripe</span></div></li>
+  </ol>
+  <div class="browser a" style="--d:.25s">
+    <div class="browser-bar"><i></i><i></i><i></i><span class="url"><span class="dot"></span>unc / workspace</span></div>
+    <div class="screen"><iframe title="UNC workspace" tabindex="-1"></iframe><div class="shield"></div><svg class="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9.5-6.6 1.4 3.9 7.6-3 1.5-3.9-7.7L4 19z" fill="#fff" stroke="#121619" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <div class="offline"><span class="mono">Live workspace</span>Open the deck from the workspace or /unc/ to run the live demo.</div></div>
+  </div>
+  <div class="mono live-note a fade" style="--d:1s">Live workspace · sample company data</div>
+</section>
+
 <!-- 07 -->
 <section class="slide" id="s7">
-  <div class="eyebrow a">06 — Subscriptions</div><div class="count">07 / 12</div>
+  <div class="eyebrow a">07 — Subscriptions</div><div class="count"></div>
   <div class="bills" data-at="2100">
     <div class="bill" data-at="250"  style="left:120px;top:260px;--r:-3deg;--gx:-60px;--gy:250px"><span>Notion</span><span class="mono">$228 / mo</span></div>
     <div class="bill" data-at="450"  style="left:170px;top:345px;--r:2deg;--gx:-110px;--gy:165px"><span>Slack</span><span class="mono">$308 / mo</span></div>
@@ -354,7 +448,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 08 -->
 <section class="slide" id="s8">
-  <div class="eyebrow a">07 — Connections</div><div class="count">08 / 12</div>
+  <div class="eyebrow a">08 — Connections</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s">Plugs into the tools you already use.</h1>
   <div class="cards4">
     <div class="conn a" style="--d:.35s" data-at="1100"><span class="st"><i></i><span class="n">Connecting</span><span class="y">Connected</span></span><div><b>QuickBooks</b><p>Finance</p></div></div>
@@ -364,9 +458,32 @@ h1,h2,h3,p{margin:0;font-weight:500}
   </div>
 </section>
 
+<!-- supabase -->
+<section class="slide" id="supa">
+  <div class="eyebrow a">09 — Under the hood</div><div class="count"></div>
+  <h1 class="h a" style="--d:.1s">Built on Supabase.</h1>
+  <p class="sub a" style="--d:.25s;position:absolute;left:120px;top:322px">Auth, Postgres with row-level security, and Edge Functions.</p>
+  <div class="pipe">
+    <div class="wire a draw" style="--d:1.3s;transform-origin:left"></div>
+    <span class="packet"></span>
+    <div class="nodes">
+      <div class="node" style="--d:.4s;--h:0s"><span class="mono">01 · Client</span><div><b>Workspace</b><p>Browser holds the publishable key only</p></div></div>
+      <div class="node" style="--d:.55s;--h:.79s"><span class="mono">02 · Auth</span><div><b>Sign in</b><p>Email magic link, one workspace per company</p></div></div>
+      <div class="node" style="--d:.7s;--h:1.58s"><span class="mono">03 · Edge Function</span><div><b>agent-chat</b><p>Checks membership, plan and usage quota</p></div></div>
+      <div class="node" style="--d:.85s;--h:2.37s"><span class="mono">04 · Postgres</span><div><b>Company memory</b><p>Facts, conversations and messages</p></div></div>
+      <div class="node" style="--d:1s;--h:3.16s"><span class="mono">05 · Model</span><div><b>Claude or Grok</b><p>Answer cites sources, saved to history</p></div></div>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="col a" style="--d:1.7s"><div class="mono">Row-level security</div><h3>One company, one wall</h3><p class="sub">Every table is scoped to its organization.</p></div>
+    <div class="col a" style="--d:1.85s"><div class="mono">Secrets server-side</div><h3>No keys in the browser</h3><p class="sub">Model and Stripe keys live in Edge Function secrets.</p></div>
+    <div class="col a" style="--d:2s"><div class="mono">Session memory</div><h3>History follows you</h3><p class="sub">Conversations sync across devices once signed in.</p></div>
+  </div>
+</section>
+
 <!-- 09 -->
 <section class="slide" id="s9">
-  <div class="eyebrow a fade">08 — Privacy &amp; grounding</div><div class="count">09 / 12</div>
+  <div class="eyebrow a fade">10 — Privacy &amp; grounding</div><div class="count"></div>
   <h1 class="h a fade" style="--d:.2s">Your data stays yours. Answers stay grounded.</h1>
   <div class="rule a fade" style="--d:.9s"></div>
   <div class="cols">
@@ -378,7 +495,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 10 -->
 <section class="slide" id="s10">
-  <div class="eyebrow a">09 — Plans</div><div class="count">10 / 12</div>
+  <div class="eyebrow a">11 — Plans</div><div class="count"></div>
   <h1 class="h a" style="--d:.1s;top:206px">Simple plans. Start small.</h1>
   <div class="plans">
     <div class="plan a" style="--d:.35s"><div class="mono">Starter</div><div class="price" data-count="29" data-pre="€" data-delay="500"></div><div class="mono">Per month</div><hr><p class="sub">The operating picture and Agent UNC for small teams.</p></div>
@@ -387,9 +504,34 @@ h1,h2,h3,p{margin:0;font-weight:500}
   </div>
 </section>
 
+<!-- stripe checkout -->
+<section class="slide" id="pay">
+  <div class="eyebrow a">12 — Checkout</div><div class="count"></div>
+  <h1 class="h a" style="--d:.1s">Pay in one click. Stripe does the rest.</h1>
+  <ol class="flow">
+    <li data-at="500"><span class="mono">01</span><div><b>Pick a plan</b><p>A workspace owner or admin chooses Starter or Growth.</p></div></li>
+    <li data-at="1100"><span class="mono">02</span><div><code>create-checkout</code><p>Edge Function checks the role and opens a Stripe Checkout session.</p></div></li>
+    <li data-at="1700"><span class="mono">03</span><div><b>Stripe Checkout</b><p>Hosted payment page. Card data never touches UNC.</p></div></li>
+    <li data-at="5000"><span class="mono">04</span><div><code>stripe-webhook</code><p>Signature verified, subscription written to Postgres.</p></div></li>
+    <li data-at="5700"><span class="mono">05</span><div><b>Plan active</b><p>Agent limits update for the whole workspace.</p></div></li>
+  </ol>
+  <div class="checkout a" style="--d:.9s">
+    <div class="co-head"><span>UNC · Checkout</span><span class="badge">TEST MODE</span></div>
+    <div class="co-title">Subscribe to UNC Growth</div>
+    <div class="co-price">€79.00 <small>per month</small></div>
+    <div class="co-label">Email</div>
+    <div class="co-field">owner@company.com</div>
+    <div class="co-label">Card information</div>
+    <div class="co-field card"><span class="co-num ph">1234 1234 1234 1234</span></div>
+    <div class="co-row"><div class="co-exp ph">MM / YY</div><div class="co-cvc ph">CVC</div></div>
+    <div class="co-btn">Subscribe</div>
+  </div>
+  <div class="event" data-at="5000"><b>●</b> checkout.session.completed → stripe-webhook · 200 OK</div>
+</section>
+
 <!-- 11 -->
 <section class="slide" id="s11">
-  <div class="eyebrow a">10 — Brand system</div><div class="count">11 / 12</div>
+  <div class="eyebrow a">13 — Brand system</div><div class="count"></div>
   <h1 class="h words" style="top:196px"><span style="animation-delay:.1s">Calm.</span> <span style="animation-delay:.45s">Precise.</span> <span style="animation-delay:.8s">Confident.</span></h1>
   <div class="bs">
     <div class="a" style="--d:1.1s"><span class="mono">Logo</span><div class="wm"><span class="dot"></span>UNC</div></div>
@@ -408,7 +550,7 @@ h1,h2,h3,p{margin:0;font-weight:500}
 
 <!-- 12 -->
 <section class="slide" id="s12">
-  <div class="eyebrow a">11 — Closing</div><div class="count">12 / 12</div>
+  <div class="eyebrow a">14 — Closing</div><div class="count"></div>
   <h1 class="close words"><span style="animation-delay:.2s">meet</span> <span style="animation-delay:.4s">the</span> <span style="animation-delay:.6s">team,</span> <span style="animation-delay:.95s">unc</span><i class="fin"></i></h1>
   <p class="sub a" style="--d:2s">UNC — company intelligence for mid-market teams.</p>
   <div class="rule a draw" style="bottom:160px;--d:2.3s"></div>
@@ -455,7 +597,80 @@ function countUp(el) {
   });
 }
 
+const productURL = /\/presentation\/(index\.html)?$/.test(location.pathname) ? '../' : 'product/';
+let appFrame = null, appReady = false;
+function loadApp() {
+  if (appFrame) return;
+  appFrame = document.querySelector('#live iframe');
+  appFrame.addEventListener('load', () => {
+    try { appReady = !!appFrame.contentDocument.querySelector('.nav-item[data-view]'); } catch (e) { appReady = false; }
+    appFrame.closest('.screen').classList.toggle('no-app', !appReady);
+  });
+  appFrame.src = productURL;
+}
+
+slides.forEach((s, i) => s.querySelectorAll('.count, .count-auto').forEach(c =>
+  c.textContent = String(i + 1).padStart(2, '0') + ' / ' + slides.length));
+
 const hooks = {
+  live(s) {
+    loadApp();
+    const steps = [...s.querySelectorAll('.steps li')], cursor = s.querySelector('.cursor');
+    steps.forEach(x => x.classList.remove('on'));
+    if (!appReady) {
+      appFrame.addEventListener('load', () => { if (slides[cur] === s && appReady) hooks.live(s); }, { once: true });
+      return;
+    }
+    const K = 1240 / 1440;
+    const find = sel => { try { return appFrame.contentDocument.querySelector(sel); } catch (e) { return null; } };
+    const point = el => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      cursor.style.left = (r.left + Math.min(r.width / 2, 70)) * K + 'px';
+      cursor.style.top = (r.top + r.height / 2) * K + 'px';
+    };
+    const press = el => {
+      if (!el) return;
+      cursor.classList.remove('click'); void cursor.getBoundingClientRect(); cursor.classList.add('click');
+      el.click();
+    };
+    const step = (ms, i, sel) => {
+      later(ms, () => { steps.forEach((x, k) => x.classList.toggle('on', k === i)); point(find(sel)); });
+      later(ms + 950, () => press(find(sel)));
+    };
+    find('.nav-item[data-view="overview"]')?.click();
+    cursor.style.left = '620px'; cursor.style.top = '420px';
+    step(900, 0, '.nav-item[data-view="overview"]');
+    step(3300, 1, '.nav-item[data-view="finance"]');
+    step(5900, 2, '.nav-item[data-view="operations"]');
+    const box = '#agentPanel textarea', question = 'What should I do about the Acme renewal risk?';
+    step(8500, 3, box);
+    later(9600, () => {
+      const ta = find(box); if (!ta) return;
+      for (let i = 1; i <= question.length; i++) later(i * 40, () => {
+        ta.value = question.slice(0, i); ta.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+      later(question.length * 40 + 400, () => {
+        const form = ta.closest('form');
+        if (form?.requestSubmit) form.requestSubmit();
+        else ta.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      });
+    });
+    step(17500, 4, '.nav-item[data-view="billing"]');
+  },
+  pay(s) {
+    const num = s.querySelector('.co-num'), exp = s.querySelector('.co-exp'), cvc = s.querySelector('.co-cvc');
+    const btn = s.querySelector('.co-btn'), card = '4242 4242 4242 4242';
+    num.textContent = '1234 1234 1234 1234'; exp.textContent = 'MM / YY'; cvc.textContent = 'CVC';
+    [num, exp, cvc].forEach(e => e.classList.add('ph'));
+    btn.className = 'co-btn'; btn.textContent = 'Subscribe';
+    for (let i = 1; i <= card.length; i++) later(2000 + i * 55, () => { num.classList.remove('ph'); num.textContent = card.slice(0, i); });
+    later(3200, () => { exp.classList.remove('ph'); exp.textContent = '12 / 28'; });
+    later(3450, () => { cvc.classList.remove('ph'); cvc.textContent = '123'; });
+    later(3900, () => { btn.classList.add('press'); btn.textContent = 'Processing…'; });
+    later(4100, () => btn.classList.remove('press'));
+    later(4800, () => { btn.classList.add('done'); btn.textContent = '✓  Subscription active'; });
+  },
   s4(s) {
     const q = s.querySelector('.q'), label = s.querySelector('.ans-label');
     const think = s.querySelector('.thinking'), ans = s.querySelector('.ans');
@@ -525,6 +740,7 @@ setTimeout(() => hint.classList.add('hide'), 5000);
 
 const start = parseInt(location.hash.slice(1), 10);
 document.fonts.ready.then(() => go(start >= 1 ? start - 1 : 0));
+setTimeout(loadApp, 1500);
 </script>
 </body>
 </html>

@@ -1,0 +1,91 @@
+/* unc-Branding für alle Versionen: Logo und Klang-Schalter. Verhalten in brand.js.
+   Alles in der Textfarbe der jeweiligen Seite, keine eigene Markenfarbe. */
+
+span.unc-logo {
+  display: inline-block;
+  margin: 0;
+  color: inherit;
+  line-height: 0;
+  vertical-align: middle;
+}
+.unc-logo svg { display: block; width: auto; height: var(--unc-h, 1em); }
+.unc-breathe { animation: unc-breathe 3.2s ease-in-out 2; }
+@keyframes unc-breathe {
+  50% { transform: scale(1.08); }
+}
+
+.unc-versions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: #111;
+  color: #fff;
+  border-bottom: 1px solid #2a2a2a;
+  font: 500 13px/1.2 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.unc-versions label { opacity: 0.7; }
+.unc-versions select {
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  cursor: pointer;
+}
+.unc-versions select:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Ladeanimation (brand.js): das Horn rollt, die Schatten bleiben stehen. Die weiße Decke liegt ab dem
+   ersten Bild über der Seite, bis brand.js übernimmt; ohne JavaScript verschwindet sie nach 2,5 s selbst. */
+body[data-versions]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: #fff;
+  animation: unc-cover 0s linear 2.5s forwards;
+}
+html.unc-js body[data-versions]::before { display: none; }
+@keyframes unc-cover { to { visibility: hidden; } }
+.unc-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.unc-loader svg { width: min(320px, 64vw); height: auto; overflow: visible; }
+.unc-shadow { color: #81d8d0; opacity: 0; transition: opacity 0.25s ease, color 0.3s ease; transform-box: fill-box; transform-origin: center; }
+.unc-shadow.unc-left { opacity: 1; }
+.unc-shadow.unc-ink { color: #111; }
+.unc-horn { transition: opacity 0.2s ease; }
+.unc-out { opacity: 0; pointer-events: none; }
+
+.om-sound {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  padding: 4px 11px;
+  font: inherit;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.om-sound:hover { opacity: 1; }
+.om-sound[aria-pressed="true"] {
+  opacity: 1;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+.om-foot { display: flex; align-items: center; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .unc-breathe { animation: none; }
+}
