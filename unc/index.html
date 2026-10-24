@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNC — Brand presentation</title>
+<meta name="description" content="UNC — company intelligence for mid-market teams. Brand presentation 2026.">
+<meta property="og:title" content="UNC — Company incorporated.">
+<meta property="og:description" content="Agent-led workspace for mid-market teams. Berlin · B2B SaaS.">
+<meta name="theme-color" content="#121619">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121619;--graphite:#181d21;--card:#1a1f23;--line:#2a3136;
+  --text:#f5f5f7;--muted:#a3a8ad;--dim:#7c848a;--teal:#63d3ca;
+  --sans:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--spring:cubic-bezier(.3,1.35,.5,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);color:var(--text);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+#viewport{position:fixed;inset:0;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;background:var(--ink)}
+
+/* slides */
+.slide{position:absolute;inset:0;padding:0 120px;opacity:0;visibility:hidden;transition:opacity .55s ease,visibility 0s .55s}
+.slide.active{opacity:1;visibility:visible;transition:opacity .55s ease}
+.eyebrow,.count,.mono{font-family:var(--mono);font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.eyebrow{position:absolute;left:120px;top:110px;color:var(--teal)}
+.count{position:absolute;right:120px;top:110px}
+h1,h2,h3,p{margin:0;font-weight:500}
+.h{font-size:92px;line-height:1.02;letter-spacing:-.035em;position:absolute;left:120px;top:226px;max-width:1440px}
+.sub{font-size:31px;line-height:1.42;color:var(--muted);font-weight:400}
+.rule{position:absolute;left:120px;right:120px;height:1px;background:var(--line);transform-origin:left}
+
+/* generic entrance animations, replayed on every visit */
+.a{opacity:0}
+.slide.active .a{animation:rise .9s var(--ease) both;animation-delay:var(--d,0s)}
+.slide.active .a.fade{animation-name:fade;animation-duration:1.4s}
+.slide.active .a.draw{animation:draw 1s var(--ease) both;animation-delay:var(--d,0s)}
+.slide.active .a.pop{animation:pop .7s var(--spring) both;animation-delay:var(--d,0s)}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{from{opacity:1;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 #63d3ca66}50%{box-shadow:0 0 0 14px #63d3ca00}}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--teal)}
+.dot.live{animation:pulse 2.2s ease-in-out infinite}
+.words>span{display:inline-block;opacity:0}
+.slide.active .words>span{animation:rise .8s var(--ease) both}
+
+/* 01 title */
+#s1 .top{position:absolute;top:110px}
+#s1 .t-dot{position:absolute;left:124px;top:420px;width:22px;height:22px}
+#s1 .logo{position:absolute;left:77px;top:470px;width:806px;height:288px}
+#s1 .logo path{stroke-dasharray:1;stroke-dashoffset:1}
+#s1.active .logo path{animation:stroke 1.3s cubic-bezier(.65,0,.35,1) forwards}
+#s1.active .logo path:nth-child(1){animation-delay:.55s}
+#s1.active .logo path:nth-child(2){animation-delay:.8s}
+#s1.active .logo path:nth-child(3){animation-delay:1.05s}
+@keyframes stroke{to{stroke-dashoffset:0}}
+#s1 .tag{position:absolute;left:116px;top:760px;font-size:88px;letter-spacing:-.04em;color:#aeb2b7;clip-path:inset(0 100% 0 0)}
+#s1.active .tag{animation:reveal 1.1s cubic-bezier(.65,0,.35,1) 2s forwards}
+@keyframes reveal{to{clip-path:inset(0 0 0 0)}}
+#s1 .foot{position:absolute;bottom:100px;left:120px;right:120px;display:flex;justify-content:space-between}
+
+/* 02 problem: tools scattered */
+.tool{position:absolute;width:320px;white-space:nowrap;padding:26px 28px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.tool .mono{font-size:17px}
+.tool b{display:block;margin-top:12px;font-size:36px;font-weight:500;letter-spacing:-.02em}
+#s2 .tool{opacity:0}
+#s2.active .tool{animation:flyin 1.1s var(--ease) both,drift 6s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1.1s)}
+@keyframes flyin{from{opacity:0;transform:translate(var(--fx),var(--fy)) rotate(calc(var(--r) * 4))}to{opacity:1;transform:rotate(var(--r))}}
+@keyframes drift{0%,100%{transform:rotate(var(--r)) translateY(0)}50%{transform:rotate(calc(var(--r) * -.4)) translateY(-10px)}}
+#s2 .sub{position:absolute;left:120px;bottom:120px}
+
+/* 03 what unc is: tools converge */
+#s3 .tool{top:520px;opacity:0;text-align:center}
+#s3.active .tool{animation:gather 2.1s cubic-bezier(.6,0,.3,1) .2s both}
+@keyframes gather{
+  0%{opacity:1;transform:translate(var(--sx),var(--sy)) rotate(var(--r))}
+  45%{opacity:1;transform:none}
+  85%{opacity:.7;transform:translateX(var(--cx)) scale(.25)}
+  100%{opacity:0;transform:translateX(var(--cx)) scale(.05)}
+}
+#s3 .core{position:absolute;left:953px;top:631px;width:14px;height:14px}
+#s3.active .core{animation:pop .6s var(--spring) 2.05s both,vanish .3s ease 2.75s forwards}
+@keyframes vanish{to{opacity:0}}
+#s3 .rule{top:638px;transform-origin:center}
+#s3 .cols,#s9 .cols{position:absolute;left:120px;right:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:56px}
+#s3 .cols{top:690px}
+.col .mono{font-size:19px}
+.col h3{font-size:44px;letter-spacing:-.025em;margin:20px 0 22px}
+.col .sub{font-size:30px}
+
+/* 04 agent */
+#s4 .h{max-width:780px}
+#s4 .lead{position:absolute;left:120px;top:460px;width:680px}
+.chat{position:absolute;left:1000px;top:220px;width:800px;height:700px;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.chat-head{height:98px;display:flex;align-items:center;gap:20px;padding:0 48px;border-bottom:1px solid var(--line)}
+.chat-head .dot{width:12px;height:12px}
+.chat-body{padding:52px 48px}
+.q{margin-left:auto;width:fit-content;max-width:490px;min-height:110px;background:#232a2f;border-radius:4px;padding:16px 48px;font-size:31px;line-height:1.42;opacity:0;transition:opacity .3s}
+.q.on{opacity:1}
+.q .caret{display:inline-block;width:3px;height:30px;background:var(--teal);vertical-align:-4px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ans-label{margin-top:52px;color:var(--teal);opacity:0;transition:opacity .4s}
+.ans-label.on{opacity:1}
+.thinking{display:flex;gap:9px;margin-top:22px;height:30px;align-items:center;opacity:0}
+.thinking.on{opacity:1}
+.thinking i{width:10px;height:10px;border-radius:50%;background:var(--dim);animation:think 1s ease-in-out infinite}
+.thinking i:nth-child(2){animation-delay:.15s}.thinking i:nth-child(3){animation-delay:.3s}
+@keyframes think{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
+.ans{font-size:31px;line-height:1.45;margin-top:-30px}
+.ans span{opacity:0;transition:opacity .35s}
+.ans span.on{opacity:1}
+.sources{position:absolute;left:48px;bottom:52px;display:flex;gap:22px}
+.sources span{transition:color .4s,opacity .4s;opacity:.35}
+.sources span.on{color:var(--text);opacity:1}
+.sources span.tag.on{color:var(--teal)}
+
+/* 05 tiles */
+.grid8{position:absolute;left:120px;right:120px;top:400px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.tile{position:relative;height:250px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:30px 40px;display:flex;flex-direction:column;justify-content:space-between;opacity:0}
+#s5.active .tile{animation:drop .8s var(--spring) both;animation-delay:var(--d)}
+@keyframes drop{from{opacity:0;transform:translateY(-40px) scale(.96)}to{opacity:1;transform:none}}
+.tile .mono{font-size:19px}
+.tile .val{font-size:52px;letter-spacing:-.03em;font-weight:500;font-variant-numeric:tabular-nums}
+.tile .val small{font-size:22px;color:var(--dim);margin-left:8px;letter-spacing:0;font-weight:400}
+.tile b{font-size:34px;font-weight:500;letter-spacing:-.02em}
+.tile .dot{position:absolute;right:38px;top:38px;width:13px;height:13px}
+.foot-note{position:absolute;left:120px;bottom:70px;font-size:16px}
+
+/* 06 priorities */
+#s6 .h{max-width:700px;font-size:88px}
+#s6 .lead{position:absolute;left:120px;top:640px;width:560px}
+.rows{position:absolute;left:860px;right:120px;top:238px;border-top:1px solid var(--line)}
+.row{border-bottom:1px solid var(--line);padding:46px 0 46px 40px;position:relative;transition:all .9s var(--ease);transform-origin:left}
+.row .dot{position:absolute;left:0;top:57px;width:13px;height:13px}
+.row h3{font-size:42px;letter-spacing:-.025em;margin:20px 0 16px;transition:font-size .9s var(--ease)}
+.row p{font-size:29px;color:var(--muted);font-weight:400}
+.rows.on .row.hi{padding:62px 40px 62px 72px;background:var(--card);border-left:2px solid var(--teal)}
+.rows.on .row.hi .dot{left:32px;top:73px;animation:pulse 2.2s infinite}
+.rows.on .row.hi h3{font-size:62px}
+.rows.on .row:not(.hi){opacity:.38;padding-top:30px;padding-bottom:30px}
+.rows.on .row:not(.hi) h3{font-size:34px}
+
+/* 07 one invoice */
+.one{position:absolute;left:100px;top:230px;font-size:520px;line-height:1;font-weight:500;letter-spacing:-.05em;color:var(--teal);opacity:0;transform:scale(.5);transition:opacity .5s,transform 1s var(--spring)}
+.one.on{opacity:1;transform:none}
+.bill{position:absolute;width:480px;height:82px;padding:0 30px;background:var(--card);border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:space-between;font-size:28px;opacity:0;transform:translateY(-320px) rotate(var(--r));transition:transform .7s var(--spring),opacity .4s}
+.bill .mono{font-size:18px;color:var(--muted)}
+.bill.on{opacity:1;transform:rotate(var(--r))}
+.bills.on .bill.on{opacity:0;transform:translate(var(--gx),var(--gy)) scale(.15);transition:transform .8s cubic-bezier(.7,0,.3,1),opacity .6s .25s}
+#s7 .right{position:absolute;left:900px;top:290px;right:120px}
+#s7 .right .h{position:static;font-size:92px}
+#s7 .right .sub{margin-top:52px}
+#s7 .rule{left:900px;top:719px}
+#s7 .cols3{position:absolute;left:900px;right:120px;top:762px;display:grid;grid-template-columns:repeat(3,1fr)}
+#s7 .cols3 b{display:block;font-size:42px;font-weight:500;letter-spacing:-.02em;margin-top:16px}
+
+/* 08 connections */
+.cards4{position:absolute;left:120px;right:120px;top:560px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.conn{height:360px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:40px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .6s}
+.conn.on{border-color:#63d3ca88}
+.conn.on.settled{border-color:var(--line)}
+.st{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:19px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.st i{width:11px;height:11px;border-radius:50%;background:#4b545a;animation:blink 1s steps(1) infinite}
+.conn.on .st i{background:var(--teal);animation:none}
+.st .y{display:none}.conn.on .st .y{display:inline}.conn.on .st .n{display:none}
+.conn b{font-size:42px;font-weight:500;letter-spacing:-.02em}
+.conn p{font-size:30px;color:var(--muted);font-weight:400;margin-top:16px}
+
+/* 09 privacy */
+#s9 .rule{top:600px}
+#s9 .cols{top:652px}
+#s9 .col .mono{color:var(--teal)}
+#s9 .col h3{min-height:100px;font-size:42px;line-height:1.15;margin-bottom:24px}
+
+/* 10 plans */
+.plans{position:absolute;left:120px;right:120px;top:380px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.plan{height:560px;border:1px solid var(--line);border-radius:6px;padding:48px;background:var(--ink);transition:border-color .8s,background .8s}
+.plan.on{border-color:var(--teal);background:var(--card)}
+.plan .mono{font-size:20px}
+.plan.on .mono{color:var(--teal)}
+.price{font-size:150px;letter-spacing:-.05em;line-height:1;margin:48px 0 34px;font-weight:500;font-variant-numeric:tabular-nums}
+.plan hr{border:0;border-top:1px solid var(--line);margin:34px 0 40px}
+.plan .sub{font-size:30px}
+.joke{font-size:58px;line-height:1.55;letter-spacing:-.04em;margin:44px 0 32px;font-weight:500;opacity:0;transform:scale(.9);transition:opacity .6s,transform .8s var(--spring)}
+.joke.on{opacity:1;transform:none}
+
+/* 11 brand system */
+.bs{position:absolute;left:120px;right:120px;top:340px;bottom:60px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;border-top:1px solid var(--line)}
+.bs>div{padding:40px 0 0;position:relative}
+.bs>div:nth-child(2n){border-left:1px solid var(--line);padding-left:40px}
+.bs>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+.wm{display:flex;align-items:flex-start;gap:6px;margin-top:40px;font-size:160px;font-weight:500;letter-spacing:-.04em;line-height:.9}
+.wm .dot{width:20px;height:20px;margin-top:22px}
+.sw{display:flex;gap:20px;margin-top:34px}
+.sw div{width:180px}
+.sw i{display:block;height:120px;border-radius:4px;border:1px solid var(--line);margin-bottom:22px}
+.sw span{display:block;font-family:var(--mono);font-size:16px;letter-spacing:.15em;color:var(--dim);line-height:1.5}
+.geist{font-size:110px;letter-spacing:-.04em;margin:30px 0 40px}
+.voice{font-size:52px;letter-spacing:-.03em;margin:40px 0 34px}
+
+/* 12 closing */
+.close{position:absolute;left:112px;top:360px;font-size:162px;letter-spacing:-.05em;line-height:1;white-space:nowrap}
+.close .fin{display:inline-block;width:34px;height:34px;border-radius:50%;background:var(--teal);margin-left:10px;opacity:0;transform:scale(0)}
+#s12.active .close .fin{animation:pop .7s var(--spring) 1.5s forwards,pulse 2.4s ease-in-out 2.4s infinite}
+#s12 .sub{position:absolute;left:120px;top:705px}
+#s12 .foot{position:absolute;left:120px;right:120px;bottom:100px;display:flex;justify-content:space-between;align-items:center}
+#s12 .foot .dot{width:12px;height:12px;margin-right:14px}
+
+/* chrome */
+#progress{position:fixed;left:0;bottom:0;height:3px;background:var(--teal);transition:width .6s var(--ease);z-index:5}
+#hint{position:fixed;right:20px;bottom:16px;font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;transition:opacity 1s;z-index:5}
+#hint.hide{opacity:0}
+.navzone{position:fixed;top:0;bottom:0;width:30%;z-index:4;cursor:pointer}
+#prev{left:0;cursor:w-resize}#next{right:0;cursor:e-resize}
+
+@media (prefers-reduced-motion:reduce){
+  .a,.tool,.tile,#s1 .tag{opacity:1!important;animation:none!important;clip-path:none!important}
+  #s1 .logo path{stroke-dashoffset:0!important;animation:none!important}
+  #s3 .tool,#s3 .core{display:none}
+  *{transition-duration:0s!important}
+}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- 01 -->
+<section class="slide" id="s1">
+  <div class="mono top a fade" style="left:120px;--d:2.4s">Brand presentation · 2026</div>
+  <div class="mono top a fade" style="right:120px;--d:2.5s">Berlin · B2B SaaS</div>
+  <span class="dot t-dot a pop live" style="--d:.15s"></span>
+  <svg class="logo" viewBox="-56 -20 112 40" aria-label="unc">
+    <g fill="none" stroke="#f5f5f7" stroke-width="4.5" stroke-linejoin="round">
+      <path pathLength="1" d="M-22 -12 L-26.2 -12 A14 14 0 1 1 -45.8 -12 L-50 -12"/>
+      <path pathLength="1" d="M-12 12 L-7.8 12 A14 14 0 1 1 11.8 12 L16 12"/>
+      <path pathLength="1" d="M50 14 L50 9.8 A14 14 0 1 1 50 -9.8 L50 -14"/>
+    </g>
+  </svg>
+  <div class="tag">Company incorporated.</div>
+  <div class="rule a draw" style="bottom:160px;--d:2.6s"></div>
+  <div class="foot">
+    <span class="mono a fade" style="--d:2.9s">Agent-led workspace for mid-market teams</span>
+    <span class="mono a fade" style="--d:3s">01 / 12</span>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="slide" id="s2">
+  <div class="eyebrow a" style="--d:0s">01 — The problem</div><div class="count">02 / 12</div>
+  <h1 class="h a" style="--d:.1s">Company information is scattered across tools.</h1>
+  <div class="tool" style="left:150px;top:560px;--r:-4deg;--fx:-500px;--fy:200px;--d:.5s"><span class="mono">Finance</span><b>Accounting</b></div>
+  <div class="tool" style="left:560px;top:700px;--r:3deg;--fx:-200px;--fy:500px;--d:.7s"><span class="mono">Revenue</span><b>CRM</b></div>
+  <div class="tool" style="left:920px;top:545px;--r:-2deg;--fx:100px;--fy:-500px;--d:.6s"><span class="mono">Customers</span><b>Support desk</b></div>
+  <div class="tool" style="left:1270px;top:690px;--r:5deg;--fx:400px;--fy:500px;--d:.85s"><span class="mono">Team</span><b>Issue tracker</b></div>
+  <div class="tool" style="left:1500px;top:530px;--r:-3deg;--fx:600px;--fy:-100px;--d:.75s"><span class="mono">Operations</span><b>Inboxes &amp; docs</b></div>
+  <p class="sub a" style="--d:1.9s">No one sees the whole picture until it's too late.</p>
+</section>
+
+<!-- 03 -->
+<section class="slide" id="s3">
+  <div class="eyebrow a">02 — What UNC is</div><div class="count">03 / 12</div>
+  <h1 class="h a" style="--d:.1s">One operating picture of your company.</h1>
+  <div class="tool" style="left:100px;--sx:50px;--sy:40px;--r:-4deg;--cx:710px"><span class="mono">Finance</span><b>Accounting</b></div>
+  <div class="tool" style="left:440px;--sx:120px;--sy:180px;--r:3deg;--cx:370px"><span class="mono">Revenue</span><b>CRM</b></div>
+  <div class="tool" style="left:810px;--sx:110px;--sy:25px;--r:-2deg;--cx:0px"><span class="mono">Customers</span><b>Support desk</b></div>
+  <div class="tool" style="left:1180px;--sx:90px;--sy:170px;--r:5deg;--cx:-370px"><span class="mono">Team</span><b>Issue tracker</b></div>
+  <div class="tool" style="left:1520px;--sx:-20px;--sy:10px;--r:-3deg;--cx:-710px"><span class="mono">Operations</span><b>Inboxes &amp; docs</b></div>
+  <span class="dot core"></span>
+  <div class="rule a draw" style="--d:2.55s"></div>
+  <div class="cols">
+    <div class="col a" style="--d:2.9s"><div class="mono">01</div><h3>Connect</h3><p class="sub">Finance, revenue, customer, team and operations data.</p></div>
+    <div class="col a" style="--d:3.05s"><div class="mono">02</div><h3>See</h3><p class="sub">Eight signals in one workspace, always current.</p></div>
+    <div class="col a" style="--d:3.2s"><div class="mono">03</div><h3>Act</h3><p class="sub">Agent UNC flags what needs attention.</p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="slide" id="s4">
+  <div class="eyebrow a">03 — Meet Agent UNC</div><div class="count">04 / 12</div>
+  <h1 class="h a" style="--d:.1s">Ask your unc anything.</h1>
+  <p class="sub lead a" style="--d:.3s">Agent UNC answers questions and flags what needs attention — grounded in your own data.</p>
+  <div class="chat a" style="--d:.35s">
+    <div class="chat-head"><span class="dot live"></span><span class="mono">Agent UNC · Live</span></div>
+    <div class="chat-body">
+      <div class="q"></div>
+      <div class="mono ans-label">Agent UNC</div>
+      <div class="thinking"><i></i><i></i><i></i></div>
+      <p class="ans"></p>
+    </div>
+    <div class="sources mono"><span>Sources</span><span class="tag">·&nbsp; Tickets</span><span class="tag">·&nbsp; Linear</span><span class="tag">·&nbsp; Messages</span></div>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="slide" id="s5">
+  <div class="eyebrow a">04 — The operating picture</div><div class="count">05 / 12</div>
+  <h1 class="h a" style="--d:.1s;top:206px">One view. Actually custom.</h1>
+  <div class="grid8">
+    <div class="tile" style="--d:.35s"><span class="mono">01</span><span class="dot live"></span><span class="val" data-count="248.6" data-dec="1" data-pre="€" data-suf="k" data-delay="500"></span><b>Finance</b></div>
+    <div class="tile" style="--d:.43s"><span class="mono">02</span><span class="val"><span data-count="8" data-delay="580"></span><small>open</small></span><b>Tickets &amp; Issues</b></div>
+    <div class="tile" style="--d:.51s"><span class="mono">03</span><span class="val" data-count="18.4" data-dec="1" data-suf="k" data-delay="660"></span><b>Social Media</b></div>
+    <div class="tile" style="--d:.59s"><span class="mono">04</span><span class="val" data-count="4.2" data-dec="1" data-suf="%" data-delay="740"></span><b>Conversion</b></div>
+    <div class="tile" style="--d:.55s"><span class="mono">05</span><span class="val" data-count="87" data-suf="%" data-delay="700"></span><b>Retention</b></div>
+    <div class="tile" style="--d:.63s"><span class="mono">06</span><span class="val"><span data-count="14" data-delay="780"></span><small>unread</small></span><b>Messages</b></div>
+    <div class="tile" style="--d:.71s"><span class="mono">07</span><span class="dot live"></span><span class="val"><span data-count="5" data-delay="860"></span><small>overdue</small></span><b>Management</b></div>
+    <div class="tile" style="--d:.79s"><span class="mono">08</span><span class="val"><span data-count="3" data-delay="940"></span><small>urgent</small></span><b>To-do</b></div>
+  </div>
+  <div class="mono foot-note a fade" style="--d:1.6s">Sample workspace data</div>
+</section>
+
+<!-- 06 -->
+<section class="slide" id="s6">
+  <div class="eyebrow a">05 — Priorities</div><div class="count">06 / 12</div>
+  <h1 class="h a" style="--d:.1s">Needs your attention, takes up more of your screen.</h1>
+  <p class="sub lead a" style="--d:.3s">Ranked by what changed, not by who shouts loudest.</p>
+  <div class="rows" data-at="1500">
+    <div class="row hi a" style="--d:.45s"><span class="dot"></span><span class="mono">High · Now</span><h3>Biggest mover leads the brief</h3><p>The signal that changed most rises to the top.</p></div>
+    <div class="row a" style="--d:.6s"><span class="dot" style="background:#f5f5f7"></span><span class="mono">Medium · This week</span><h3>Watch what's drifting</h3><p>Slower trends surface before they become problems.</p></div>
+    <div class="row a" style="--d:.75s"><span class="dot" style="background:#5a6268"></span><span class="mono">Low · Stable</span><h3>Quiet signals stay quiet</h3><p>Nothing changed, nothing to read.</p></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="slide" id="s7">
+  <div class="eyebrow a">06 — Subscriptions</div><div class="count">07 / 12</div>
+  <div class="bills" data-at="2100">
+    <div class="bill" data-at="250"  style="left:120px;top:260px;--r:-3deg;--gx:-60px;--gy:250px"><span>Notion</span><span class="mono">$228 / mo</span></div>
+    <div class="bill" data-at="450"  style="left:170px;top:345px;--r:2deg;--gx:-110px;--gy:165px"><span>Slack</span><span class="mono">$308 / mo</span></div>
+    <div class="bill" data-at="650"  style="left:140px;top:430px;--r:-1.5deg;--gx:-80px;--gy:80px"><span>Figma</span><span class="mono">$72 / mo</span></div>
+    <div class="bill" data-at="850"  style="left:190px;top:515px;--r:3deg;--gx:-130px;--gy:-5px"><span>Linear</span><span class="mono">$140 / mo</span></div>
+    <div class="bill" data-at="1050" style="left:130px;top:600px;--r:-2deg;--gx:-70px;--gy:-90px"><span>Adobe CC</span><span class="mono">$147 / mo</span></div>
+    <div class="bill" data-at="1250" style="left:175px;top:685px;--r:1deg;--gx:-115px;--gy:-175px"><span>Google Workspace</span><span class="mono">$288 / mo</span></div>
+  </div>
+  <div class="one" data-at="2450">1</div>
+  <div class="right">
+    <h1 class="h a" style="--d:2.7s">One invoice for all software.</h1>
+    <p class="sub a" style="--d:2.9s">Every subscription your team uses, billed together.</p>
+  </div>
+  <div class="rule a draw" style="--d:3.1s"></div>
+  <div class="cols3">
+    <div class="a" style="--d:3.3s"><span class="mono">See</span><b>Every tool</b></div>
+    <div class="a" style="--d:3.45s"><span class="mono">Pay</span><b>Once a month</b></div>
+    <div class="a" style="--d:3.6s"><span class="mono">Cut</span><b>Unused seats</b></div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="slide" id="s8">
+  <div class="eyebrow a">07 — Connections</div><div class="count">08 / 12</div>
+  <h1 class="h a" style="--d:.1s">Plugs into the tools you already use.</h1>
+  <div class="cards4">
+    <div class="conn a" style="--d:.35s" data-at="1100"><span class="st"><i></i><span class="n">Connecting</span><span class="y">Connected</span></span><div><b>QuickBooks</b><p>Finance</p></div></div>
+    <div class="conn a" style="--d:.45s" data-at="1600"><span class="st"><i></i><span class="n">Connecting</span><span class="y">Connected</span></span><div><b>HubSpot</b><p>Revenue &amp; customers</p></div></div>
+    <div class="conn a" style="--d:.55s" data-at="2100"><span class="st"><i></i><span class="n">Connecting</span><span class="y">Connected</span></span><div><b>Linear</b><p>Tickets &amp; issues</p></div></div>
+    <div class="conn a" style="--d:.65s" data-at="2600"><span class="st"><i></i><span class="n">Importing</span><span class="y">Imported</span></span><div><b>Website</b><p>Company context</p></div></div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="slide" id="s9">
+  <div class="eyebrow a fade">08 — Privacy &amp; grounding</div><div class="count">09 / 12</div>
+  <h1 class="h a fade" style="--d:.2s">Your data stays yours. Answers stay grounded.</h1>
+  <div class="rule a fade" style="--d:.9s"></div>
+  <div class="cols">
+    <div class="col a fade" style="--d:1.2s"><div class="mono">Grounded</div><h3>Answers from your data only</h3><p class="sub">Every answer cites its source.</p></div>
+    <div class="col a fade" style="--d:1.6s"><div class="mono">Private</div><h3>Never used to train models</h3><p class="sub">Your company data is not shared.</p></div>
+    <div class="col a fade" style="--d:2s"><div class="mono">In control</div><h3>You choose what connects</h3><p class="sub">Disconnect any source, anytime.</p></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" id="s10">
+  <div class="eyebrow a">09 — Plans</div><div class="count">10 / 12</div>
+  <h1 class="h a" style="--d:.1s;top:206px">Simple plans. Start small.</h1>
+  <div class="plans">
+    <div class="plan a" style="--d:.35s"><div class="mono">Starter</div><div class="price" data-count="29" data-pre="€" data-delay="500"></div><div class="mono">Per month</div><hr><p class="sub">The operating picture and Agent UNC for small teams.</p></div>
+    <div class="plan a" style="--d:.5s" data-at="1300"><div class="mono">Growth</div><div class="price" data-count="79" data-pre="€" data-delay="650"></div><div class="mono">Per month</div><hr><p class="sub">For growing mid-market teams with more connections.</p></div>
+    <div class="plan a" style="--d:.65s"><div class="mono">Enterprise</div><div class="joke" data-at="2300">a small loan of a million dollars</div><hr><p class="sub">Tailored setup, security review and support.</p></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" id="s11">
+  <div class="eyebrow a">10 — Brand system</div><div class="count">11 / 12</div>
+  <h1 class="h words" style="top:196px"><span style="animation-delay:.1s">Calm.</span> <span style="animation-delay:.45s">Precise.</span> <span style="animation-delay:.8s">Confident.</span></h1>
+  <div class="bs">
+    <div class="a" style="--d:1.1s"><span class="mono">Logo</span><div class="wm"><span class="dot"></span>UNC</div></div>
+    <div><span class="mono a" style="--d:1.2s">Colors</span>
+      <div class="sw">
+        <div class="a" style="--d:1.3s"><i style="background:#121619"></i><span>Charcoal<br>#121619</span></div>
+        <div class="a" style="--d:1.4s"><i style="background:#181d21"></i><span>Graphite<br>#181D21</span></div>
+        <div class="a" style="--d:1.5s"><i style="background:#f5f5f7"></i><span>Off-white<br>#F5F5F7</span></div>
+        <div class="a" style="--d:1.6s"><i style="background:#63d3ca;border-color:#63d3ca"></i><span>Teal accent<br>#63D3CA</span></div>
+      </div>
+    </div>
+    <div class="a" style="--d:1.8s"><span class="mono">Type</span><div class="geist">Geist</div><span class="mono">Geist Mono for labels</span></div>
+    <div class="a" style="--d:2s"><span class="mono">Voice</span><div class="voice">Few words. Real numbers.</div><p class="sub">Teal only where attention is needed.</p></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" id="s12">
+  <div class="eyebrow a">11 — Closing</div><div class="count">12 / 12</div>
+  <h1 class="close words"><span style="animation-delay:.2s">meet</span> <span style="animation-delay:.4s">the</span> <span style="animation-delay:.6s">team,</span> <span style="animation-delay:.95s">unc</span><i class="fin"></i></h1>
+  <p class="sub a" style="--d:2s">UNC — company intelligence for mid-market teams.</p>
+  <div class="rule a draw" style="bottom:160px;--d:2.3s"></div>
+  <div class="foot">
+    <span class="mono a fade" style="--d:2.6s;display:flex;align-items:center"><span class="dot"></span>UNC · Berlin</span>
+    <span class="mono a fade" style="--d:2.7s">Thank you</span>
+  </div>
+</section>
+
+</div></div>
+<div class="navzone" id="prev" aria-label="Previous slide"></div>
+<div class="navzone" id="next" aria-label="Next slide"></div>
+<div id="progress"></div>
+<div id="hint">← → navigate · F fullscreen</div>
+
+<script>
+const stage = document.getElementById('stage');
+const slides = [...document.querySelectorAll('.slide')];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur = -1, timers = [];
+
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `translate(-50%, -50%) scale(${s})`;
+}
+addEventListener('resize', fit); fit();
+
+const later = (ms, fn) => timers.push(setTimeout(fn, reduce ? 0 : ms));
+
+function countUp(el) {
+  const to = +el.dataset.count, dec = +(el.dataset.dec || 0);
+  const pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+  const fmt = v => pre + v.toFixed(dec) + suf;
+  if (reduce) { el.textContent = fmt(to); return; }
+  el.textContent = fmt(0);
+  later(+(el.dataset.delay || 0), () => {
+    const t0 = performance.now(), dur = 1300;
+    const step = now => {
+      const p = Math.min((now - t0) / dur, 1);
+      el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1 && slides[cur].contains(el)) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+const hooks = {
+  s4(s) {
+    const q = s.querySelector('.q'), label = s.querySelector('.ans-label');
+    const think = s.querySelector('.thinking'), ans = s.querySelector('.ans');
+    const srcs = [...s.querySelectorAll('.sources span')];
+    const question = 'Why did support load rise this week?';
+    const answer = 'Tickets & Issues moved the most this week. Most new tickets trace back to one recent release.';
+    [q, label, think, ...srcs].forEach(e => e.classList.remove('on'));
+    q.innerHTML = ''; ans.innerHTML = '';
+    let t = 800;
+    later(t, () => q.classList.add('on'));
+    for (let i = 1; i <= question.length; i++)
+      later(t + i * 42, () => q.innerHTML = question.slice(0, i) + (i < question.length ? '<span class="caret"></span>' : ''));
+    t += question.length * 42 + 350;
+    later(t, () => { label.classList.add('on'); think.classList.add('on'); });
+    t += 1300;
+    later(t, () => think.classList.remove('on'));
+    const words = answer.split(' ');
+    ans.innerHTML = words.map(w => `<span>${w.replace('&', '&amp;')} </span>`).join('');
+    const spans = [...ans.children];
+    spans.forEach((w, i) => later(t + i * 85, () => w.classList.add('on')));
+    t += words.length * 85 + 300;
+    srcs.forEach((e, i) => later(t + i * 280, () => e.classList.add('on')));
+  },
+  s8(s) {
+    s.querySelectorAll('.conn').forEach(c => {
+      c.classList.remove('settled');
+      later(+c.dataset.at + 900, () => c.classList.add('settled'));
+    });
+  }
+};
+
+function go(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  if (i === cur) return;
+  timers.forEach(clearTimeout); timers = [];
+  const s = slides[i];
+  slides.forEach(x => x !== s && x.classList.remove('active'));
+  s.classList.remove('active'); void s.offsetWidth; s.classList.add('active');
+  cur = i;
+  s.querySelectorAll('[data-at]').forEach(el => { el.classList.remove('on'); later(+el.dataset.at, () => el.classList.add('on')); });
+  s.querySelectorAll('[data-count]').forEach(countUp);
+  hooks[s.id] && hooks[s.id](s);
+  document.getElementById('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+  history.replaceState(null, '', '#' + (i + 1));
+}
+
+const hint = document.getElementById('hint');
+const nav = d => { hint.classList.add('hide'); go(cur + d); };
+addEventListener('keydown', e => {
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); nav(1); }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); nav(-1); }
+  else if (e.key === 'Home') go(0);
+  else if (e.key === 'End') go(slides.length - 1);
+  else if (e.key === 'r' || e.key === 'R') { const c = cur; cur = -1; go(c); }
+  else if (e.key === 'f' || e.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+});
+document.getElementById('next').onclick = () => nav(1);
+document.getElementById('prev').onclick = () => nav(-1);
+let tx = null;
+addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx; tx = null;
+  if (Math.abs(dx) > 40) nav(dx < 0 ? 1 : -1);
+});
+setTimeout(() => hint.classList.add('hide'), 5000);
+
+const start = parseInt(location.hash.slice(1), 10);
+document.fonts.ready.then(() => go(start >= 1 ? start - 1 : 0));
+</script>
+</body>
+</html>
