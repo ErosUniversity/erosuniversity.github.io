@@ -18,11 +18,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=EB+Garamond:ital@0;1&family=Cinzel:wght@500&family=Caveat:wght@600&display=swap">
+<script>
+  // reduced motion and no-JS visitors keep the plain page
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("unroll");
+</script>
 <style>
-  :root { --paper: #f3e8cf; --ink: #1c1a18; --soft: #6e665a; --seal: #a8322a; --display: "Cormorant Garamond", Garamond, Georgia, serif; --body: "EB Garamond", Garamond, Georgia, serif; --caps: "Cinzel", Georgia, serif; --hand: "Caveat", cursive; }
+  :root { --paper: #f3e8cf; --ink: #1c1a18; --soft: #6e665a; --seal: #a8322a; --dark: #141210; --display: "Cormorant Garamond", Garamond, Georgia, serif; --body: "EB Garamond", Garamond, Georgia, serif; --caps: "Cinzel", Georgia, serif; --hand: "Caveat", cursive; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 400 22px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
-  .mark { position: absolute; top: 18px; left: 20px; z-index: 2; font: 500 11px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--soft); text-decoration: none; }
+  .mark { position: absolute; top: 18px; left: 20px; z-index: 5; font: 500 11px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--soft); text-decoration: none; }
   .mark:hover { color: var(--seal); }
 
   /* the scroll melts into the page */
@@ -41,18 +45,62 @@
   .hand { font: 600 1.3em/1.2 var(--hand); }
   .last { margin-top: 2.6em; font: italic 500 clamp(30px, 5vw, 40px)/1.2 var(--display); }
   footer { padding: 30px 22px 60px; text-align: center; font: 500 11px/1.6 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--soft); }
+
+  /* red ink, drawn straight on the paper */
+  .sketch { display: block; width: 100%; max-width: 440px; height: auto; margin: 1.6em auto 2em; overflow: visible; }
+  .sketch .line { fill: none; stroke: var(--seal); stroke-linecap: round; stroke-linejoin: round; }
+  .sketch .wash { fill: var(--seal); }
+  .sketch .body { fill: var(--paper); }
+  .sketch text { fill: var(--seal); font: 600 33px var(--hand); text-anchor: middle; }
+
+  .closed, .roller { display: none; }
+
+  /* the unrolling version */
+  .unroll body { background: var(--dark); font-size: clamp(19px, 2.4vw, 22px); line-height: 1.55; }
+  .unroll .room { position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 42%, #2c2721 0%, var(--dark) 68%); }
+  .unroll .mark { position: fixed; color: #8f8675; }
+  .unroll .sheet { position: fixed; left: 50%; width: var(--sw); margin-left: calc(var(--sw) / -2); overflow: hidden; z-index: 2; box-shadow: 0 0 34px rgba(0, 0, 0, .55); }
+  .unroll .content { position: relative; background-color: var(--paper); will-change: transform;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .35' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .unroll .sheet::before, .unroll .sheet::after { content: ""; position: absolute; left: 0; right: 0; height: 46px; z-index: 2; pointer-events: none; }
+  .unroll .sheet::before { top: 0; background: linear-gradient(to bottom, rgba(40, 28, 14, .55), rgba(40, 28, 14, 0)); }
+  .unroll .sheet::after { bottom: 0; background: linear-gradient(to top, rgba(40, 28, 14, .55), rgba(40, 28, 14, 0)); }
+  .unroll header { padding: 34px 10px 0; }
+  .unroll .scroll { width: 100%; }
+  .unroll .kicker, .unroll header h1 { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); }
+  .unroll main { padding: 40px 26px 10px; }
+  .unroll footer { padding: 10px 22px 44px; }
+
+  .unroll .roller { display: block; position: fixed; left: 50%; width: calc(var(--sw) + 42px); margin-left: calc(var(--sw) / -2 - 21px); height: var(--d, 34px); z-index: 3; filter: drop-shadow(0 7px 8px rgba(0, 0, 0, .5)); }
+  .rod { position: absolute; left: 0; right: 0; top: 50%; height: 12px; margin-top: -6px; background: linear-gradient(to bottom, #2c1a0e, #7a4f2c 28%, #a4713f 42%, #5f3a1e 72%, #1e1208); }
+  .knob { position: absolute; top: 50%; width: 13px; height: 22px; margin-top: -11px; border-radius: 5px; background: linear-gradient(to bottom, #20130a, #8a5a31 30%, #b07c49 44%, #5a361c 74%, #170d06); }
+  .knob.l { left: 0; } .knob.r { right: 0; }
+  .tube { position: absolute; left: 21px; right: 21px; top: 0; bottom: 0; border-radius: 4px; background: linear-gradient(to bottom, #8d7c5c 0%, #e0d2b3 16%, #f8efda 36%, #eadcbd 58%, #b8a581 82%, #6e5e44 100%); }
+  .band { position: absolute; top: -1px; bottom: -1px; left: 50%; width: 34px; margin-left: -17px; background: linear-gradient(to bottom, #4c120d, #a8322a 34%, #c04338 48%, #8a241d 74%, #3d0e0a); }
+  .wax { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 48% 52% 50% 50%; background: radial-gradient(circle at 38% 32%, #d0544a, #a8322a 55%, #6e1a14); box-shadow: 0 2px 5px rgba(0, 0, 0, .5); }
+  .wax::after { content: ""; position: absolute; left: 16px; top: 16px; width: 14px; height: 14px; border-radius: 2px; background: #7c1f18; box-shadow: 0 1px 0 rgba(255, 255, 255, .2); }
+  .unroll .closed { display: block; position: fixed; left: 16px; right: 16px; z-index: 1; text-align: center; pointer-events: none; }
+  .closed em { display: block; margin-bottom: 12px; font: italic 500 clamp(26px, 5vw, 36px)/1.2 var(--display); color: #e7dcc5; }
+  .closed b { font: 500 11px/1.5 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: #a59a86; }
 </style>
 </head>
 <body>
+<div class="room"></div>
 <a class="mark" href="/">Eros University</a>
+<div class="closed" aria-hidden="true"><em>The Monkey Who Stayed</em><b>Scroll to open</b></div>
+<div class="roller top" aria-hidden="true"><span class="rod"></span><span class="knob l"></span><span class="knob r"></span><span class="tube"></span></div>
+<div class="roller bottom" aria-hidden="true"><span class="rod"></span><span class="knob l"></span><span class="knob r"></span><span class="tube"><span class="band"></span><span class="wax"></span></span></div>
+<div class="sheet">
+<div class="content">
 <header>
   <img class="scroll" src="monkey.webp" width="1024" height="1024" alt="Ink painting of a horned monkey sitting with a long curled tail, covering his mouth with one hand.">
   <p class="kicker">The story of Sun Wu Shi</p>
   <h1>The Monkey Who Stayed</h1>
 </header>
 <main>
-  <p class="open">There were two monkeys in the stone.</p>
+  <p class="open">Sun Wu Shi is born from the thought that no one talks about and no one wants to ask about.</p>
 
+  <p>There were two monkeys in the stone.</p>
   <p>The first one burst out and light shot from his eyes all the way to heaven. You know his story. Sun Wukong, Great Sage, Equal of Heaven.</p>
   <p>The second came out a little later, because someone had to check whether the stone was okay. It wasn’t. It was a broken stone. He sat on it for a while.</p>
 
@@ -68,6 +116,41 @@
 
   <p>His brother went to war with heaven and bet the Buddha he could leap out of his hand. He flew to the end of the world, where five great pillars stood. He wrote <span class="hand">The Great Sage was here</span> on one of them, pissed at its foot, and flew home in triumph. The Buddha opened his hand. It was written on his finger. They put a mountain on Wukong for 500 years.</p>
   <p>Wu Shi walked. It took him his whole life. He was old when he reached the five pillars. He read his brother’s graffiti, and the stain was still there. He took the pen from behind his ear and wrote underneath: <span class="hand">me too.</span></p>
+
+  <svg class="sketch" viewBox="0 0 400 520" role="img" aria-label="Red ink sketch. An old monkey at the foot of a giant finger, beside an old stain, writes me too under the words The Great Sage was here.">
+    <defs>
+      <filter id="ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="4.5"/></filter>
+      <clipPath id="wipe"><rect id="wipe-rect" x="130" y="255" width="150" height="70"/></clipPath>
+    </defs>
+    <g filter="url(#ink)">
+      <!-- the other fingers of the hand -->
+      <path class="line" stroke-width="1.8" opacity=".65" d="M10 490 C6 340 8 212 22 192 C32 180 42 190 44 214 M44 490 C38 280 42 122 72 98 C92 84 106 110 110 170 M298 160 C304 90 322 70 342 86 C364 104 368 270 360 488 M364 240 C376 222 392 240 392 270 C394 350 386 430 384 490"/>
+      <!-- the finger with his brother's words -->
+      <path class="line" stroke-width="3.2" d="M104 490 C110 440 116 390 114 310 C110 200 106 62 150 26 C178 6 232 6 258 26 C302 62 300 200 294 312 C290 392 298 440 306 488"/>
+      <path class="line" stroke-width="1.8" d="M164 66 C160 40 176 24 204 24 C232 24 248 40 244 66 C230 76 178 76 164 66Z"/>
+      <path class="line" stroke-width="2" d="M146 106 C176 120 232 120 264 104 M156 124 C188 134 226 132 254 120"/>
+      <path class="line" stroke-width="2" d="M6 492 C90 486 150 497 230 492 S350 487 396 494"/>
+      <text transform="rotate(-4 204 190)" x="204" y="182" style="font-size:29px">The Great Sage</text>
+      <text transform="rotate(-4 204 190)" x="204" y="216" style="font-size:29px">was here</text>
+      <!-- the stain, still there -->
+      <path class="wash" opacity=".2" d="M240 438 C248 426 262 430 268 438 C282 442 286 456 278 470 C282 480 280 488 276 492 L238 492 C232 478 228 452 240 438Z"/>
+      <path class="wash" opacity=".32" d="M220 493 C240 488 290 488 306 494 C290 503 238 505 220 493Z"/>
+      <path class="line" stroke-width="1.3" opacity=".7" d="M250 446 C248 462 251 478 249 490 M263 442 C266 458 262 474 265 490 M274 456 C276 468 272 480 273 489"/>
+      <path class="wash" opacity=".7" d="M232 424 a2 2 0 1 0 .1 0Z M276 420 a1.6 1.6 0 1 0 .1 0Z M286 434 a1.4 1.4 0 1 0 .1 0Z M222 508 a2.4 1.6 0 1 0 .1 0Z M300 506 a1.8 1.4 0 1 0 .1 0Z"/>
+      <!-- him: small, old, hunched, the pen in his hand -->
+      <path class="line" stroke-width="4.2" d="M134 480 C92 504 50 476 60 440 C70 408 108 416 104 442 C100 458 84 452 86 440"/>
+      <path class="body line" stroke-width="3" d="M142 486 C120 462 120 420 146 398 C158 386 176 384 186 392 C192 410 196 432 194 450 C210 452 216 470 206 484 L224 490 C190 494 160 494 142 486Z"/>
+      <path class="line" stroke-width="2.6" d="M130 442 l11 -5 M127 458 l11 -3 M134 420 l10 -7 M146 404 l8 -8 M132 474 l11 -2 M146 430 l9 -5 M146 450 l9 -3 M150 470 l9 -2 M160 414 l7 -6"/>
+      <path class="line" stroke-width="2.2" d="M194 450 C186 458 180 470 182 484"/>
+      <g transform="translate(-10 2)"><path class="body line" stroke-width="3" d="M172 376 C170 356 190 348 204 358 C210 362 214 368 222 372 C228 378 224 388 214 388 C206 394 192 394 184 390 C176 388 172 384 172 376Z"/>
+      <path class="line" stroke-width="3" d="M184 352 C182 340 188 332 197 328 M176 366 C168 362 166 374 174 378 M214 382 C217 382 220 381 222 379"/>
+      <path class="wash" d="M205 364 a2.2 2.2 0 1 0 .1 0Z"/></g>
+      <path class="line" stroke-width="4.4" d="M188 412 C210 404 230 372 234 340"/>
+      <path class="line" stroke-width="2.8" d="M234 342 L248 306"/>
+    </g>
+    <g filter="url(#ink)" clip-path="url(#wipe)"><text class="too" transform="rotate(-3 204 290)" x="204" y="290" style="font-size:34px">me too.</text></g>
+  </svg>
+
   <p>Then he sat down against the finger and started laughing, and he couldn’t stop.</p>
 
   <span class="seal"></span>
@@ -84,9 +167,80 @@
 
   <span class="seal"></span>
 
+  <div class="final">
   <p>He has no temple and no heaven. But when someone laughs on the worst day of their life, at the hospital, at the funeral, at the bank, Sun Wu Shi is there for exactly as long as the laugh lasts. Then he’s gone again.</p>
   <p class="last">Don’t pray to him, he won’t answer. He’s eating.</p>
+  </div>
 </main>
 <footer>An Eros University story</footer>
+</div>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains("unroll")) return;
+  document.querySelector('meta[name="theme-color"]').content = "#141210";
+  var $ = function (s) { return document.querySelector(s); };
+  var sheet = $(".sheet"), content = $(".content"), top = $(".roller.top"), bottom = $(".roller.bottom"),
+      closed = $(".closed"), mark = $(".mark"), band = $(".band"), wax = $(".wax"),
+      fin = $(".final"), sketch = $(".sketch"), wipe = $("#wipe-rect");
+  var clamp = function (v) { return Math.max(0, Math.min(1, v)); };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var H, closedY, restT, maxH, openDist, offsetEnd, total, contentH, sketchY, sketchH, queued = false;
+
+  function measure() {
+    H = window.innerHeight;
+    var sw = Math.min(window.innerWidth - 54, 640);
+    root.style.setProperty("--sw", sw + "px");
+    closedY = H * 0.44;
+    restT = 40;
+    maxH = H - 88;
+    contentH = content.offsetHeight;
+    offsetEnd = Math.max(fin.offsetTop - 34, contentH - maxH);
+    openDist = maxH;
+    total = openDist + offsetEnd;
+    document.body.style.height = total + H + "px";
+    closed.style.top = closedY + 62 + "px";
+    var box = sketch.getBoundingClientRect(), c = content.getBoundingClientRect();
+    sketchY = box.top - c.top;
+    sketchH = box.height;
+    update();
+  }
+
+  function update() {
+    queued = false;
+    var s = Math.max(0, window.scrollY), t = clamp(s / openDist), e = t * t * (3 - 2 * t);
+    var offset = Math.min(offsetEnd, Math.max(0, s - openDist));
+    var gap = Math.min(e * maxH, contentH - offset);
+    var y = lerp(closedY, restT, clamp(e * 1.2));
+    var p = clamp(s / total), dB = lerp(64, 34, p), dT = lerp(34, 48, p);
+
+    sheet.style.top = y + "px";
+    sheet.style.height = gap + "px";
+    content.style.transform = "translateY(" + -offset + "px)";
+    top.style.setProperty("--d", dT + "px");
+    top.style.top = y - dT / 2 + "px";
+    bottom.style.setProperty("--d", dB + "px");
+    bottom.style.top = y + gap - dB / 2 + "px";
+
+    var sealGone = clamp(t / 0.05);
+    band.style.opacity = wax.style.opacity = 1 - sealGone;
+    closed.style.opacity = 1 - clamp(t / 0.1);
+    mark.style.opacity = 1 - clamp((t - 0.25) / 0.3);
+    mark.style.pointerEvents = t > 0.5 ? "none" : "";
+
+    // "me too." writes itself as it comes up the screen
+    var meY = y + sketchY + sketchH * 0.56 - offset;
+    wipe.setAttribute("width", 150 * clamp((H * 0.84 - meY) / (H * 0.28)));
+  }
+
+  function ask() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", ask, { passive: true });
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
+})();
+</script>
 </body>
 </html>
