@@ -1,0 +1,92 @@
+[
+  {
+    "n": "I", "title": "Kontext",
+    "rule": "Ein Verhalten ist nicht an sich gut oder schlecht. Es ist gut oder schlecht für die Gruppe, in der es stattfindet.",
+    "context": [
+      "Die Biologie kennt kaum eine Eigenschaft, die überall gut ist. Das Sichelzell-Gen ist ein bekanntes Beispiel. Wer eine Kopie davon trägt, ist besser vor Malaria geschützt. Wer zwei Kopien trägt, wird schwer krank. In Malariagebieten hat sich das Gen deshalb verbreitet, anderswo ist es nur eine Last.",
+      "Die Eigenschaft ist dieselbe, nur ihre Bedeutung hängt vom Ort ab. Für Verhalten gilt dasselbe. Wer Moral ohne Kontext formuliert, beschreibt kein Leben, sondern eine Idee davon."
+    ],
+    "source": "A. C. Allison, „Protection Afforded by Sickle-Cell Trait Against Subtertian Malarial Infection“, British Medical Journal (1954)."
+  },
+  {
+    "n": "II", "title": "Selbstzweck",
+    "rule": "Leben hat keinen Zweck außer sich selbst. Ein Verhalten, das die Gemeinschaft schwächt, von der es lebt, schwächt am Ende auch sich selbst.",
+    "context": [
+      "Maturana und Varela beschreiben Lebewesen als Systeme, die sich ständig selbst herstellen. Sie nennen das Autopoiesis. Ein Ziel außerhalb davon gibt es nicht. Aber kein Lebewesen stellt sich allein her, alle hängen von einer Umgebung ab, die andere mit aufbauen.",
+      "Die Evolutionsbiologie kennt das Problem als Tragik der Allmende. Wenn Einzelne das gemeinsame Gut ausbeuten, kann die ganze Gruppe zusammenbrechen, und die Ausbeuter mit ihr. Eigennutz, der die eigene Grundlage zerstört, ist auf lange Sicht kein Eigennutz."
+    ],
+    "source": "Humberto Maturana und Francisco Varela, Der Baum der Erkenntnis (1987). Daniel Rankin, Katja Bargum und Hanna Kokko, „The tragedy of the commons in evolutionary biology“, Trends in Ecology & Evolution (2007)."
+  },
+  {
+    "n": "III", "title": "Kein Raum ohne Moral",
+    "rule": "Jede Gruppe hat eine Moral, auch wenn sie sie nicht ausspricht. Was eine Gruppe duldet, verantwortet sie mit.",
+    "context": [
+      "Watzlawick hat gezeigt, dass man nicht nicht kommunizieren kann: Auch Schweigen ist eine Nachricht. Die Anthropologie stellt Ähnliches für Moral fest. In keiner bekannten Gesellschaft fehlen Normen, Sanktionen oder die Unterscheidung zwischen richtigem und falschem Verhalten.",
+      "Ein Raum, der sich für frei von Regeln hält, hat trotzdem welche. Sie zeigen sich darin, wer bleibt, wer geht und was niemand anspricht."
+    ],
+    "source": "Paul Watzlawick, Janet Beavin und Don Jackson, Menschliche Kommunikation (1969). Donald E. Brown, Human Universals (1991)."
+  },
+  {
+    "n": "IV", "title": "Sichtbare Regeln",
+    "rule": "Die Regeln eines Raums gelten für alle, die ihn betreten, aber nur, wenn sie vorher erkennbar waren. Eintreten ist keine Zustimmung zu Regeln, die niemand kennt.",
+    "context": [
+      "Die Forschungsethik hat festgelegt, was Zustimmung bedeutet. Nach dem Belmont Report braucht sie drei Dinge: Information, Verständnis und Freiwilligkeit. Wer nicht weiß, worauf er sich einlässt, hat nicht zugestimmt.",
+      "Ein Club, der fotografieren lässt, darf das tun, wenn es vor dem Eintritt klar ist. „Wer drin ist, hat zugestimmt“ funktioniert nur, wenn man vorher wissen konnte, wozu."
+    ],
+    "source": "National Commission for the Protection of Human Subjects, The Belmont Report (1979). Für die Rechtslage in Deutschland gelten das Recht am eigenen Bild (§ 22 KUG) und die DSGVO."
+  },
+  {
+    "n": "V", "title": "Symbiose",
+    "rule": "Was ein Lebewesen abgibt, weil es das nicht mehr braucht, darf genutzt werden. Diese Beziehung ist von Anfang an eine Symbiose.",
+    "context": [
+      "Darmbakterien vergären Ballaststoffe, die wir selbst nicht verdauen können. Dabei entsteht unter anderem Butyrat, ein Abfallprodukt der Bakterien. Für die Zellen unserer Darmwand ist es die wichtigste Energiequelle. Niemand verliert dabei etwas, und beide gewinnen.",
+      "Die Biologie nennt das „by-product mutualism“, also eine Partnerschaft über Nebenprodukte. Sie braucht weder Vertrauen noch Gegenleistung, nur dass jemand etwas nutzt, das ohnehin übrig ist."
+    ],
+    "source": "W. E. W. Roediger, „Role of anaerobic bacteria in the metabolic welfare of the colonic mucosa in man“, Gut (1980). Richard C. Connor, „The benefits of mutualism: a conceptual framework“, Biological Reviews (1995)."
+  },
+  {
+    "n": "VI", "title": "Parasitismus",
+    "rule": "Wer nutzt, was ein anderes Lebewesen herstellt und selbst braucht, lebt parasitär. Das gilt auch dann, wenn das Produkt nach außen abgegeben wird.",
+    "context": [
+      "Manche Bakterien geben Moleküle nach außen ab, die Eisen einfangen. Sie heißen Siderophore, und die Bakterien brauchen sie, um an Eisen zu kommen. Andere Bakterien derselben Art stellen keine her, nehmen aber das eingefangene Eisen auf. Sie sparen die Kosten und wachsen schneller.",
+      "Im Experiment verdrängten sie die Produzenten, bis die ganze Gruppe geschwächt war. Dass etwas offen herumliegt, heißt also nicht, dass es niemandem gehört."
+    ],
+    "source": "Ashleigh Griffin, Stuart West und Angus Buckling, „Cooperation and competition in pathogenic bacteria“, Nature (2004)."
+  },
+  {
+    "n": "VII", "title": "Parasitismus als Anfang",
+    "rule": "Viele Symbiosen haben parasitär begonnen. Eine Beziehung, die so beginnt, kann sich zur Symbiose entwickeln, wenn sich beide Seiten aneinander anpassen.",
+    "context": [
+      "Kwang Jeon beobachtete in den 1960er Jahren Amöben, die sich mit Bakterien infiziert hatten. Zuerst starben viele Amöben daran. Ein paar Jahre später konnten die überlebenden Amöben ohne die Bakterien nicht mehr leben. Aus einem Parasiten war ein Partner geworden.",
+      "Unsere Mitochondrien haben vermutlich eine ähnliche Geschichte: Sie waren einmal eigenständige Bakterien, die in eine andere Zelle eingedrungen sind. Ein parasitärer Anfang ist also ein Zustand, aus dem etwas anderes werden kann, und kein Urteil."
+    ],
+    "source": "Kwang W. Jeon, „Development of cellular dependence on infective organisms: micrurgical studies in amoebas“, Science (1972). Lynn Margulis, Die andere Evolution (1999)."
+  },
+  {
+    "n": "VIII", "title": "Gleiche Regeln für alle Arten",
+    "rule": "Die Sätze 5 bis 7 gelten innerhalb einer Art genauso wie zwischen Arten. Die Grenze der eigenen Art ändert nichts an der Regel.",
+    "context": [
+      "Fast kein Lebewesen ist ein reines Individuum. Ein Mensch besteht aus menschlichen Zellen und mindestens ebenso vielen Bakterienzellen. Die Biologie nennt solche Verbünde Holobionten. Die Mechanismen von Satz 5 bis 7 kümmern sich nicht um Artgrenzen: Bakterien nutzen auch die Siderophore fremder Arten.",
+      "Peter Singer nennt es Speziesismus, wenn Moral an der Grenze der eigenen Art endet. Biologisch lässt sich diese Grenze nicht begründen."
+    ],
+    "source": "Scott Gilbert, Jan Sapp und Alfred Tauber, „A Symbiotic View of Life: We Have Never Been Individuals“, The Quarterly Review of Biology (2012). Peter Singer, Animal Liberation (1975)."
+  },
+  {
+    "n": "IX", "title": "Das Radikal",
+    "rule": "Ein Individuum ohne Bindungen verhält sich wie ein Radikal: Es reagiert extrem und kann giftig werden. Wenn ein Mitglied ohne Bindung bleibt, ist das eine Aufgabe für die Gruppe, nicht nur sein Problem.",
+    "context": [
+      "In der Chemie ist ein Radikal ein Teilchen mit einem ungepaarten Elektron. Es ist instabil und reagiert heftig, bis es eine Bindung findet. Bei Menschen beschreibt die Forschung etwas Ähnliches. Einsame Menschen nehmen soziale Bedrohung stärker wahr und reagieren misstrauischer, was sie noch weiter isoliert.",
+      "Eine Meta-Analyse mit über 300.000 Menschen fand, dass starke soziale Bindungen die Überlebenschance um etwa 50 Prozent erhöhen. Isolation ist also auch biologisch ein Risiko, für den Einzelnen und für die Gruppe um ihn herum."
+    ],
+    "source": "John Cacioppo und William Patrick, Loneliness (2008). Julianne Holt-Lunstad, Timothy Smith und J. Bradley Layton, „Social Relationships and Mortality Risk: A Meta-analytic Review“, PLoS Medicine (2010)."
+  },
+  {
+    "n": "X", "title": "Unterschiedliche Grenzen",
+    "rule": "Wenn Menschen mit unterschiedlichen Erfahrungen im selben Raum sind, etwa mit ungewollter Berührung oder ungefragten Fotos, gilt die engere Grenze, bis sie ausgesprochen und geklärt ist.",
+    "context": [
+      "Verletzende Erfahrungen bleiben im Körper gespeichert. Van der Kolk beschreibt, wie eine harmlose Berührung bei Menschen mit Trauma dieselbe Reaktion auslösen kann wie die ursprüngliche Verletzung. Dieselbe Handlung ist für die eine Person nichts und für die andere ein Übergriff.",
+      "Wer nicht weiß, wo die Grenze des anderen liegt, folgt besser dem Vorsorgeprinzip aus dem Umweltrecht: Wenn Schaden möglich ist, wartet man nicht auf den Beweis. Die engere Grenze gilt so lange, bis man darüber gesprochen hat."
+    ],
+    "source": "Bessel van der Kolk, Verkörperter Schrecken (2015). Erklärung von Rio über Umwelt und Entwicklung, Grundsatz 15 (1992)."
+  }
+]

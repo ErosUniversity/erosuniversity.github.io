@@ -8,15 +8,8 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (id) => document.getElementById(id);
 
-const STONES = [{
-  n: "VI", title: "Parasitismus",
-  context: [
-    "Manche Bakterien geben Moleküle nach außen ab, die Eisen einfangen. Sie heißen Siderophore, und die Bakterien brauchen sie, um an Eisen zu kommen. Andere Bakterien derselben Art stellen keine her, nehmen aber das eingefangene Eisen auf. Sie sparen die Kosten und wachsen schneller.",
-    "Im Experiment verdrängten sie die Produzenten, bis die ganze Gruppe geschwächt war. Dass etwas offen herumliegt, heißt also nicht, dass es niemandem gehört.",
-  ],
-  source: "Ashleigh Griffin, Stuart West und Angus Buckling, „Cooperation and competition in pathogenic bacteria“, Nature (2004).",
-  asset: "assets/stone",
-}];
+// the ten rules (text, context, source); stone k's shards are in assets/stone<k>.bin/json
+const STONES = (await fetch("assets/rules.json").then((r) => r.json())).map((r, i) => ({ ...r, asset: `assets/stone${i + 1}` }));
 
 // --- renderer, scene ---------------------------------------------------------------
 const canvas = $("scene");
@@ -145,7 +138,7 @@ function piece(buf, d, homeOffset) {
 // --- one stone in the scene ---------------------------------------------------------
 class Stone {
   constructor(meta, buf) {
-    this.root = new THREE.Group(); scene.add(this.root);
+    this.root = new THREE.Group(); this.root.visible = false; scene.add(this.root);
     this.whole = new THREE.Mesh(piece(buf, meta.whole, new THREE.Vector3()), [STONE, INNER, CUT]);
     this.whole.castShadow = this.whole.receiveShadow = true;
     this.root.add(this.whole);
@@ -163,15 +156,20 @@ class Stone {
       s.lost = s.lost && !s.stump;                                       // only flying shards get lost
       const gold = s.lost ? new THREE.Mesh(g, GOLD) : null;          // the lost shard, cast in gold
       if (gold) { gold.visible = false; gold.position.copy(home); this.root.add(gold); }
+      const burst = toThree(s.burst); burst.z = Math.min(burst.z, 0.55);   // nothing flies into the lens
       return {
-        pivot, mesh, mats, gold, stump: s.stump, lost: s.lost, near: s.near, home,
-        burst: toThree(s.burst), burstQ: quatThree(s.burstRot), rest: toThree(s.rest), restQ: quatThree(s.restRot),
+        pivot, mesh, mats, gold, stump: s.stump, lost: s.lost, near: s.near, home, burst,
+        burstQ: quatThree(s.burstRot), rest: toThree(s.rest), restQ: quatThree(s.restRot),
         from: new THREE.Vector3(), fromQ: new THREE.Quaternion(), delay: Math.random() * 0.5,
       };
     });
   }
   showShards(on) { this.whole.visible = !on; for (const s of this.shards) s.pivot.visible = on; }
-  dispose() { scene.remove(this.root); }
+  dispose() {
+    scene.remove(this.root);
+    const seen = new Set();
+    this.root.traverse((o) => { if (o.geometry && !seen.has(o.geometry)) { seen.add(o.geometry); o.geometry.dispose(); } });
+  }
 }
 
 // --- camera framing -------------------------------------------------------------------
@@ -197,7 +195,8 @@ cam.pos.copy(viewPos(views.front));
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 const easeOut = (x) => 1 - Math.pow(1 - x, 3);
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
-let stone = null, phase = "intro", t0 = 0, now = 0, hold = 0, holding = false, idx = 0;
+let stone = null, nextStone = null, phase = "intro", t0 = 0, now = 0, hold = 0, holding = false, idx = 0;
+const verdicts = [];                        // per stone: "intact" | "broken" | "gold"
 const tally = { intact: 0, broken: 0, gold: 0 };
 const clock = new THREE.Clock();
 const show = (id, on) => $(id).classList.toggle("on", on);
@@ -209,9 +208,16 @@ async function loadStone(def) {
 
 function setPhase(p) { phase = p; t0 = now; }
 
+function marks() {
+  $("marks").innerHTML = STONES.map((_, i) => `<i class="${verdicts[i] || (i === idx ? "now" : "")}"></i>`).join("");
+}
+
 function arrive() {
   show("bar-next", false); show("note", false);
-  stone.root.position.set(3.2, 0, 0); stone.showShards(false);
+  stone.root.position.set(3.2, 0, 0); stone.root.visible = true; stone.showShards(false);
+  marks();
+  // fetch the next stone while this one is read
+  nextStone = idx + 1 < STONES.length ? loadStone(STONES[idx + 1]) : null;
   GOLD.emissiveIntensity = 0; GOLD.roughness = 0.18; $("context").classList.remove("on", "out");
   cam.target = "front"; setPhase("arrive");
 }
@@ -236,7 +242,7 @@ function writeContext(def) {
 $("begin").addEventListener("click", () => { show("intro", false); arrive(); });
 $("keep").addEventListener("click", () => {
   if (phase !== "idle") return;
-  show("bar-stone", false); tally.intact++; setPhase("keep");
+  show("bar-stone", false); tally.intact++; verdicts[idx] = "intact"; marks(); setPhase("out");
 });
 const startHold = (e) => { if (phase !== "idle") return; e.preventDefault(); holding = true; };
 const endHold = () => { holding = false; };
@@ -249,19 +255,28 @@ $("break").addEventListener("contextmenu", (e) => e.preventDefault());
 
 $("leave").addEventListener("click", () => {
   if (phase !== "rubble") return;
-  show("bar-rubble", false); $("context").classList.add("out"); tally.broken++; setPhase("leave");
+  show("bar-rubble", false); $("context").classList.add("out"); tally.broken++; verdicts[idx] = "broken"; marks(); setPhase("leave");
 });
 $("restore").addEventListener("click", () => {
   if (phase !== "rubble") return;
-  show("bar-rubble", false); $("context").classList.add("out"); tally.gold++;
+  show("bar-rubble", false); $("context").classList.add("out"); tally.gold++; verdicts[idx] = "gold"; marks();
   for (const s of stone.shards) { s.from.copy(s.pivot.position); s.fromQ.copy(s.pivot.quaternion); }
   cam.target = "front"; setPhase("restore");
 });
-$("next").addEventListener("click", () => { show("bar-next", false); show("note", false); setPhase("exit"); });
-$("again").addEventListener("click", () => {
-  tally.intact = tally.broken = tally.gold = 0; show("end", false);
-  stone.dispose(); loadStone(STONES[0]).then((s) => { stone = s; arrive(); });
+$("next").addEventListener("click", () => { show("bar-next", false); show("note", false); setPhase("out"); });
+$("again").addEventListener("click", async () => {
+  tally.intact = tally.broken = tally.gold = 0; verdicts.length = 0; idx = 0; show("end", false);
+  stone.dispose(); stone = await loadStone(STONES[0]); arrive();
 });
+
+// the stone leaves to the left, the next one comes in from the right
+async function nextOne() {
+  setPhase("wait");
+  stone.dispose();
+  idx++;
+  if (idx >= STONES.length) { stone = null; marks(); finish(); return; }
+  stone = await nextStone; arrive();
+}
 
 function finish() {
   show("end", true);
@@ -339,7 +354,7 @@ function step(dt, T) {
     if (done && T > 1.4) { setPhase("rubble"); $("context").classList.add("on"); }
   }
   if (phase === "rubble" && T > 1.8 && !$("bar-rubble").classList.contains("on")) show("bar-rubble", true);
-  if (phase === "leave" && T > 1.2) setPhase("exit");
+  if (phase === "leave" && T > 1.0) setPhase("out");
   if (phase === "restore") {
     let home = true;
     for (const s of S.shards) {
@@ -368,29 +383,38 @@ function step(dt, T) {
     if (T > 3.6) { setPhase("done"); show("bar-next", true); }
   }
   if (phase === "leave" || phase === "rubble") key.intensity = KEY;
-  if (phase === "keep") {
+  if (phase === "out") {
+    cam.target = "front";
     const u = clamp01(T / 1.1);
-    S.root.position.x = -3.4 * ease(u);
-    if (u >= 1) setPhase("exit");
+    S.root.position.x = -3.6 * ease(u);
+    if (u >= 1) nextOne();
   }
-  if (phase === "exit") { setPhase("end"); finish(); }
 }
 
 // --- go ---------------------------------------------------------------------------------------
 stone = await loadStone(STONES[0]);
-stone.root.position.set(3.2, 0, 0);
 $("loading").classList.add("done");
 
 function autoTick(mode) {
   if (phase === "idle") { if (mode === "keep") $("keep").click(); else holding = true; }
   if (phase === "rubble" && $("bar-rubble").classList.contains("on")) $(mode === "restore" ? "restore" : "leave").click();
+  if (phase === "done") $("next").click();
 }
 if (SIM) {
   const st = document.createElement("style"); st.textContent = "*{transition:none!important}"; document.head.append(st);
   await Promise.all(LOADS);
   $("begin").click();
   const n = Math.round(parseFloat(PARAMS.get("t") || "3") * 60);
-  for (let k = 0; k < n; k++) { autoTick(SIM); advance(1 / 60); }
+  for (let k = 0; k < n; k++) {
+    autoTick(SIM); advance(1 / 60);
+    if (phase === "wait") await new Promise((r) => setTimeout(r, 300));   // let the next stone load
+  }
   const still = () => { renderer.render(scene, camera); requestAnimationFrame(still); };   // hold the frame for the screenshot
   still(); document.title = "ready";
+  if (PARAMS.get("dbg")) {                       // DEBUG: anything close to the lens
+    const near = [];
+    scene.updateMatrixWorld(true);
+    scene.traverseVisible((o) => { if (o.isMesh) { const p = new THREE.Vector3().setFromMatrixPosition(o.matrixWorld); const d = p.distanceTo(camera.position); if (d < 2.2) near.push([o.parent && o.parent.parent === stone?.root ? "shard" : o.parent === stone?.root ? "root-child" : "other", p.toArray().map((v) => +v.toFixed(2)), +d.toFixed(2)]); } });
+    document.body.dataset.dbg = JSON.stringify({ idx, phase, cam: camera.position.toArray().map((v) => +v.toFixed(2)), roots: scene.children.filter((c) => c.isGroup).map((g) => [g.visible, g.position.x.toFixed(2), g.children.length]), near });
+  }
 } else requestAnimationFrame(frame);

@@ -10,7 +10,7 @@
 <meta property="og:url" content="https://erosuniversity.eu/10rules/">
 <meta property="og:site_name" content="Eros University">
 <meta property="og:title" content="Zehn Sätze biologischer Moral">
-<meta property="og:description" content="Behalte die Regel, oder brich den Stein.">
+<meta property="og:description" content="Zehn Regeln, gemeißelt in Stein. Behalte sie, oder brich den Stein.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500&display=swap">
@@ -83,6 +83,13 @@
   .end.on .spent { opacity: 1; }
   .soon { margin: 0 0 30px; font: italic 400 17px var(--display); color: var(--ash); }
 
+  /* ten marks: where you are and what you decided */
+  .marks { position: fixed; top: 22px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; gap: 7px; }
+  .marks i { width: 9px; height: 14px; border: 1px solid #4a453e; }
+  .marks i.now { border-color: var(--bone); }
+  .marks i.intact { background: #cfc6b5; border-color: #cfc6b5; }
+  .marks i.broken { border-style: dashed; border-color: #6f685e; }
+  .marks i.gold { background: linear-gradient(115deg, #cfc6b5 0 45%, var(--gold) 45% 58%, #cfc6b5 58%); border-color: var(--gold); }
   .loading { position: fixed; inset: 0; z-index: 6; display: grid; place-items: center; background: #000; font: italic 400 18px var(--display); color: var(--ash); transition: opacity .8s; }
   .loading.done { opacity: 0; pointer-events: none; }
   @media (max-width: 560px) { .btn { min-width: 0; flex: 1; padding: 16px 12px; letter-spacing: .22em; } .btns { width: 100%; max-width: 420px; padding: 0 16px; } }
@@ -97,6 +104,7 @@
 <body>
   <a class="mark" href="../">Eros University</a>
   <canvas id="scene"></canvas>
+  <div class="marks" id="marks" aria-hidden="true"></div>
   <div class="loading" id="loading">Der Steinmetz arbeitet …</div>
 
   <section class="screen intro on" id="intro">
@@ -134,7 +142,6 @@
       <div class="col gold"><div class="stack" id="s-gold"></div><div class="n" id="n-gold">0</div><div class="l">Gold</div></div>
     </div>
     <p class="spent" id="spent"></p>
-    <p class="soon">Die anderen neun Steine folgen.</p>
     <div class="btns"><button class="btn" id="again" type="button">Nochmal</button></div>
   </section>
 
