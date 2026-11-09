@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zehn Sätze biologischer Moral · Eros University</title>
+<meta name="description" content="Zehn Regeln, gemeißelt in Stein. Behalte sie, oder brich sie und lies, was darunter liegt.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://erosuniversity.eu/10rules/">
+<meta property="og:site_name" content="Eros University">
+<meta property="og:title" content="Zehn Sätze biologischer Moral">
+<meta property="og:description" content="Behalte die Regel, oder brich den Stein.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500&display=swap">
+<style>
+  :root {
+    --gold: #D6AA5C; --bone: #ECE4D6; --ash: #968E82; --night: #000;
+    --display: "Cormorant Garamond", Garamond, Georgia, serif;
+    --body: "EB Garamond", Garamond, Georgia, serif;
+    --caps: "Cinzel", "Trajan Pro", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #000; color: var(--bone); overflow: hidden; }
+  body { font: 400 19px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+  canvas#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  .mark { position: fixed; top: 20px; left: 22px; z-index: 5; font: 500 11px/1 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--ash); text-decoration: none; }
+
+  /* screens over the stone */
+  .screen { position: fixed; inset: 0; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 80px 24px; text-align: center; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility 0s .9s; }
+  .screen.on { opacity: 1; visibility: visible; transition-delay: 0s; }
+  .intro { background: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,.55), #000 75%); }
+  .intro h1 { margin: 0 0 30px; font: 500 clamp(30px, 6vw, 54px)/1.1 var(--caps); letter-spacing: .08em; }
+  .intro p { max-width: 560px; margin: 0 0 1em; color: #d6cebf; }
+  .intro .small { font: italic 400 16px var(--display); color: var(--ash); }
+
+  .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn { min-width: 200px; padding: 17px 26px; border: 1px solid var(--bone); background: none; color: var(--bone);
+         font: 500 12px/1 var(--caps); letter-spacing: .32em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s;
+         -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  .btn:hover, .btn:focus-visible { background: rgba(236,228,214,.1); outline: none; }
+  .btn.solid { background: var(--bone); color: #000; }
+  .btn.solid:hover { background: #fff; }
+  .btn.gold { border-color: var(--gold); color: var(--gold); }
+  .btn.gold:hover { background: rgba(214,170,92,.12); }
+
+  /* the decision bar under the stone */
+  .bar { position: fixed; left: 0; right: 0; bottom: max(34px, env(safe-area-inset-bottom)); z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 12px;
+         opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .6s, transform .6s, visibility 0s .6s; }
+  .bar.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .hint { font: italic 400 16px var(--display); color: var(--ash); }
+  .hold { position: relative; overflow: hidden; }
+  .hold .fill { position: absolute; inset: 0; background: var(--bone); transform-origin: left; transform: scaleX(0); }
+  .hold span { position: relative; mix-blend-mode: difference; color: #fff; }
+
+  /* context rising out of the rubble */
+  .context { position: fixed; left: 0; right: 0; top: 0; z-index: 3; padding: 74px 24px 0; display: flex; justify-content: center; pointer-events: none; }
+  .context .inner { max-width: 620px; text-align: center; }
+  .context p { margin: 0 0 .8em; font: 400 clamp(17px, 2.1vw, 21px)/1.55 var(--body); color: #e3dbcc; }
+  .context .src { font: italic 400 15px var(--display); color: var(--ash); }
+  .context .w { display: inline-block; opacity: 0; filter: blur(6px); transform: translateY(14px); transition: opacity 1.1s ease, filter 1.1s ease, transform 1.1s ease; }
+  .context.on .w { opacity: 1; filter: none; transform: none; }
+  .context.out .w { opacity: 0 !important; filter: blur(6px) !important; transform: translateY(18px) !important; transition-duration: .7s; transition-delay: 0s !important; }
+
+  .note { position: fixed; left: 0; right: 0; bottom: 120px; z-index: 4; text-align: center; font: italic 500 22px var(--display); color: var(--gold);
+          opacity: 0; transition: opacity 1.2s; pointer-events: none; }
+  .note.on { opacity: 1; }
+
+  /* the end */
+  .end { background: rgba(0,0,0,.82); }
+  .end h2 { margin: 0 0 34px; font: 500 clamp(24px, 4vw, 38px)/1.2 var(--caps); letter-spacing: .08em; }
+  .tally { display: flex; gap: clamp(22px, 6vw, 70px); align-items: flex-end; margin: 0 0 30px; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .col .stack { display: flex; flex-direction: column-reverse; gap: 5px; min-height: 140px; justify-content: flex-start; }
+  .col .st { width: 54px; height: 22px; background: #cfc6b5; }
+  .col.broken .st { background: none; border: 1px dashed #6f685e; }
+  .col.gold .st { background: linear-gradient(115deg, #cfc6b5 0 40%, var(--gold) 40% 46%, #cfc6b5 46% 70%, var(--gold) 70% 74%, #cfc6b5 74%); }
+  .col .n { font: 500 30px/1 var(--display); }
+  .col .l { font: 500 11px/1 var(--caps); letter-spacing: .26em; text-transform: uppercase; color: var(--ash); }
+  .spent { margin: 0 0 8px; font: italic 500 24px var(--display); color: var(--gold); opacity: 0; transition: opacity 1.4s 1.4s; }
+  .end.on .spent { opacity: 1; }
+  .soon { margin: 0 0 30px; font: italic 400 17px var(--display); color: var(--ash); }
+
+  .loading { position: fixed; inset: 0; z-index: 6; display: grid; place-items: center; background: #000; font: italic 400 18px var(--display); color: var(--ash); transition: opacity .8s; }
+  .loading.done { opacity: 0; pointer-events: none; }
+  @media (max-width: 560px) { .btn { min-width: 0; flex: 1; padding: 16px 12px; letter-spacing: .22em; } .btns { width: 100%; max-width: 420px; padding: 0 16px; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+  <a class="mark" href="../">Eros University</a>
+  <canvas id="scene"></canvas>
+  <div class="loading" id="loading">Der Steinmetz arbeitet …</div>
+
+  <section class="screen intro on" id="intro">
+    <h1>Zehn Sätze<br>biologischer Moral</h1>
+    <p>Jede Gruppe hat eine Moral, auch wenn sie sie nicht ausspricht. Hier sind zehn Sätze, abgeleitet aus der Biologie und gemeißelt in Stein.</p>
+    <p>Wenn eine Regel für dich Sinn ergibt, behalte sie. Wenn nicht, brich den Stein und lies, was darunter liegt.</p>
+    <p>Was du danach mit den Trümmern machst, entscheidest du.</p>
+    <p class="small">Platzhaltertext</p>
+    <div class="btns" style="margin-top:22px"><button class="btn solid" id="begin" type="button">Beginnen</button></div>
+  </section>
+
+  <div class="bar" id="bar-stone">
+    <div class="btns">
+      <button class="btn" id="keep" type="button">Behalten</button>
+      <button class="btn hold" id="break" type="button"><i class="fill" id="hold-fill"></i><span>Brechen</span></button>
+    </div>
+    <div class="hint">gedrückt halten zum Brechen</div>
+  </div>
+
+  <div class="context" id="context"><div class="inner" id="context-inner"></div></div>
+  <div class="bar" id="bar-rubble">
+    <div class="btns">
+      <button class="btn" id="leave" type="button">Liegen lassen</button>
+      <button class="btn gold" id="restore" type="button">Wiederherstellen</button>
+    </div>
+  </div>
+  <div class="note" id="note">Das hat dich Gold gekostet.</div>
+  <div class="bar" id="bar-next"><div class="btns"><button class="btn" id="next" type="button">Weiter</button></div></div>
+
+  <section class="screen end" id="end">
+    <h2>Dein Urteil</h2>
+    <div class="tally">
+      <div class="col intact"><div class="stack" id="s-intact"></div><div class="n" id="n-intact">0</div><div class="l">Intakt</div></div>
+      <div class="col broken"><div class="stack" id="s-broken"></div><div class="n" id="n-broken">0</div><div class="l">Gebrochen</div></div>
+      <div class="col gold"><div class="stack" id="s-gold"></div><div class="n" id="n-gold">0</div><div class="l">Gold</div></div>
+    </div>
+    <p class="spent" id="spent"></p>
+    <p class="soon">Die anderen neun Steine folgen.</p>
+    <div class="btns"><button class="btn" id="again" type="button">Nochmal</button></div>
+  </section>
+
+  <script>
+    // if anything breaks while loading, say so instead of waiting forever
+    const fail = (msg) => { const l = document.getElementById("loading"); if (l && !l.classList.contains("done")) l.textContent = "Fehler: " + msg; };
+    addEventListener("error", (e) => fail(e.message || "Datei fehlt"), true);
+    addEventListener("unhandledrejection", (e) => fail(String(e.reason && e.reason.message || e.reason)));
+    if (location.protocol === "file:") fail("Bitte über einen Server öffnen, nicht als Datei.");
+    setTimeout(() => fail("lädt sehr lange. Neu laden?"), 25000);
+  </script>
+  <script type="module" src="rules.js"></script>
+</body>
+</html>
