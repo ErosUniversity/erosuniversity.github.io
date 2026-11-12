@@ -15,13 +15,23 @@ export const air = { fog:{ value:.05 }, far:{ value:60 }, mist:{ value:new THREE
 export function inkMat(o = {}) {
   return new THREE.ShaderMaterial({
     uniforms:{ uTone:{ value:o.tone ?? .8 }, uSeal:{ value:o.seal ?? 0 }, uMap:{ value:o.map ?? null }, uUseMap:{ value:o.map ? 1 : 0 },
-      uFlat:{ value:o.flat || o.map ? 1 : 0 }, uForm:{ value:o.form ?? 0 }, uFog:air.fog, uFogInk:air.fogInk, uFar:air.far, uMist:air.mist, uLight:air.light },
-    transparent:!!o.map, depthWrite:!o.map, side:o.side ?? THREE.FrontSide,
+      uFlat:{ value:o.flat || o.map ? 1 : 0 }, uForm:{ value:o.form ?? 0 }, uVcol:{ value:o.vcol ?? 0 }, uInv:{ value:o.inv ?? 0 }, uFog:air.fog, uFogInk:air.fogInk, uFar:air.far, uMist:air.mist, uLight:air.light },
+    vertexColors:!!o.vcol, transparent:!!o.map, depthWrite:!o.map, side:o.side ?? THREE.FrontSide,
     polygonOffset:!!o.map, polygonOffsetFactor:-2, polygonOffsetUnits:-2,
     vertexShader:`
-      varying vec3 vN; varying vec3 vW; varying float vD; varying vec2 vUv;
+      varying vec3 vN; varying vec3 vW; varying float vD; varying vec2 vUv; varying float vCol;
+      #include <skinning_pars_vertex>
       void main(){
-        vec4 p=vec4(position,1.); vec3 n=normal;
+        vec3 transformed=position; vec3 objectNormal=normal;
+        #include <skinbase_vertex>
+        #include <skinnormal_vertex>
+        #include <skinning_vertex>
+        vec4 p=vec4(transformed,1.); vec3 n=objectNormal;
+        #if defined(USE_COLOR_ALPHA) || defined(USE_COLOR)
+          vCol=color.r;
+        #else
+          vCol=0.;
+        #endif
         #ifdef USE_INSTANCING
           p=instanceMatrix*p; n=mat3(instanceMatrix)*n;
         #endif
@@ -29,14 +39,14 @@ export function inkMat(o = {}) {
         vec4 mv=viewMatrix*w; vD=-mv.z; vUv=uv; gl_Position=projectionMatrix*mv;
       }`,
     fragmentShader:`
-      uniform float uTone,uSeal,uUseMap,uFog,uFogInk,uFar,uFlat,uForm; uniform vec2 uMist; uniform vec3 uLight; uniform sampler2D uMap;
+      uniform float uTone,uSeal,uUseMap,uFog,uFogInk,uFar,uFlat,uForm,uVcol,uInv; varying float vCol; uniform vec2 uMist; uniform vec3 uLight; uniform sampler2D uMap;
       varying vec3 vN; varying vec3 vW; varying float vD; varying vec2 vUv;
       ${NOISE}
       void main(){
         float a=1.;
         if(uUseMap>.5){ a=texture2D(uMap,vUv).a; if(a<.01) discard; }
         vec3 n=normalize(vN); if(!gl_FrontFacing) n=-n;
-        float ink=uTone;
+        float mk=clamp(vCol*uVcol,0.,1.); float ink=uTone*mix(1.-mk, .05+mk*1.7, uInv);   // vertex colour: painted markings, bright = bare paper
         if(uFlat<.5){
           float ndl=dot(n,normalize(uLight))*.5+.5;
           vec2 q=abs(n.y)>.7 ? vW.xz : vec2(vW.x+vW.z, vW.y);

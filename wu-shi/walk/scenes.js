@@ -1,6 +1,7 @@
 // The four places of the walk, built from plain shapes. Each returns { scene, camera, look }.
 import * as THREE from "three";
 import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
+import { clone as cloneSkinned } from "three/addons/utils/SkeletonUtils.js";
 import { inkMat } from "./ink.js";
 
 /* ---------- small helpers ---------- */
@@ -224,8 +225,8 @@ export function monkey(o = {}) {
 }
 
 /* ---------- the heads that come up out of the underworld ---------- */
-export function eroHead(src, black, size = .8) {
-  const g = src.clone(true), m = inkMat({ tone:black ? 1.3 : .015, form:black ? -.55 : .7 });
+export function eroHead(src, black, size = .8, red = false) {
+  const g = src.clone(true), m = red ? inkMat({ tone:1.2, seal:.84 }) : inkMat({ tone:black ? 1.3 : .015, form:black ? -.55 : .7 });
   g.traverse(o => { if (o.isMesh) o.material = m; });
   const b = new THREE.Box3().setFromObject(g), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
   g.position.sub(c); const w = new THREE.Group(); w.add(g); w.scale.setScalar(size / Math.max(sz.x, sz.y, sz.z));
@@ -247,4 +248,65 @@ export function theClimb(aspect, headSrc, o = {}) {
   s.add(me);
   return { scene:s, camera:cam(aspect, 70, [0, Y(M) + 4.3, Z(M) + 2.3], [0, Y(M + 6), Z(M + 6)]),
     look:{ fog:o.fog ?? .034, fogInk:.93, far:30, light:[.1, .9, .5], seed:o.seed ?? 5 } };
+}
+
+/* ---------- Sun Wu Shi himself: the rigged model, posed in model space (x right, y up, z front) ---------- */
+const LB = { arm:"Bone_022", fore:"Bone_021", thigh:"Bone_010", shin:"Bone_009" }, RB = { arm:"Bone_027", fore:"Bone_026", thigh:"Bone_015", shin:"Bone_014" };
+export function sun(src, h = .82, o = {}) {      // o.white: the colours turned inside out
+  const root = cloneSkinned(src), bones = {}, rest = {}, mat = inkMat({ tone:o.white ? 1 : 1.3, vcol:1.2, inv:o.white ? 1 : 0 });
+  root.traverse(o => { if (o.isBone) bones[o.name] = o; if (o.isSkinnedMesh) { o.material = mat; o.frustumCulled = false; } });
+  root.updateMatrixWorld(true);
+  for (const k in bones) rest[k] = { l:bones[k].quaternion.clone(), w:bones[k].getWorldQuaternion(new THREE.Quaternion()) };
+  const g = new THREE.Group(); root.scale.multiplyScalar(h / 1.7); g.add(root);
+  const e = new THREE.Euler(), q = new THREE.Quaternion(), wi = new THREE.Quaternion();
+  const rot = (name, x = 0, y = 0, z = 0) => { const b = bones[name], r = rest[name]; if (!b) return;
+    q.setFromEuler(e.set(x, y, z, "XZY")); wi.copy(r.w).invert(); b.quaternion.copy(r.l).multiply(wi.multiply(q).multiply(r.w)); };
+  // ph: walk phase, stride: size of the steps, up: arms 0 down .. 1 thrown up, lean: forward, crouch: knees, sway: side to side,
+  // armFwd: arms hang forward (ape), tail: how lively, t: time, head: [nod, turn, tilt], set: { boneKey:[x, y, z] } to override single bones
+  const KEY = { armL:LB.arm, armR:RB.arm, foreL:LB.fore, foreR:RB.fore, handL:"Bone_020", handR:"Bone_025", thighL:LB.thigh, thighR:RB.thigh, shinL:LB.shin, shinR:RB.shin,
+    hips:"Bone_001", chest:"Bone_004", neck:"Bone_018", head:"Bone_017" };
+  g.pose = (o = {}) => {
+    const ph = o.ph ?? 0, s = Math.sin(ph), c = Math.cos(ph), st = o.stride ?? 0, up = o.up ?? 0, t = o.t ?? 0, down = 1.22 * (1 - up) - .75 * up, crouch = o.crouch ?? 0,
+      sway = o.sway ?? 0, fwd = o.armFwd ?? 0, tl = o.tail ?? 1;
+    rot(LB.arm, st * .7 * s - fwd, 0, -down); rot(RB.arm, -st * .7 * s - fwd, 0, down);
+    rot(LB.fore, -.35 * (1 - up) - st * .25 * (1 + s) - fwd * .5, 0, 0); rot(RB.fore, -.35 * (1 - up) - st * .25 * (1 - s) - fwd * .5, 0, 0);
+    rot(LB.thigh, -st * .7 * s - crouch * 1.1, 0, .08 * crouch); rot(RB.thigh, st * .7 * s - crouch * 1.1, 0, -.08 * crouch);
+    rot(LB.shin, st * .9 * Math.max(0, s) + crouch * 1.7, 0, 0); rot(RB.shin, st * .9 * Math.max(0, -s) + crouch * 1.7, 0, 0);
+    rot("Bone_001", o.lean ?? 0, st * .18 * s, sway); rot("Bone_004", 0, -st * .3 * s, -sway * .6);
+    rot("Bone_017", (o.head?.[0] ?? 0) + st * .06 * Math.cos(ph * 2), o.head?.[1] ?? 0, (o.head?.[2] ?? 0) - sway * .5);
+    rot("Bone_020"); rot("Bone_025");
+    for (let i = 0; i < 7; i++) rot("Tail_" + i, Math.sin(t * 1.7 - i * .5) * .07 * tl + st * .1 * c, Math.sin(t * 2.4 - i * .7) * .11 * tl + st * .16 * Math.sin(ph - i * .6), 0);
+    if (o.set) for (const k in o.set) rot(KEY[k] || k, ...o.set[k]);
+  };
+  // one hand up at the head, scratching (a: 0..1 how far the arm is raised)
+  g.scratch = (a, t) => ({ armR:[-.25 * a, 0, 1.22 - 2.15 * a], foreR:[-.35 * (1 - a), 0, -1.75 * a + Math.sin(t * 17) * .16 * a], handR:[0, 0, Math.sin(t * 17 + 1) * .5 * a],
+    head:[.12 * a, -.25 * a + Math.sin(t * 1.3) * .08, .3 * a + Math.sin(t * 17) * .03 * a] });
+  g.pose(); return g;
+}
+
+/* ---------- the cloud his brother rides ---------- */
+export function cloud() {
+  const g = new THREE.Group(), m = inkMat({ tone:.05 });
+  [[0, 0, 0, .5], [.45, .05, 0, .38], [-.45, .03, .05, .4], [.2, .1, -.22, .35], [-.2, .08, .22, .33], [.78, -.02, .05, .22], [-.82, -.03, 0, .2], [1.02, .06, 0, .12]].forEach(([x, y, z, r]) =>
+    put(g, new THREE.SphereGeometry(r, 14, 10), m, x, y, z).scale.set(1, .55, 1));
+  return g;
+}
+
+/* ---------- the foot of the stairs: the floor, the last desk, the Book, the clerk. Origin: where the stairs end, looking down -z ---------- */
+export function deskSet() {
+  const g = new THREE.Group();
+  put(g, box(14, .4, 40), inkMat({ tone:.22 }), 0, -.198, -20);
+  put(g, box(2.3, 1.0, 1.1), inkMat({ tone:.88 }), 0, .5, -5); put(g, box(2.5, .08, 1.3), inkMat({ tone:.95 }), 0, 1.04, -5);
+  const PW = .62, PH = .8;
+  for (const sx of [-1, 1]) {
+    put(g, box(PW, .09, PH), inkMat({ tone:.12 }), sx * (PW / 2 + .01), 1.125, -4.95, 0, 0, sx * .06);
+    put(g, new THREE.PlaneGeometry(PW, PH), inkMat({ tone:.05 }), sx * (PW / 2 + .01), 1.185, -4.95, -Math.PI / 2, sx * .06, 0);
+    put(g, new THREE.PlaneGeometry(PW, PH), inkMat({ tone:.95, map:pageTex(sx < 0) }), sx * (PW / 2 + .01), 1.19, -4.95, -Math.PI / 2, sx * .06, 0);
+  }
+  put(g, box(.16, .05, .16), inkMat({ seal:1, flat:true }), -.95, 1.1, -4.75, 0, .3, 0);
+  put(g, new THREE.CylinderGeometry(.13, .15, .06, 20), inkMat({ tone:.96 }), .95, 1.11, -5.1);
+  [[-.85, -7.4, 2.6], [.9, -7.7, 3.5], [-.5, -8.6, 4.4], [.45, -9.2, 5]].forEach(([x, z, h]) => {
+    for (let y = 0; y < h; y += .22) put(g, box(.5 + rnd() * .08, .2, .66 + rnd() * .08), inkMat({ tone:.07 }), x + (rnd() - .5) * .07, y + .1, z, 0, (rnd() - .5) * .3, 0); });
+  const c = clerk(3.0); c.position.set(0, 0, -6.4); g.add(c);
+  return g;
 }

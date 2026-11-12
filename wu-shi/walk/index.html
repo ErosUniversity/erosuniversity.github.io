@@ -31,6 +31,8 @@
   .room { position:fixed; inset:0; background:radial-gradient(ellipse at 50% 42%, #2c2721 0%, var(--dark) 68%); }
   .mark { position:fixed; top:18px; left:20px; z-index:6; font:500 11px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#8f8675; text-decoration:none; }
   .mark:hover { color:var(--seal); }
+  #mute { position:fixed; top:11px; right:14px; z-index:6; padding:7px 6px; border:0; background:none; cursor:pointer; font:500 11px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#8f8675; }
+  #mute:hover { color:var(--seal); }
 
   /* the picture, between the two rollers */
   .view { position:fixed; left:50%; width:var(--sw); margin-left:calc(var(--sw) / -2); top:var(--top); bottom:var(--bot); overflow:hidden; background:var(--paper);
@@ -69,11 +71,15 @@
   #end { top:0; bottom:0; z-index:5; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding:0 26px 62px; text-align:center; color:var(--ink);
     text-shadow:0 0 8px var(--paper), 0 0 14px var(--paper), 0 0 3px var(--paper); transition-duration:1.2s; }
   #end.on { pointer-events:auto; }
+  #end.dark { color:#efe4cb; text-shadow:0 0 12px #141210, 0 0 5px #141210, 0 0 2px #141210; } #end.dark small { color:#b9ae98; }
   #end small { display:block; margin-bottom:8px; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:var(--soft); }
   #end p { margin:0 0 .5em; font:italic 500 clamp(21px, 5.6vw, 27px)/1.22 var(--display); }
   #end button, #end a { display:inline-block; margin:10px 5px 0; padding:8px 15px 9px; border:1px solid var(--ink); border-radius:2px; background:rgba(243,232,207,.86); color:var(--ink);
     font:400 18px/1.2 var(--body); text-decoration:none; text-shadow:none; cursor:pointer; }
   #end button:hover, #end a:hover { border-color:var(--seal); color:var(--seal); }
+  #end input { display:block; width:min(100%, 300px); margin:4px auto 2px; padding:8px 10px 9px; border:0; border-bottom:1px solid currentColor; border-radius:0; background:rgba(243,232,207,.14); color:inherit; text-align:center;
+    font:600 26px/1.2 "Caveat", cursive; outline:none; user-select:text; -webkit-user-select:text; touch-action:auto; }
+  #end input::placeholder { color:inherit; opacity:.45; }
   #end .quiet { border-color:transparent; background:none; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:var(--soft); }
   #load { position:fixed; left:0; right:0; bottom:26px; z-index:6; text-align:center; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#6f6759; transition:opacity .6s; }
 </style>
@@ -81,6 +87,7 @@
 <body>
 <div class="room"></div>
 <a class="mark" href="/">Eros University</a>
+<button id="mute" type="button">Sound on</button>
 <div class="view" id="view">
   <div class="hud" id="step"></div>
   <div class="hud" id="line" role="status" aria-live="polite"></div>

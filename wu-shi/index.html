@@ -46,6 +46,27 @@
   .last { margin-top: 2.6em; font: italic 500 clamp(30px, 5vw, 40px)/1.2 var(--display); }
   footer { padding: 30px 22px 60px; text-align: center; font: 500 11px/1.6 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--soft); }
 
+  /* after the story: the Book, the word list, the pens */
+  .after { margin-top: 3.2em; }
+  .after h2 { margin: 0 0 .5em; font: italic 500 clamp(30px, 5vw, 40px)/1.2 var(--display); }
+  .cap { margin: 0 0 14px; font: 500 11px/1.5 var(--caps); letter-spacing: .3em; text-transform: uppercase; color: var(--soft); }
+  .fine { font-size: .78em; line-height: 1.45; color: var(--soft); }
+  .names { list-style: none; margin: 1.2em 0 1.4em; padding: 0; columns: 2; column-gap: 28px; font: 600 1.35em/1.25 var(--hand); }
+  .names li { break-inside: avoid; padding: 2px 0; overflow-wrap: anywhere; }
+  .names li.mine::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 2px; background: var(--seal); vertical-align: middle; }
+  .names li.none { columns: 1; column-span: all; font: italic 400 .8em/1.4 var(--body); color: var(--soft); }
+  .go { display: inline-block; padding: 8px 16px 9px; border: 1px solid var(--ink); border-radius: 2px; background: none; color: var(--ink); font: 400 .92em/1.2 var(--body); text-decoration: none; cursor: pointer; }
+  .go:hover { border-color: var(--seal); color: var(--seal); }
+  .go.soon { border-style: dashed; color: var(--soft); }
+  #wordForm { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 .8em; }
+  #wordForm input { flex: 1 1 200px; min-width: 0; padding: 8px 10px 9px; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background: rgba(255, 255, 255, .25); color: var(--ink); font: 400 .92em/1.2 var(--body); outline: none; }
+  #wordForm input:focus { border-bottom-color: var(--seal); }
+  .pens { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 1.2em 0 1em; }
+  .pen svg { display: block; width: 100%; height: auto; margin-bottom: 10px; }
+  .pen h3 { margin: 0 0 .3em; font: italic 500 1.2em/1.2 var(--display); }
+  .pen p { margin: 0 0 .7em; font-size: .9em; line-height: 1.45; }
+  @media (max-width: 460px) { .pens { grid-template-columns: 1fr; } }
+
   /* red ink, drawn straight on the paper */
 
   .closed, .roller { display: none; }
@@ -133,6 +154,49 @@
   <p>He has no temple and no heaven. But when someone laughs on the worst day of their life, at the hospital, at the funeral, at the bank, Sun Wu Shi is there for exactly as long as the laugh lasts. Then he’s gone again.</p>
   <p class="last">Don’t pray to him, he won’t answer. He’s eating.</p>
   </div>
+
+  <span class="seal"></span>
+
+  <section class="after" id="book">
+    <p class="cap">The Book of Life and Death</p>
+    <h2>Written back in</h2>
+    <p>Everyone on this page took the stairs, all 1,200 of them, and asked the clerk for the pen.</p>
+    <ul class="names" id="names"><li class="none">The Book is being fetched.</li></ul>
+    <p><a class="go" href="walk/">Walk down yourself</a></p>
+  </section>
+
+  <span class="seal"></span>
+
+  <section class="after" id="word">
+    <p class="cap">The next adventure</p>
+    <h2>Send word</h2>
+    <p>It is being written. Leave an address and the clerk sends one note on the day it opens, with something extra for the road.</p>
+    <form id="wordForm"><input type="email" name="email" required maxlength="200" autocomplete="email" placeholder="you@somewhere" aria-label="Your email address"><button class="go" type="submit">Send word</button></form>
+    <p class="fine" id="wordNote">One note when it is online, and the bonus. Nothing else, and the address is never passed on. Answer the note to be taken off the list.</p>
+  </section>
+
+  <span class="seal"></span>
+
+  <section class="after" id="pens">
+    <p class="cap">Pre-order</p>
+    <h2>He kept the pen</h2>
+    <p>You can have one too. There are two, and you should be honest about which one is yours.</p>
+    <div class="pens">
+      <div class="pen">
+        <svg viewBox="0 0 240 150" aria-hidden="true"><rect x="1" y="1" width="238" height="148" fill="none" stroke="#6e665a" stroke-dasharray="5 5"/><path d="M52 112 L168 44" stroke="#1c1a18" stroke-width="7" stroke-linecap="round"/><path d="M168 44 L190 30 L180 52 Z" fill="#1c1a18"/><text x="120" y="138" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="9" letter-spacing="3" fill="#6e665a">PLACEHOLDER</text></svg>
+        <h3>The pen for learning</h3>
+        <p>Writes badly at first. So do you. It does not mind.</p>
+        <p><a class="go soon" data-pen="learning" href="#word">Pre-order opens soon</a></p>
+      </div>
+      <div class="pen">
+        <svg viewBox="0 0 240 150" aria-hidden="true"><rect x="1" y="1" width="238" height="148" fill="none" stroke="#6e665a" stroke-dasharray="5 5"/><path d="M48 116 L176 40" stroke="#1c1a18" stroke-width="4" stroke-linecap="round"/><path d="M176 40 L200 24 L186 50 Z" fill="#a8322a"/><text x="120" y="138" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-size="9" letter-spacing="3" fill="#6e665a">PLACEHOLDER</text></svg>
+        <h3>The pen for those already good at it</h3>
+        <p>Writes exactly as well as you do. That is the risk.</p>
+        <p><a class="go soon" data-pen="good" href="#word">Pre-order opens soon</a></p>
+      </div>
+    </div>
+    <p class="fine" id="penNote">A pre-order means you pay now and the pen is made and sent later. Price and date will stand here before the shop opens. Until then, leave an address above and we tell you first.</p>
+  </section>
 </main>
 <footer>An Eros University story</footer>
 </div>
@@ -197,6 +261,51 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   measure();
 })();
+</script>
+<script type="module">
+// The Book (names from the stairs), the word list (emails) and the two pens.
+const PENS = { learning:"", good:"" };      // Stripe payment links go here; while empty the buttons only take your address
+const SB_URL = "https://csvxfyzgvhfvrmkejaqk.supabase.co";
+const SB_KEY = "sb_publishable_8uAUu5iuA6EPY9-nWNxJig_sI5tAivl";       // publishable: meant to sit in page code
+const sbReady = import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm").then(({ createClient }) => createClient(SB_URL, SB_KEY));
+const $ = id => document.getElementById(id), remeasure = () => window.dispatchEvent(new Event("resize"));
+let mine = null; try { mine = localStorage.getItem("walk-name-id"); } catch {}
+
+// jump to a section: the unrolling page scrolls the paper itself, so anchors need a hand
+function jump(id) {
+  const el = $(id); if (!el) return;
+  if (document.documentElement.classList.contains("unroll")) window.scrollTo(0, (window.innerHeight - 88) + el.offsetTop - 30); else el.scrollIntoView();
+}
+function names(rows, note) {
+  const ul = $("names"); ul.textContent = "";
+  if (!rows.length) { const li = document.createElement("li"); li.className = "none"; li.textContent = note; ul.append(li); }
+  for (const r of rows) { const li = document.createElement("li"); li.textContent = r.name; if (r.id === mine) li.className = "mine"; ul.append(li); }
+  remeasure(); if (location.hash) requestAnimationFrame(() => jump(location.hash.slice(1)));
+}
+// the paper sits in a clipped window; a plain anchor or a focus would scroll that window instead of the page, so undo it and go the proper way
+const sheet = document.querySelector(".sheet");
+if (sheet) { sheet.scrollTop = 0; sheet.addEventListener("scroll", () => { if (sheet.scrollTop) sheet.scrollTop = 0; }); }
+addEventListener("hashchange", () => { if (sheet) sheet.scrollTop = 0; jump(location.hash.slice(1)); });
+if (location.hash) requestAnimationFrame(() => jump(location.hash.slice(1)));
+sbReady.then(sb => sb.from("book_names").select("id,name").eq("approved", true).order("created_at", { ascending:false }).limit(600))
+  .then(({ data, error }) => { if (error) throw error; names(data, "Nobody yet. The stairs are that way."); })
+  .catch(() => { names([], "The Book would not open just now. Come back later.");      // no clerk, no list: do not take addresses that cannot be kept
+    $("wordForm").hidden = true; $("wordNote").textContent = "The clerk is away from his desk, so no addresses can be taken today. Come back soon."; remeasure(); });
+
+let pen = null;
+for (const a of document.querySelectorAll("[data-pen]")) {
+  const link = PENS[a.dataset.pen];
+  if (link) { a.href = link; a.textContent = "Pre-order"; a.classList.remove("soon"); }
+  else a.addEventListener("click", e => { e.preventDefault(); pen = a.dataset.pen; jump("word"); $("wordNote").textContent = "Leave your address and you hear first when the pens can be ordered."; $("wordForm").email.focus({ preventScroll:true }); });
+}
+$("wordForm").addEventListener("submit", async e => {
+  e.preventDefault(); const f = e.target, email = f.email.value.trim(), btn = f.querySelector("button"); if (!email) return;
+  btn.disabled = true;
+  try { const sb = await sbReady, { error } = await sb.from("word_list").insert({ email, pen }); if (error) throw error;
+    f.hidden = true; $("wordNote").textContent = "Noted. The clerk writes slowly, but he writes."; }
+  catch (err) { btn.disabled = false; $("wordNote").textContent = "That did not go through. Check the address and try again."; }
+  remeasure();
+});
 </script>
 </body>
 </html>
