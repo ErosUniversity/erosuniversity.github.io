@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>The Walk Down</title>
+<meta name="description" content="His brother flew. He could only walk. The long stairs of Sun Wu Shi.">
+<meta name="theme-color" content="#141210">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eros University">
+<meta property="og:title" content="The Walk Down">
+<meta property="og:description" content="His brother flew. He could only walk.">
+<meta property="og:image" content="https://erosuniversity.eu/wu-shi/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=EB+Garamond:ital@0;1&family=Cinzel:wght@500&family=Caveat:wght@600&display=swap">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<style>
+  :root { --paper:#f3e8cf; --ink:#1c1a18; --soft:#6e665a; --seal:#a8322a; --dark:#141210;
+    --display:"Cormorant Garamond",Garamond,Georgia,serif; --body:"EB Garamond",Garamond,Georgia,serif; --caps:"Cinzel",Georgia,serif;
+    --vh:100vh; --sw:min(100vw - 52px, (var(--vh) - 104px) * .62, 520px); --top:52px; --bot:52px; }
+  @supports (height:100dvh) { :root { --vh:100dvh; } }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; margin:0; overflow:hidden; background:var(--dark); color:#e7dcc5; font:400 19px/1.5 var(--body); -webkit-font-smoothing:antialiased;
+    touch-action:none; user-select:none; -webkit-user-select:none; overscroll-behavior:none; }
+  .room { position:fixed; inset:0; background:radial-gradient(ellipse at 50% 42%, #2c2721 0%, var(--dark) 68%); }
+  .mark { position:fixed; top:18px; left:20px; z-index:6; font:500 11px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#8f8675; text-decoration:none; }
+  .mark:hover { color:var(--seal); }
+
+  /* the picture, between the two rollers */
+  .view { position:fixed; left:50%; width:var(--sw); margin-left:calc(var(--sw) / -2); top:var(--top); bottom:var(--bot); overflow:hidden; background:var(--paper);
+    box-shadow:0 0 34px rgba(0,0,0,.55); clip-path:inset(50% 0); transition:clip-path 1.9s cubic-bezier(.6,0,.2,1); }
+  .open .view { clip-path:inset(0 0); }
+  .view canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .view::before, .view::after { content:""; position:absolute; left:0; right:0; height:44px; z-index:3; pointer-events:none; }
+  .view::before { top:0; background:linear-gradient(to bottom, rgba(40,28,14,.5), rgba(40,28,14,0)); }
+  .view::after { bottom:0; background:linear-gradient(to top, rgba(40,28,14,.5), rgba(40,28,14,0)); }
+  .roller { position:fixed; left:50%; width:calc(var(--sw) + 42px); margin-left:calc(var(--sw) / -2 - 21px); height:34px; z-index:4; filter:drop-shadow(0 7px 8px rgba(0,0,0,.5));
+    transition:top 1.9s cubic-bezier(.6,0,.2,1); }
+  .roller.a { top:calc(var(--vh) / 2 - 34px); } .roller.b { top:calc(var(--vh) / 2); }
+  .open .roller.a { top:calc(var(--top) - 17px); } .open .roller.b { top:calc(var(--vh) - var(--bot) - 17px); }
+  .rod { position:absolute; left:0; right:0; top:50%; height:12px; margin-top:-6px; background:linear-gradient(to bottom,#2c1a0e,#7a4f2c 28%,#a4713f 42%,#5f3a1e 72%,#1e1208); }
+  .knob { position:absolute; top:50%; width:13px; height:22px; margin-top:-11px; border-radius:5px; background:linear-gradient(to bottom,#20130a,#8a5a31 30%,#b07c49 44%,#5a361c 74%,#170d06); }
+  .knob.l { left:0; } .knob.r { right:0; }
+  .tube { position:absolute; left:21px; right:21px; top:0; bottom:0; border-radius:4px; background:linear-gradient(to bottom,#8d7c5c 0%,#e0d2b3 16%,#f8efda 36%,#eadcbd 58%,#b8a581 82%,#6e5e44 100%); }
+  .band { position:absolute; top:-1px; bottom:-1px; left:50%; width:34px; margin-left:-17px; background:linear-gradient(to bottom,#4c120d,#a8322a 34%,#c04338 48%,#8a241d 74%,#3d0e0a); }
+  .wax { position:absolute; left:50%; top:50%; width:46px; height:46px; margin:-23px 0 0 -23px; border-radius:48% 52% 50% 50%; background:radial-gradient(circle at 38% 32%,#d0544a,#a8322a 55%,#6e1a14); box-shadow:0 2px 5px rgba(0,0,0,.5); }
+  .wax::after { content:""; position:absolute; left:16px; top:16px; width:14px; height:14px; border-radius:2px; background:#7c1f18; box-shadow:0 1px 0 rgba(255,255,255,.2); }
+  .band, .wax { transition:opacity .5s; } .open .band, .open .wax { opacity:0; }
+
+  .closed { position:fixed; left:16px; right:16px; top:calc(var(--vh) / 2 + 76px); z-index:5; text-align:center; cursor:pointer; transition:opacity .6s; }
+  .closed em { display:block; margin-bottom:12px; font:italic 500 clamp(28px, 6vw, 38px)/1.2 var(--display); color:#e7dcc5; }
+  .closed b { font:500 11px/1.5 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#a59a86; }
+  .open .closed { opacity:0; pointer-events:none; }
+
+  /* words on the picture */
+  .hud { position:absolute; z-index:2; left:0; right:0; pointer-events:none; opacity:0; transition:opacity .7s; }
+  .hud.on { opacity:1; }
+  #step { top:54px; left:18px; right:auto; font:500 10px/1 var(--caps); letter-spacing:.28em; text-transform:uppercase; color:#b9ae98; text-shadow:0 0 6px #141210; }
+  #line { top:82px; padding:0 26px; text-align:center; font:italic 500 clamp(20px, 5.4vw, 26px)/1.22 var(--display); color:#efe4cb; text-shadow:0 0 12px #141210, 0 0 5px #141210, 0 0 2px #141210; transition-duration:1.1s; }
+  #note { bottom:58px; padding:0 26px; text-align:center; font:italic 500 clamp(20px, 5.4vw, 25px)/1.22 var(--display); color:var(--ink); text-shadow:0 0 8px var(--paper), 0 0 14px var(--paper), 0 0 3px var(--paper); }
+  #note.red { font:500 11px/1.3 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:var(--seal); transition-duration:.2s; }
+  #black { top:0; bottom:0; z-index:4; background:#0e0c0b; transition-duration:1s; }
+  #end { top:0; bottom:0; z-index:5; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; padding:0 26px 62px; text-align:center; color:var(--ink);
+    text-shadow:0 0 8px var(--paper), 0 0 14px var(--paper), 0 0 3px var(--paper); transition-duration:1.2s; }
+  #end.on { pointer-events:auto; }
+  #end small { display:block; margin-bottom:8px; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:var(--soft); }
+  #end p { margin:0 0 .5em; font:italic 500 clamp(21px, 5.6vw, 27px)/1.22 var(--display); }
+  #end button, #end a { display:inline-block; margin:10px 5px 0; padding:8px 15px 9px; border:1px solid var(--ink); border-radius:2px; background:rgba(243,232,207,.86); color:var(--ink);
+    font:400 18px/1.2 var(--body); text-decoration:none; text-shadow:none; cursor:pointer; }
+  #end button:hover, #end a:hover { border-color:var(--seal); color:var(--seal); }
+  #end .quiet { border-color:transparent; background:none; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:var(--soft); }
+  #load { position:fixed; left:0; right:0; bottom:26px; z-index:6; text-align:center; font:500 10px/1 var(--caps); letter-spacing:.3em; text-transform:uppercase; color:#6f6759; transition:opacity .6s; }
+</style>
+</head>
+<body>
+<div class="room"></div>
+<a class="mark" href="/">Eros University</a>
+<div class="view" id="view">
+  <div class="hud" id="step"></div>
+  <div class="hud" id="line" role="status" aria-live="polite"></div>
+  <div class="hud" id="note"></div>
+  <div class="hud" id="black"></div>
+  <div class="hud" id="end"></div>
+</div>
+<div class="roller a" aria-hidden="true"><span class="rod"></span><span class="knob l"></span><span class="knob r"></span><span class="tube"></span></div>
+<div class="roller b" aria-hidden="true"><span class="rod"></span><span class="knob l"></span><span class="knob r"></span><span class="tube"><span class="band"></span><span class="wax"></span></span></div>
+<div class="closed" id="closed"><em>The Walk Down</em><b id="closedHint">Unrolling</b></div>
+<div id="load">Grinding the ink</div>
+<script type="module" src="game.js"></script>
+</body>
+</html>
